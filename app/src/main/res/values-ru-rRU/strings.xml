@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="navigation_items">
-        <item>Погода</item>
-        <item>Настройки</item>
-        <item>О программе</item>
-    </string-array>
+    <string name="weather">Погода</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
 
 
 </resources>
