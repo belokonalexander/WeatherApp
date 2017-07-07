@@ -29,6 +29,11 @@ public class WeatherFragment extends NavigationFragment {
         ButterKnife.bind(this, view);
     }
 
+    /**
+     * получается, что фрагмент получает контекст через активити и если
+     * фрагмент не бы прикреплен а активити, то getContext() сынициирует NPE
+     * @return
+     */
     @Override
     public String getNavigationName() {
         return getContext().getResources().getString(R.string.weather);

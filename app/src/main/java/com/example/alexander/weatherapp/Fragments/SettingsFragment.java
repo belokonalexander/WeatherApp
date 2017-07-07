@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.alexander.weatherapp.MainActivity;
 import com.example.alexander.weatherapp.R;
 
 import butterknife.ButterKnife;
@@ -27,6 +28,7 @@ public class SettingsFragment extends NavigationFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
     }
 
     @Override
