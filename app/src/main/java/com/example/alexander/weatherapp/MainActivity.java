@@ -1,5 +1,7 @@
 package com.example.alexander.weatherapp;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 
 import android.support.v4.app.FragmentTransaction;
@@ -51,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-
-
         navigation = new DrawerBuilder().withActivity(this)
                         .withToolbar(toolbar)
                         .withHeader(R.layout.navigation_drawable_header)
@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
                         .withDrawerItems(customInflateMenu())
                         .build();
 
+
+        initToolbar();
 
         if(savedInstanceState==null)
             onDrawableItemClick(R.id.weather);
@@ -88,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
 
         return result;
     }
+
+
+    /**
+     * настраиваю тулбар:
+     *  1) иконка навигации
+     */
+    private void initToolbar(){
+        Drawable toolbarNavigationIcon = getBaseContext().getResources().getDrawable(R.drawable.ic_menu_black_24dp);
+        toolbarNavigationIcon.setColorFilter(ContextCompat.getColor(getBaseContext(),R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
+        toolbar.setNavigationIcon(toolbarNavigationIcon);
+        toolbar.setContentInsetStartWithNavigation(0);
+    }
+
 
     /**
      * сохраняю позицию выбранного пункта меню
@@ -153,9 +168,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void addMenuItems(List<IDrawerItem> item, Menu mMenu) {
-        for (int i = 0; i < mMenu.size(); i++) {
-            MenuItem mMenuItem = mMenu.getItem(i);
+    private void addMenuItems(List<IDrawerItem> item, Menu menu) {
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem mMenuItem = menu.getItem(i);
             IDrawerItem iDrawerItem = new PrimaryDrawerItem()
                         .withName(mMenuItem.getTitle().toString())
                         .withIcon(mMenuItem.getIcon())
