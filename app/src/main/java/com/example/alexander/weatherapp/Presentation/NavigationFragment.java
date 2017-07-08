@@ -1,4 +1,4 @@
-package com.example.alexander.weatherapp.Fragments;
+package com.example.alexander.weatherapp.Presentation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

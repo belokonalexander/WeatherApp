@@ -17,16 +17,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
-import com.example.alexander.weatherapp.Fragments.AboutFragment;
-import com.example.alexander.weatherapp.Fragments.NavigationFragment;
-import com.example.alexander.weatherapp.Fragments.SettingsFragment;
-import com.example.alexander.weatherapp.Fragments.WeatherFragment;
+import com.example.alexander.weatherapp.Presentation.About.AboutFragment;
+import com.example.alexander.weatherapp.Presentation.NavigationFragment;
+import com.example.alexander.weatherapp.Presentation.Settings.SettingsFragment;
+import com.example.alexander.weatherapp.Presentation.Weather.WeatherFragment;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.DimenHolder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
@@ -35,6 +33,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+/**
+ *  Главное активити - отвечает за навигацию и реализацию паттерна NavigationDrawable
+ *  Не стал делать в стиле MVP потому что:
+ *  1) Здесь есть только навигация
+ *  2) Не вижу смысла бросать событие по клику на пункте меню в презентер, а оттуда возвращать то же самое во вью -
+ *     проще сразу обработать все во вью без посредников
+ *  3) Все процессы будут происходить во фрагментах, где уже и будет презентер
+ */
+
+
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
@@ -42,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
     public final String NAVIGATE_POSITION = "NAVIGATE_POSITION_ID";
 
+    //меню навигации
     Drawer navigation;
 
+    //созданные при навигации фрагменты
     SparseArray<NavigationFragment> fragmentStore = new SparseArray<>();
 
     @Override
@@ -167,7 +178,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * конвертирую items в menu в IDrawerItem
+     * @param item
+     * @param menu
+     */
     private void addMenuItems(List<IDrawerItem> item, Menu menu) {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem mMenuItem = menu.getItem(i);
@@ -178,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
                         .withEnabled(mMenuItem.isEnabled())
                         .withIconTintingEnabled(true)
                         .withSelectedIconColor(ContextCompat.getColor(getBaseContext(),R.color.material_drawer_selected_icon));
-                        //.withDisabledIconColor(ContextCompat.getColor(getBaseContext(),R.color.colorPrimary));
                 item.add(iDrawerItem);
         }
     }
