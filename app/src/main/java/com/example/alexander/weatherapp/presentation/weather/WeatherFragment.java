@@ -1,11 +1,13 @@
 package com.example.alexander.weatherapp.presentation.weather;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.alexander.weatherapp.LogUtils;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
@@ -32,13 +34,23 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         WeatherApplication.get(getContext()).getAppComponent().plus(new WeatherModule()).inject(this);
-        setRetainInstance(true);
+        LogUtils.write("onCreate");
+        //setRetainInstance(true);
         super.onCreate(savedInstanceState);
+    }
+
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        LogUtils.write("onAttach");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogUtils.write("onCreateView");
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
@@ -47,6 +59,7 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         presenter.bindView(this);
+        LogUtils.write("onViewCreated");
     }
 
     @Override
@@ -57,7 +70,14 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         presenter.unbindView();
+        unbinder.unbind();
+        LogUtils.write("onDestroyView");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LogUtils.write("onActivityCreated");
     }
 }

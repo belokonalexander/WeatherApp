@@ -50,6 +50,8 @@ public class SettingsFragment extends NavigationFragment implements SettingsView
         presenter.bindView(this);
     }
 
+
+
     @Override
     public String getNavigationName() {
         return getContext().getResources().getString(R.string.settings);
@@ -58,7 +60,8 @@ public class SettingsFragment extends NavigationFragment implements SettingsView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         presenter.unbindView();
+        unbinder.unbind();
+
     }
 }

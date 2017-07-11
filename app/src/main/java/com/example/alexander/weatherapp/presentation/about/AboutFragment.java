@@ -24,7 +24,7 @@ import butterknife.Unbinder;
 public class AboutFragment extends NavigationFragment implements AboutView {
 
     @Inject
-    com.example.alexander.weatherapp.presentation.about.interfaces.AboutPresenter presenter;
+    AboutPresenter presenter;
 
     Unbinder unbinder;
 
@@ -56,7 +56,8 @@ public class AboutFragment extends NavigationFragment implements AboutView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         presenter.unbindView();
+        unbinder.unbind();
+
     }
 }
