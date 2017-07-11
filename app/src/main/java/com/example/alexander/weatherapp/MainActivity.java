@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
 
-
         //если такой пункт меню открыт в данный момент - игнорирую нажатие
         if(fm.findFragmentByTag(tag)!=null){
             return;

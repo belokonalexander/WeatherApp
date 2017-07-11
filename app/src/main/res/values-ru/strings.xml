@@ -4,6 +4,6 @@
     <string name="weather">Погода</string>
     <string name="settings">Настройки</string>
     <string name="about">О программе</string>
-
+    <string name="navigation_menu">Меню</string>
 
 </resources>
