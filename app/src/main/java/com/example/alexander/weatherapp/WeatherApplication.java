@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.alexander.weatherapp.DI.Components.AppComponent;
-import com.example.alexander.weatherapp.DI.Components.DaggerAppComponent;
-import com.example.alexander.weatherapp.DI.Modules.AppModule;
+import com.example.alexander.weatherapp.di.components.AppComponent;
+import com.example.alexander.weatherapp.di.components.DaggerAppComponent;
+import com.example.alexander.weatherapp.di.modules.AppModule;
 
 /**
  * Created by Alexander on 08.07.2017.

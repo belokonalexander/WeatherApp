@@ -4,6 +4,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +13,15 @@ import android.os.Bundle;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
-import com.example.alexander.weatherapp.Presentation.About.AboutFragment;
-import com.example.alexander.weatherapp.Presentation.NavigationFragment;
-import com.example.alexander.weatherapp.Presentation.Settings.SettingsFragment;
-import com.example.alexander.weatherapp.Presentation.Weather.WeatherFragment;
+import com.example.alexander.weatherapp.presentation.about.AboutFragment;
+import com.example.alexander.weatherapp.presentation.NavigationFragment;
+import com.example.alexander.weatherapp.presentation.settings.SettingsFragment;
+import com.example.alexander.weatherapp.presentation.weather.WeatherFragment;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.DimenHolder;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 
 
 /**
- *  Главное активити - отвечает за навигацию и реализацию паттерна NavigationDrawable
+ *  Главное активити - отвечает за навигацию и реализацию паттерна Navigation Drawer
  *  Не стал делать в стиле MVP потому что:
  *  1) Здесь есть только навигация
  *  2) Не вижу смысла бросать событие по клику на пункте меню в презентер, а оттуда возвращать то же самое во вью -
@@ -46,16 +47,14 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String NAVIGATE_POSITION = "NAVIGATE_POSITION_ID";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    public final String NAVIGATE_POSITION = "NAVIGATE_POSITION_ID";
-
     //меню навигации
-    Drawer navigation;
+    private Drawer navigation;
 
-    //созданные при навигации фрагменты
-    SparseArray<NavigationFragment> fragmentStore = new SparseArray<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +62,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
         navigation = new DrawerBuilder().withActivity(this)
                         .withToolbar(toolbar)
                         .withHeader(R.layout.navigation_drawable_header)
                         .withHeaderHeight(DimenHolder.fromDp(240))
                         .withTranslucentStatusBar(true)
                         .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                            onDrawableItemClick(view.getId());
+                            onDrawerItemClick(view.getId());
                             return false;
                         })
                         .withDrawerItems(customInflateMenu())
@@ -79,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
 
-        if(savedInstanceState==null)
-            onDrawableItemClick(R.id.weather);
-        else {
+        if(savedInstanceState==null) {
+            onDrawerItemClick(R.id.weather);
+        } else {
             navigation.setSelection(savedInstanceState.getInt(NAVIGATE_POSITION), false);
         }
 
@@ -137,34 +135,44 @@ public class MainActivity extends AppCompatActivity {
      * обработка клика по элементу меню
      * @param id - id элемента меню, по которому произведен клик
      */
-    private void onDrawableItemClick(@IdRes int id) {
+    private void onDrawerItemClick(@IdRes int id) {
 
-        NavigationFragment fragment = fragmentStore.get(id);
+        Class fragmentClass = null;
 
-        if(fragment==null)
             switch (id){
                 case R.id.weather:
-                    fragment = new WeatherFragment();
-                    fragmentStore.put(id,fragment);
+                    fragmentClass = WeatherFragment.class;
                     break;
                 case R.id.settings:
-                    fragment = new SettingsFragment();
-                    fragmentStore.put(id,fragment);
+                    fragmentClass = SettingsFragment.class;
                     break;
                 case R.id.about:
-                    fragment = new AboutFragment();
-                    fragmentStore.put(id,fragment);
+                    fragmentClass = AboutFragment.class;
                     break;
             }
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_content, fragment, null);
-        ft.commit();
+        //NPE, если забуду описать пункт меню
+        String tag = fragmentClass.getSimpleName();
+
+        FragmentManager fm = getSupportFragmentManager();
+
+
+        //если такой пункт меню открыт в данный момент - игнорирую нажатие
+        if(fm.findFragmentByTag(tag)!=null){
+            return;
+        }
+
+        NavigationFragment fragment = (NavigationFragment) Fragment.instantiate(this,fragmentClass.getName());
+        fm.beginTransaction()
+                .replace(R.id.main_content,fragment,tag)
+                .commit();
+
 
         //подсвечивается выбранный пункт меню
         navigation.setSelection(id, false);
 
     }
+
 
 
 
