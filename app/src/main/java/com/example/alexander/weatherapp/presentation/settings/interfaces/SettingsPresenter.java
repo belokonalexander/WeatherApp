@@ -1,4 +1,4 @@
-package com.example.alexander.weatherapp.presentation.settings.intefaces;
+package com.example.alexander.weatherapp.presentation.settings.interfaces;
 
 /**
  * Created by Alexander on 08.07.2017.

@@ -57,7 +57,7 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //unbinder.unbind();
+        unbinder.unbind();
         presenter.unbindView();
     }
 }

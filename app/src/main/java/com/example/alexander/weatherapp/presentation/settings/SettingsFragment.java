@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.example.alexander.weatherapp.di.modules.SettingsModule;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
-import com.example.alexander.weatherapp.presentation.settings.intefaces.SettingsPresenter;
-import com.example.alexander.weatherapp.presentation.settings.intefaces.SettingsView;
+import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;
+import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsView;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 
@@ -58,7 +58,7 @@ public class SettingsFragment extends NavigationFragment implements SettingsView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //unbinder.unbind();
+        unbinder.unbind();
         presenter.unbindView();
     }
 }

@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(NAVIGATE_POSITION, (int) navigation.getCurrentSelection());
         super.onSaveInstanceState(outState);
+        outState.putInt(NAVIGATE_POSITION, (int) navigation.getCurrentSelection());
     }
 
     /**
@@ -174,7 +174,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+    }
 
     @Override
     public void onBackPressed(){

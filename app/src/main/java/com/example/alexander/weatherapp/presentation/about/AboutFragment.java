@@ -56,7 +56,7 @@ public class AboutFragment extends NavigationFragment implements AboutView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-       // unbinder.unbind();
+        unbinder.unbind();
         presenter.unbindView();
     }
 }
