@@ -1,8 +1,8 @@
 package com.example.alexander.weatherapp.di.modules;
 
 import com.example.alexander.weatherapp.di.scopes.AboutScope;
-import com.example.alexander.weatherapp.presentation.about.AboutPresenter;
-import com.example.alexander.weatherapp.presentation.about.interfaces.IAboutPresenter;
+import com.example.alexander.weatherapp.presentation.about.AboutPresenterImpl;
+import com.example.alexander.weatherapp.presentation.about.interfaces.AboutPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,8 +16,8 @@ public class AboutModule {
 
     @Provides
     @AboutScope
-    IAboutPresenter provideIAboutPresenter(){
-        return new AboutPresenter();
+    AboutPresenter provideAboutPresenter(){
+        return new AboutPresenterImpl();
     }
 
 }

@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alexander.weatherapp.di.modules.AboutModule;
-import com.example.alexander.weatherapp.presentation.about.interfaces.IAboutPresenter;
-import com.example.alexander.weatherapp.presentation.about.interfaces.IAboutView;
+import com.example.alexander.weatherapp.presentation.about.interfaces.*;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
@@ -22,10 +21,10 @@ import butterknife.Unbinder;
  * Created by Alexander on 07.07.2017.
  */
 
-public class AboutFragment extends NavigationFragment implements IAboutView{
+public class AboutFragment extends NavigationFragment implements AboutView {
 
     @Inject
-    IAboutPresenter presenter;
+    com.example.alexander.weatherapp.presentation.about.interfaces.AboutPresenter presenter;
 
     Unbinder unbinder;
 

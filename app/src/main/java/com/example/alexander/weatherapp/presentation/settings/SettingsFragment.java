@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.example.alexander.weatherapp.di.modules.SettingsModule;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
-import com.example.alexander.weatherapp.presentation.settings.intefaces.ISettingsPresenter;
-import com.example.alexander.weatherapp.presentation.settings.intefaces.ISettingsView;
+import com.example.alexander.weatherapp.presentation.settings.intefaces.SettingsPresenter;
+import com.example.alexander.weatherapp.presentation.settings.intefaces.SettingsView;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 
@@ -22,10 +22,10 @@ import butterknife.Unbinder;
  * Created by Alexander on 07.07.2017.
  */
 
-public class SettingsFragment extends NavigationFragment implements ISettingsView {
+public class SettingsFragment extends NavigationFragment implements SettingsView {
 
     @Inject
-    ISettingsPresenter presenter;
+    SettingsPresenter presenter;
 
     Unbinder unbinder;
 

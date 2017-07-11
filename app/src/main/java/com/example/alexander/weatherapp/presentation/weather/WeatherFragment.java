@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
-import com.example.alexander.weatherapp.presentation.weather.interfaces.IWeatherPresenter;
-import com.example.alexander.weatherapp.presentation.weather.interfaces.IWeatherView;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 
@@ -22,10 +22,10 @@ import butterknife.Unbinder;
  * Created by Alexander on 07.07.2017.
  */
 
-public class WeatherFragment extends NavigationFragment implements IWeatherView{
+public class WeatherFragment extends NavigationFragment implements WeatherView {
 
     @Inject
-    IWeatherPresenter presenter;
+    WeatherPresenter presenter;
 
     Unbinder unbinder;
 

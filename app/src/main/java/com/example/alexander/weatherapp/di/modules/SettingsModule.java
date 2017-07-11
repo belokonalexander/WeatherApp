@@ -1,8 +1,8 @@
 package com.example.alexander.weatherapp.di.modules;
 
 import com.example.alexander.weatherapp.di.scopes.SettingsScope;
-import com.example.alexander.weatherapp.presentation.settings.intefaces.ISettingsPresenter;
-import com.example.alexander.weatherapp.presentation.settings.SettingsPresenter;
+import com.example.alexander.weatherapp.presentation.settings.SettingsPresenterImpl;
+import com.example.alexander.weatherapp.presentation.settings.intefaces.SettingsPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,8 +16,8 @@ public class SettingsModule {
 
     @Provides
     @SettingsScope
-    ISettingsPresenter provideISettingstPresenter(){
-        return new SettingsPresenter();
+    SettingsPresenter provideSettingsPresenter(){
+        return new SettingsPresenterImpl();
     }
 
 }
