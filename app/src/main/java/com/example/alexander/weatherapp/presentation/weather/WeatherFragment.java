@@ -34,8 +34,7 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         WeatherApplication.get(getContext()).getAppComponent().plus(new WeatherModule()).inject(this);
-        LogUtils.write("onCreate");
-        //setRetainInstance(true);
+        setRetainInstance(true);
         super.onCreate(savedInstanceState);
     }
 
@@ -44,13 +43,13 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        LogUtils.write("onAttach");
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogUtils.write("onCreateView");
+
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 
@@ -59,7 +58,7 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         presenter.bindView(this);
-        LogUtils.write("onViewCreated");
+
     }
 
     @Override
@@ -72,12 +71,12 @@ public class WeatherFragment extends NavigationFragment implements WeatherView {
         super.onDestroyView();
         presenter.unbindView();
         unbinder.unbind();
-        LogUtils.write("onDestroyView");
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        LogUtils.write("onActivityCreated");
+
     }
 }
