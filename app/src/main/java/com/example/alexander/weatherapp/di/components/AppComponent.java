@@ -6,6 +6,8 @@ import com.example.alexander.weatherapp.di.modules.SettingsModule;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.WeatherApplication;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 
 /**
@@ -13,6 +15,7 @@ import dagger.Component;
  */
 
 @Component(modules = {AppModule.class})
+@Singleton
 public interface AppComponent {
 
     AboutComponent plus(AboutModule aboutModule);

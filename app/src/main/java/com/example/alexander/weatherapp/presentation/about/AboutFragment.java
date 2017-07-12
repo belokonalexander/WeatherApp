@@ -2,10 +2,12 @@ package com.example.alexander.weatherapp.presentation.about;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.alexander.weatherapp.MainActivity;
 import com.example.alexander.weatherapp.di.modules.AboutModule;
 import com.example.alexander.weatherapp.presentation.about.interfaces.*;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
@@ -21,7 +23,7 @@ import butterknife.Unbinder;
  * Created by Alexander on 07.07.2017.
  */
 
-public class AboutFragment extends NavigationFragment implements AboutView {
+public class AboutFragment extends Fragment implements AboutView, NavigationFragment {
 
     @Inject
     AboutPresenter presenter;
@@ -44,6 +46,7 @@ public class AboutFragment extends NavigationFragment implements AboutView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
         unbinder = ButterKnife.bind(this, view);
         presenter.bindView(this);
     }

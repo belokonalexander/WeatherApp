@@ -12,11 +12,11 @@ import com.example.alexander.weatherapp.MainActivity;
  * Created by Alexander on 07.07.2017.
  */
 
-public abstract class NavigationFragment extends Fragment{
+public interface NavigationFragment{
 
-    public abstract String getNavigationName();
+    String getNavigationName();
 
-    public NavigationFragment() {
+    /*public NavigationFragment() {
         LogUtils.write("Created fragment: " + getClass().getCanonicalName());
     }
 
@@ -24,5 +24,5 @@ public abstract class NavigationFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
-    }
+    }*/
 }

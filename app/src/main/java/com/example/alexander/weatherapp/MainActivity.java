@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
 
         if(savedInstanceState==null) {
-            onDrawerItemClick(R.id.weather);
+            onDrawerItemClick(R.id.settings);
         } else {
             navigation.setSelection(savedInstanceState.getInt(NAVIGATE_POSITION), false);
         }
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        NavigationFragment fragment = (NavigationFragment) Fragment.instantiate(this,fragmentClass.getName());
+        Fragment fragment = Fragment.instantiate(this,fragmentClass.getName());
         fm.beginTransaction()
                 .replace(R.id.main_content,fragment,tag)
                 .commit();

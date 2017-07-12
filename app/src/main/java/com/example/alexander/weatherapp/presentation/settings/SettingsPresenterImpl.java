@@ -1,12 +1,13 @@
 package com.example.alexander.weatherapp.presentation.settings;
 
+import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;
 import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsView;
 
 /**
  * Created by Alexander on 08.07.2017.
  */
 
-public class SettingsPresenterImpl implements com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter {
+public class SettingsPresenterImpl implements SettingsPresenter {
 
     private SettingsView view;
 

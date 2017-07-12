@@ -6,5 +6,14 @@
     <string name="about">About</string>
     <string name="navigation_menu">Menu</string>
 
+    <string name="pr_auto_refresh">Auto refresh</string>
+    <string name="pr_refresh_interval">Refresh interval</string>
+    <string name="pr_refresh_interval_summary">Refresh interval in minutes</string>
+    <string name="pr_cat_common_prefs">Common prefs</string>
+
+    <string name="dialog_positive">Ok</string>
+    <string name="dialog_negative">Cancel</string>
+
+    <string name="short_minutes">min</string>
 
 </resources>
