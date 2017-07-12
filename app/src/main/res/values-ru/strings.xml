@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="weather">Погода</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+    <string name="navigation_menu">Меню</string>
+
+</resources>
