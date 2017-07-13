@@ -17,6 +17,7 @@ import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
+import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
 import com.example.alexander.weatherapp.R;
@@ -101,7 +102,8 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
 
     @Override
     public void onError(Throwable cause) {
-        weatherTextView.setText(cause.getMessage());
+        ViewException viewException = new ViewException(getContext(),cause);
+        weatherTextView.setText(viewException.getDetailMessage());
     }
 
     @Override

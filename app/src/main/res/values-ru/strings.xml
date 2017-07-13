@@ -16,4 +16,7 @@
 
     <string name="short_minutes">мин</string>
 
+    <string name="connection_error">Ошибка соединения. Пожалуйста, проверьте доступ к интернету и повторите операцию</string>
+    <string name="unknown_error">Неизвестная ошибка. Попробуйте повторить операцию</string>
+
 </resources>

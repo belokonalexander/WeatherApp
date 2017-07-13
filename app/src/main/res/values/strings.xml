@@ -26,5 +26,8 @@
 
     <string name="short_minutes">min</string>
 
+    <string name="connection_error">Connection error. Please check your internet connection</string>
+    <string name="unknown_error">Unknown error. Try to repeat operation</string>
+
 
 </resources>

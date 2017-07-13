@@ -2,13 +2,10 @@ package com.example.alexander.weatherapp.data.network;
 
 import android.content.Context;
 
-import com.example.alexander.weatherapp.LogUtils;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 
-import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.Date;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -97,15 +94,15 @@ public class NetworkService {
             if(!NetworkUtils.isNetworkAvailable(context)){
                 //если нет соединения, то берем последнюю запись из кэша по сигнатуре и подменяем запрос
                 throw new UnknownHostException("Unable to resolve host \""+request.url().host()+"\"");
-
             }
 
             //выполняю реальный запрос к api
             Response response = null;
             response = chain.proceed(request);
 
+            //ответ для кеширования
             ResponseBody responseBody = response.body();
-            String responseBodyString= responseBody.string(); //ответ для кеширования
+            String responseBodyString= responseBody.string();
 
             //тут можно закешировать результат
             if(response.code()==200) {

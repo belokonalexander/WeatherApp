@@ -2,6 +2,7 @@ package com.example.alexander.weatherapp.presentation.weather;
 
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
+import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
 

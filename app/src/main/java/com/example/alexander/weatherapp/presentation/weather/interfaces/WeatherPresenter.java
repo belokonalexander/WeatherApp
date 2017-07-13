@@ -1,6 +1,7 @@
 package com.example.alexander.weatherapp.presentation.weather.interfaces;
 
 import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
+import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 
 /**
  * Created by Alexander on 08.07.2017.
