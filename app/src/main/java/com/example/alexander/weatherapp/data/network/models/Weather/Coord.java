@@ -11,10 +11,17 @@ public class Coord {
 
     @SerializedName("lon")
     @Expose
-    public Double lon;
+    Double lon;
 
     @SerializedName("lat")
     @Expose
-    public Double lat;
+    Double lat;
 
+    public Double getLon() {
+        return lon;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
 }

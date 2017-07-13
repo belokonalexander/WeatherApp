@@ -11,23 +11,23 @@ public class Main {
 
     @SerializedName("temp")
     @Expose
-    public Double temp;
+    Double temp;
 
     @SerializedName("pressure")
     @Expose
-    public Integer pressure;
+    Integer pressure;
 
     @SerializedName("humidity")
     @Expose
-    public Integer humidity;
+    Integer humidity;
 
     @SerializedName("temp_min")
     @Expose
-    public Double tempMin;
+    Double tempMin;
 
     @SerializedName("temp_max")
     @Expose
-    public Double tempMax;
+    Double tempMax;
 
     @Override
     public String toString() {
@@ -37,5 +37,25 @@ public class Main {
                 ", tempMin=" + tempMin +
                 ", tempMax=" + tempMax +
                 '}';
+    }
+
+    public Double getTemp() {
+        return temp;
+    }
+
+    public Integer getPressure() {
+        return pressure;
+    }
+
+    public Integer getHumidity() {
+        return humidity;
+    }
+
+    public Double getTempMin() {
+        return tempMin;
+    }
+
+    public Double getTempMax() {
+        return tempMax;
     }
 }

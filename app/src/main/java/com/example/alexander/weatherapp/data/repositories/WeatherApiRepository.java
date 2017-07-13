@@ -1,7 +1,5 @@
 package com.example.alexander.weatherapp.data.repositories;
 
-import android.support.annotation.NonNull;
-
 import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
 
 import io.reactivex.Single;
@@ -12,6 +10,8 @@ import io.reactivex.Single;
 
 public interface WeatherApiRepository {
 
-    Single<WeatherModel> getWeather(String id);
+    Single<WeatherModel> getWeatherByID(String id);
+
+    Single<WeatherModel> getWeatherByName(String id);
 
 }

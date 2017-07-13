@@ -1,9 +1,8 @@
 package com.example.alexander.weatherapp.business.weather;
 
-import android.support.annotation.NonNull;
-
-import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
+import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 import io.reactivex.Single;
 
@@ -16,15 +15,19 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     private WeatherApiRepository weatherApiRepository;
 
+    private WeatherModelToCityWeatherMapper weatherMapper;
 
-    public WeatherInteractorImpl(WeatherApiRepository weatherApiRepository) {
+
+    public WeatherInteractorImpl(WeatherApiRepository weatherApiRepository, WeatherModelToCityWeatherMapper mapper) {
         this.weatherApiRepository = weatherApiRepository;
+        this.weatherMapper = mapper;
     }
 
     @Override
-    public Single<WeatherModel> getWeather() {
-        //TODO получиь ID текущего выбранного города
-        return weatherApiRepository.getWeather("2172797");
+    public Single<CityWeather> getWeather() {
+        //TODO получить ID текущего выбранного города
+        return weatherApiRepository.getWeatherByName("Moscow")
+                .flatMap(weatherMapper.toCityWeather());
     }
 
 }

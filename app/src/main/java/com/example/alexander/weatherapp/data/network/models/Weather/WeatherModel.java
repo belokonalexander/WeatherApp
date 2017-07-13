@@ -13,56 +13,104 @@ public class WeatherModel {
 
     @SerializedName("coord")
     @Expose
-    public Coord coord;
+    Coord coord;
 
-    @SerializedName("weather")
+    @SerializedName("weatherById")
     @Expose
-    public List<Weather> weather = null;
+    List<Weather> weather = null;
 
     @SerializedName("base")
     @Expose
-    public String base;
+    String base;
 
     @SerializedName("main")
     @Expose
-    public Main main;
+    Main main;
 
     @SerializedName("visibility")
     @Expose
-    public Integer visibility;
+    Integer visibility;
 
     @SerializedName("wind")
     @Expose
-    public Wind wind;
+    Wind wind;
 
     @SerializedName("clouds")
     @Expose
-    public Clouds clouds;
+    Clouds clouds;
 
     @SerializedName("dt")
     @Expose
-    public Integer dt;
+    Integer dt;
 
     @SerializedName("sys")
     @Expose
-    public Sys sys;
+    Sys sys;
 
     @SerializedName("id")
     @Expose
-    public Integer id;
+    Integer id;
 
     @SerializedName("name")
     @Expose
-    public String name;
+    String name;
 
     @SerializedName("cod")
     @Expose
-    public Integer cod;
+    Integer cod;
 
     @Override
     public String toString() {
         return "WeatherModel{" +
                 "main=" + main +
                 '}';
+    }
+
+    public Coord getCoord() {
+        return coord;
+    }
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public Integer getVisibility() {
+        return visibility;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public Clouds getClouds() {
+        return clouds;
+    }
+
+    public Integer getDt() {
+        return dt;
+    }
+
+    public Sys getSys() {
+        return sys;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getCod() {
+        return cod;
     }
 }

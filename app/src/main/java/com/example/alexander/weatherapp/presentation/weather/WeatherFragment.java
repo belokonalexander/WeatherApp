@@ -10,18 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
-import com.example.alexander.weatherapp.LogUtils;
 import com.example.alexander.weatherapp.MainActivity;
-import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
+import com.example.alexander.weatherapp.R;
+import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
-
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
 import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
-import com.example.alexander.weatherapp.R;
-import com.example.alexander.weatherapp.WeatherApplication;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 import javax.inject.Inject;
 
@@ -107,7 +104,7 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     }
 
     @Override
-    public void showWeather(WeatherModel weatherModel) {
+    public void showWeather(CityWeather weatherModel) {
         weatherTextView.setText(weatherModel.toString());
     }
 
@@ -120,4 +117,6 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     public void finishProgress() {
         refreshLayout.setRefreshing(false);
     }
+
+
 }

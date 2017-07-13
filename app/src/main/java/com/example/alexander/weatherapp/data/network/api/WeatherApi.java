@@ -3,7 +3,7 @@ package com.example.alexander.weatherapp.data.network.api;
 import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
 
 import io.reactivex.Observable;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
@@ -12,8 +12,10 @@ import retrofit2.http.Query;
 
 public interface WeatherApi {
 
-    @POST("weather")
-    Observable<WeatherModel> weather(@Query("id") String cityId);
+    @GET("weather")
+    Observable<WeatherModel> weatherById(@Query("id") String cityId);
 
+    @GET("weather")
+    Observable<WeatherModel> weatherByName(@Query("q") String cityName);
 
 }

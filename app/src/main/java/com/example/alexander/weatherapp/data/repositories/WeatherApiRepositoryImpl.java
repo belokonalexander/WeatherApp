@@ -18,8 +18,13 @@ public class WeatherApiRepositoryImpl implements WeatherApiRepository {
     }
 
     @Override
-    public Single<WeatherModel> getWeather(String id) {
-        return Single.fromObservable(weatherApi.weather(id));
+    public Single<WeatherModel> getWeatherByID(String id) {
+        return Single.fromObservable(weatherApi.weatherById(id));
+    }
+
+    @Override
+    public Single<WeatherModel> getWeatherByName(String name) {
+        return Single.fromObservable(weatherApi.weatherByName(name));
     }
 
 

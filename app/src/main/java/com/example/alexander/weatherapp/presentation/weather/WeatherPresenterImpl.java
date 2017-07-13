@@ -1,10 +1,9 @@
 package com.example.alexander.weatherapp.presentation.weather;
 
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
-import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
-import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -24,7 +23,7 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     }
 
     @Override
-    public void handleSuccessGetWeather(WeatherModel weather) {
+    public void handleSuccessGetWeather(CityWeather weather) {
         view.showWeather(weather);
         view.finishProgress();
     }

@@ -1,9 +1,6 @@
 package com.example.alexander.weatherapp.business.weather;
 
-import android.support.annotation.NonNull;
-
-import com.example.alexander.weatherapp.data.network.models.Weather.Weather;
-import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 import io.reactivex.Single;
 
@@ -17,6 +14,7 @@ public interface WeatherInteractor {
      * получить погоду по id города
      * @return
      */
-    Single<WeatherModel> getWeather();
+    Single<CityWeather> getWeather();
+
 
 }

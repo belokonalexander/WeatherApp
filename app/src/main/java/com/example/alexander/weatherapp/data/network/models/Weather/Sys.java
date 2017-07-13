@@ -11,26 +11,49 @@ public class Sys {
 
     @SerializedName("type")
     @Expose
-    public Integer type;
+    Integer type;
 
     @SerializedName("id")
     @Expose
-    public Integer id;
+    Integer id;
 
     @SerializedName("message")
     @Expose
-    public Double message;
+    Double message;
 
     @SerializedName("country")
     @Expose
-    public String country;
+    String country;
 
     @SerializedName("sunrise")
     @Expose
-    public Integer sunrise;
+    Integer sunrise;
 
     @SerializedName("sunset")
     @Expose
-    public Integer sunset;
+    Integer sunset;
 
+    public Integer getType() {
+        return type;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Double getMessage() {
+        return message;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public Integer getSunrise() {
+        return sunrise;
+    }
+
+    public Integer getSunset() {
+        return sunset;
+    }
 }

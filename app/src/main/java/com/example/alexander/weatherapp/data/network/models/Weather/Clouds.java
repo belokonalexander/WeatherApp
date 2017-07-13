@@ -11,6 +11,9 @@ public class Clouds {
 
     @SerializedName("all")
     @Expose
-    public Integer all;
+    Integer all;
 
+    public Integer getAll() {
+        return all;
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.alexander.weatherapp.presentation.weather.interfaces;
 
-import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
-import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 /**
  * Created by Alexander on 08.07.2017.
@@ -10,7 +9,7 @@ import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 public interface WeatherView {
 
     void onError(Throwable cause);
-    void showWeather(WeatherModel weatherModel);
+    void showWeather(CityWeather weatherModel);
 
     void startProgress();
     void finishProgress();

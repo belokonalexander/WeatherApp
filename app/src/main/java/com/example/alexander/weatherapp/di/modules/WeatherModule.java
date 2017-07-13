@@ -1,5 +1,6 @@
 package com.example.alexander.weatherapp.di.modules;
 
+import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractorImpl;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
@@ -19,6 +20,13 @@ import dagger.Provides;
 @Module
 public class WeatherModule {
 
+
+    @Provides
+    @WeatherScope
+    WeatherModelToCityWeatherMapper provideMapper(){
+        return new WeatherModelToCityWeatherMapper();
+    }
+
     @Provides
     @WeatherScope
     WeatherApiRepository provideWeatherApiRepository(WeatherApi weatherApi){
@@ -27,8 +35,8 @@ public class WeatherModule {
 
     @Provides
     @WeatherScope
-    WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository){
-        return new WeatherInteractorImpl(repository);
+    WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository, WeatherModelToCityWeatherMapper mapper){
+        return new WeatherInteractorImpl(repository, mapper);
     }
 
 
