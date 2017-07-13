@@ -4,12 +4,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
+import com.example.alexander.weatherapp.LogUtils;
 import com.example.alexander.weatherapp.MainActivity;
+import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
@@ -20,6 +24,7 @@ import com.example.alexander.weatherapp.WeatherApplication;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -31,6 +36,12 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
 
     @Inject
     WeatherPresenter presenter;
+
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout refreshLayout;
+
+    @BindView(R.id.weather_text)
+    TextView weatherTextView;
 
     Unbinder unbinder;
 
@@ -61,7 +72,12 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
         unbinder = ButterKnife.bind(this, view);
         presenter.bindView(this);
         ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
+        initViewLogic();
 
+    }
+
+    private void initViewLogic() {
+        refreshLayout.setOnRefreshListener(() -> presenter.getWeather());
     }
 
     @Override
@@ -81,5 +97,25 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+    }
+
+    @Override
+    public void onError(Throwable cause) {
+        weatherTextView.setText(cause.getMessage());
+    }
+
+    @Override
+    public void showWeather(WeatherModel weatherModel) {
+        weatherTextView.setText(weatherModel.toString());
+    }
+
+    @Override
+    public void startProgress() {
+        refreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void finishProgress() {
+        refreshLayout.setRefreshing(false);
     }
 }

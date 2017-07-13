@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.example.alexander.weatherapp.data.network.NetworkService;
+import com.example.alexander.weatherapp.data.network.api.WeatherApi;
+import com.example.alexander.weatherapp.data.network.models.Weather.Weather;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
 
 import javax.inject.Singleton;
@@ -34,6 +37,12 @@ public class AppModule {
     @Singleton
     SharedPrefs provideSharedPrefs(){
         return new SharedPrefs(appContext);
+    }
+
+    @Provides
+    @Singleton
+    WeatherApi provideWeatherApi(){
+        return NetworkService.getService(appContext, WeatherApi.class);
     }
 
 }

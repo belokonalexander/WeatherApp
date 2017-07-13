@@ -11,7 +11,7 @@ public class LogUtils {
     public static final String common = "COMMON";
 
     public static void write(Object msg){
-        Log.d(common, "-> " + msg);
+        Log.e(common, "-> " + msg);
     }
 
 }

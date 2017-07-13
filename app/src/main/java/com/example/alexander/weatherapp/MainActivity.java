@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
 
         if(savedInstanceState==null) {
-            onDrawerItemClick(R.id.settings);
+            onDrawerItemClick(R.id.weather);
         } else {
             navigation.setSelection(savedInstanceState.getInt(NAVIGATE_POSITION), false);
         }

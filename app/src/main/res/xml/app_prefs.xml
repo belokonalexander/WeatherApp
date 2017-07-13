@@ -1,0 +1,26 @@
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pr_cat_common_prefs"
+        android:layout="@layout/category_layout"
+        >
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="_auto_refresh"
+            android:title="@string/pr_auto_refresh"
+            android:defaultValue="true"
+            />
+
+        <com.example.alexander.weatherapp.prefs.uiprefs.time.TimePreference
+            android:key="_update_interval"
+            android:title="@string/pr_refresh_interval"
+            android:dependency = "_auto_refresh"
+            style="@style/AppTheme.DialogPreference"
+           />
+
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>
