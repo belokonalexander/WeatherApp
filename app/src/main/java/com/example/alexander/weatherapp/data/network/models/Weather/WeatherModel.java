@@ -15,7 +15,7 @@ public class WeatherModel {
     @Expose
     Coord coord;
 
-    @SerializedName("weatherById")
+    @SerializedName("weather")
     @Expose
     List<Weather> weather = null;
 
@@ -62,7 +62,7 @@ public class WeatherModel {
     @Override
     public String toString() {
         return "WeatherModel{" +
-                "main=" + main +
+                "main=" + weather +
                 '}';
     }
 

@@ -1,5 +1,6 @@
 package com.example.alexander.weatherapp.presentation.weather;
 
+import com.example.alexander.weatherapp.LogUtils;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
@@ -18,12 +19,15 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
     private WeatherInteractor weatherInteractor;
 
+    private CityWeather cachedCityWeatherModel;
+
     public WeatherPresenterImpl(WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
 
     @Override
     public void handleSuccessGetWeather(CityWeather weather) {
+        cachedCityWeatherModel = weather;
         view.showWeather(weather);
         view.finishProgress();
     }
@@ -31,11 +35,13 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     @Override
     public void handleFailureGetWeather(Throwable throwable) {
         view.onError(throwable);
+        LogUtils.write(" ---> error " + throwable);
         view.finishProgress();
     }
 
     @Override
     public void getWeather() {
+        view.startProgress();
         weatherInteractor.getWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -45,6 +51,13 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     @Override
     public void bindView(WeatherView weatherView) {
         this.view = weatherView;
+
+        //отображение кешированных данных
+        if(cachedCityWeatherModel!=null){
+            view.showWeather(cachedCityWeatherModel);
+        } else {
+            getWeather();
+        }
     }
 
     @Override

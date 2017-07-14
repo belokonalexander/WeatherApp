@@ -21,9 +21,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Alexander on 13.07.2017.
  */
 
+/**
+ * генерирует с помощью retrofit'а необходимый экземпляр API,
+ */
 public class NetworkService {
-
-    private static Interceptor networkConnectInterceptor;
 
     public static <T> T getService( Context context, Class<T> service){
 

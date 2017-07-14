@@ -9,10 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/weather_text"
-            android:text="something"
-            android:gravity="center_horizontal"
+        <com.example.alexander.weatherapp.views.Layouts.WeatherWidget
+            android:id="@+id/weather_widget"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

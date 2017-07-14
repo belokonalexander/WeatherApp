@@ -28,6 +28,16 @@
 
     <string name="connection_error">Connection error. Please check your internet connection</string>
     <string name="unknown_error">Unknown error. Try to repeat operation</string>
+    <string name="temperature">Temperature</string>
 
+    <string-array name="fahrenheit_countries">
+        <item>US</item>
+    </string-array>
+
+    <string name="pressure">mmHg</string>
+    <string name="fahrenheit" translatable="false">°F</string>
+    <string name="celsius" translatable="false">°C</string>
+
+    <string name="moscow">Moscow</string>
 
 </resources>

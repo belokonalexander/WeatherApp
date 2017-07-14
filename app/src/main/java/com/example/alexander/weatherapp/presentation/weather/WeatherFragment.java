@@ -1,6 +1,5 @@
 package com.example.alexander.weatherapp.presentation.weather;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alexander.weatherapp.MainActivity;
 import com.example.alexander.weatherapp.R;
@@ -19,6 +18,7 @@ import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherView;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
+import com.example.alexander.weatherapp.views.Layouts.WeatherWidget;
 
 import javax.inject.Inject;
 
@@ -38,8 +38,10 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout refreshLayout;
 
-    @BindView(R.id.weather_text)
-    TextView weatherTextView;
+    @BindView(R.id.weather_widget)
+    WeatherWidget weatherWidget;
+
+    Toast toast;
 
     Unbinder unbinder;
 
@@ -50,13 +52,6 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
         super.onCreate(savedInstanceState);
     }
 
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
 
     @Nullable
     @Override
@@ -69,6 +64,7 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         presenter.bindView(this);
+        toast = Toast.makeText(getContext(),null,Toast.LENGTH_LONG);
         ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
         initViewLogic();
 
@@ -100,12 +96,13 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     @Override
     public void onError(Throwable cause) {
         ViewException viewException = new ViewException(getContext(),cause);
-        weatherTextView.setText(viewException.getDetailMessage());
+        toast.setText(viewException.getDetailMessage());
+        toast.show();
     }
 
     @Override
     public void showWeather(CityWeather weatherModel) {
-        weatherTextView.setText(weatherModel.toString());
+        weatherWidget.setModelAndShow(weatherModel);
     }
 
     @Override

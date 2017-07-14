@@ -31,4 +31,41 @@
         <item name="negativeButtonText">@string/dialog_negative</item>
     </style>
 
+    <style name="AppCardView" parent="CardView">
+
+        <item name="cardCornerRadius">1dp</item>
+        <item name="android:clickable">true</item>
+        <item name="contentPaddingLeft">0dp</item>
+        <item name="contentPaddingRight">0dp</item>
+        <item name="contentPaddingTop">0dp</item>
+        <item name="contentPaddingBottom">0dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="cardMaxElevation">1dp</item>
+        <item name="contentPadding">0dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardBackgroundColor">@color/card_item_background</item>
+
+
+    </style>
+
+    <style name="CommonTextView">
+        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textColor">@color/normal_text_color</item>
+    </style>
+
+    <style name="OneLineTextView" parent="CommonTextView">
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingLeft">@dimen/small_padding</item>
+        <item name="android:paddingStart">@dimen/small_padding</item>
+        <item name="android:paddingRight">@dimen/normal_padding</item>
+        <item name="android:paddingEnd">@dimen/normal_padding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="TitleTextView" parent="OneLineTextView">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/title_text_color</item>
+    </style>
+
 </resources>
