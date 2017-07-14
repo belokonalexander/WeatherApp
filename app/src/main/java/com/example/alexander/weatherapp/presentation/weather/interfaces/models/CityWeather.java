@@ -2,11 +2,13 @@ package com.example.alexander.weatherapp.presentation.weather.interfaces.models;
 
 import com.example.alexander.weatherapp.LogUtils;
 
+import java.io.Serializable;
+
 /**
  * Created by Alexander on 13.07.2017.
  */
 
-public class CityWeather {
+public class CityWeather implements Serializable{
 
     public static final int STATE_UNKNOWN = -1;
     public static final int STATE_RAIN = 0;

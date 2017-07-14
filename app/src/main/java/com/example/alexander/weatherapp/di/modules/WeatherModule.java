@@ -7,8 +7,8 @@ import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepositoryImpl;
 import com.example.alexander.weatherapp.di.scopes.WeatherScope;
-import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.WeatherPresenterImpl;
+import com.example.alexander.weatherapp.presentation.weather.interfaces.WeatherPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,11 +21,6 @@ import dagger.Provides;
 public class WeatherModule {
 
 
-    @Provides
-    @WeatherScope
-    WeatherModelToCityWeatherMapper provideMapper(){
-        return new WeatherModelToCityWeatherMapper();
-    }
 
     @Provides
     @WeatherScope

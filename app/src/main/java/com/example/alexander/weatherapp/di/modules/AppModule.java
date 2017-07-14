@@ -1,12 +1,11 @@
 package com.example.alexander.weatherapp.di.modules;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.NetworkService;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.data.network.models.Weather.Weather;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
 
 import javax.inject.Singleton;
@@ -23,8 +22,10 @@ public class AppModule {
 
     private Context appContext;
 
+
     public AppModule(@NonNull Context appContext) {
         this.appContext = appContext;
+
     }
 
     @Provides
@@ -43,6 +44,12 @@ public class AppModule {
     @Singleton
     WeatherApi provideWeatherApi(){
         return NetworkService.getService(appContext, WeatherApi.class);
+    }
+
+
+    @Provides
+    WeatherModelToCityWeatherMapper provideMapper(){
+        return new WeatherModelToCityWeatherMapper();
     }
 
 }
