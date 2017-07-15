@@ -2,7 +2,7 @@ package com.example.alexander.weatherapp.di.modules;
 
 import com.example.alexander.weatherapp.business.settings.SettingsInteractor;
 import com.example.alexander.weatherapp.business.settings.SettingsInteractorImpl;
-import com.example.alexander.weatherapp.data.local.JobWrapper;
+import com.example.alexander.weatherapp.job.JobWrapper;
 import com.example.alexander.weatherapp.di.scopes.SettingsScope;
 import com.example.alexander.weatherapp.presentation.settings.SettingsPresenterImpl;
 import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;

@@ -7,10 +7,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.weatherapp.BuildConfig;
 import com.example.alexander.weatherapp.MainActivity;
 import com.example.alexander.weatherapp.R;
+import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
@@ -66,6 +69,18 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
         toast = Toast.makeText(getContext(),null,Toast.LENGTH_LONG);
         ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
         initViewLogic();
+
+        if(BuildConfig.DEBUG) {
+            weatherWidget.setOnClickListener(v -> {
+                String text = LogUtils.showLogCacheFile(getContext(), 10);
+                TextView logTextView = (TextView) WeatherFragment.this.getView().findViewById(R.id.for_logs);
+                logTextView.setVisibility(View.VISIBLE);
+                logTextView.setText(text);
+                logTextView.setOnClickListener(v1 -> v1.setVisibility(View.GONE));
+            });
+        }
+
+
 
     }
 

@@ -1,5 +1,7 @@
 package com.example.alexander.weatherapp.job;
 
+import android.content.Context;
+
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
@@ -17,10 +19,12 @@ public class WeatherJobCreator implements JobCreator {
     private WeatherModelToCityWeatherMapper mapper;
     private EventedSharedPrefs prefs;
 
+
     public WeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs prefs) {
         this.weatherApi = weatherApi;
         this.mapper = mapper;
         this.prefs = prefs;
+
     }
 
     @Override

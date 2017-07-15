@@ -1,6 +1,6 @@
 package com.example.alexander.weatherapp.business.settings;
 
-import com.example.alexander.weatherapp.data.local.JobWrapper;
+import com.example.alexander.weatherapp.job.JobWrapper;
 
 import io.reactivex.Single;
 

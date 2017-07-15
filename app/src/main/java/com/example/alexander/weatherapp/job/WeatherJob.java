@@ -29,6 +29,7 @@ public class WeatherJob extends Job {
     private EventedSharedPrefs sharedPrefs;
 
     WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs sharedPrefs) {
+
         this.weatherApi = weatherApi;
         this.mapper = mapper;
         this.sharedPrefs = sharedPrefs;
@@ -43,13 +44,13 @@ public class WeatherJob extends Job {
                 .subscribe(new DisposableSingleObserver<CityWeather>() {
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull CityWeather cityWeather) {
-                        LogUtils.write(" Android-job got new data: " + cityWeather);
+                        LogUtils.writeLogCache(getContext(), WeatherJob.this.getClass(), " Android-job got new data: " + cityWeather);
                         sharedPrefs.setWeatherResult(cityWeather);
                     }
 
                     @Override
                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        LogUtils.write("Android-job got error: " + e);
+                        LogUtils.writeLogCache(getContext(), WeatherJob.this.getClass(), "Android-job got error: " + e);
                     }
                 });
 
@@ -59,11 +60,11 @@ public class WeatherJob extends Job {
 
     public static void scheduleJob(int minutes) {
         new JobRequest.Builder(WeatherJob.TAG)
-                .setRequiresCharging(true)                                  //задача выполняется только если телефон включен
+                //.setRequiresCharging(true)                                  //задача выполняется только если телефон включен
                 .setPersisted(true)                                         //задача невоспреимчива к перезагрузке устройства
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)   //задача выполняется при наличии интернет соединения
                 .setUpdateCurrent(true)                                     //переписываю задачу с тем же тэгом
-                .setPeriodic(TimeUnit.MINUTES.toMillis(15),TimeUnit.MINUTES.toMillis(14))
+                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes),TimeUnit.MINUTES.toMillis(14))
                 .build()
                 .schedule();
     }
