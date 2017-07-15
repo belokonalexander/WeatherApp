@@ -57,7 +57,6 @@ public class WeatherWidget extends RelativeLayout {
         TextView updatedAtTextView = (TextView) layout.findViewById(R.id.update_time);
 
         cityTextView.setText(getTranslatableCity(model.getCityId()));
-
         weatherIcon.setImageDrawable(getDrawableByStateCode(model.getWeatherState()));
 
         int press = (int) (model.getPress()*0.750062f);
@@ -71,6 +70,8 @@ public class WeatherWidget extends RelativeLayout {
         temperatureTextView.setText(getLocaleTemp(model.getTemp()));
 
         updatedAtTextView.append(TimeUtils.getFormattedDate(model.getCreatedDate(), true));
+
+
 
         addView(layout);
 

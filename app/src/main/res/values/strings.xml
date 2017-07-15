@@ -44,6 +44,7 @@
     </string-array>
 
     <string name="update_at">Updated</string>
+    <string name="logs_empty">Logs are empty</string>
 
 
 </resources>

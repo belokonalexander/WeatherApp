@@ -101,4 +101,6 @@ public class CityWeather implements Serializable{
         result = 31 * result + (hum != null ? hum.hashCode() : 0);
         return result;
     }
+
+
 }

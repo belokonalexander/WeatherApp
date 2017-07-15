@@ -46,6 +46,8 @@ public class LogUtils {
                     getDateTimeStamp(), logMessageTag, logMessage));
             writer.close();
 
+            LogUtils.write(" LOGS: " + logMessage);
+
         }
         catch (IOException e)
         {
@@ -85,6 +87,8 @@ public class LogUtils {
 
         for(int i = list.size()-1; i >=0 && i>=list.size()-lastLines; i--)
             result.append(list.get(i)).append("\n");
+
+
 
         return result.toString();
     }

@@ -33,20 +33,25 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     @Override
     public void handleSuccessGetWeather(CityWeather weather) {
         cachedCityWeatherModel = weather;
-        view.showWeather(weather);
-        view.finishProgress();
+        if(view!=null) {
+            view.showWeather(weather);
+            view.finishProgress();
+        }
     }
 
     @Override
     public void handleFailureGetWeather(Throwable throwable) {
-        view.onError(throwable);
-        LogUtils.write(" ---> error " + throwable);
-        view.finishProgress();
+        if(view!=null && !(throwable instanceof NullPointerException)) {
+            LogUtils.write(" ---> error " + throwable);
+            view.finishProgress();
+        }
     }
 
     @Override
     public void getWeather() {
-        view.startProgress();
+        if(view!=null) {
+            view.startProgress();
+        }
         weatherInteractor.getWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,14 +66,10 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         if (cachedCityWeatherModel != null) {
                 view.showWeather(cachedCityWeatherModel);
             } else {
-
-
                 if(firstAttach) {
                     updateFromStore();
                 }
-
                 getWeather();
-
             }
 
         firstAttach = false;
@@ -89,7 +90,6 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     }
 
     private void updateFromStore(){
-
         weatherInteractor.getStoredWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

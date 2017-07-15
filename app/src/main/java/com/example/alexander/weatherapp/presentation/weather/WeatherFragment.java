@@ -75,8 +75,14 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
                 String text = LogUtils.showLogCacheFile(getContext(), 10);
                 TextView logTextView = (TextView) WeatherFragment.this.getView().findViewById(R.id.for_logs);
                 logTextView.setVisibility(View.VISIBLE);
-                logTextView.setText(text);
+
+                if(text.length()==0){
+                    logTextView.setText(getResources().getString(R.string.logs_empty));
+                } else {
+                    logTextView.setText(text);
+                }
                 logTextView.setOnClickListener(v1 -> v1.setVisibility(View.GONE));
+
             });
         }
 

@@ -37,15 +37,19 @@ public class WeatherInteractorImpl implements WeatherInteractor {
                 .flatMap(weatherMapper.toCityWeather())
                 .doOnSuccess(weatherModel -> {
                     //задача на периодическое обновление
-                    LogUtils.write("Данные получены: " + weatherModel);
                     sharedPrefs.setWeatherResult(weatherModel);
                     jobWrapper.tryToStartWeatherJob();
                 });
     }
 
+
+
     @Override
     public Single<CityWeather> getStoredWeather() {
-        return Single.fromCallable(() -> sharedPrefs.getWeatherResult());
+        return Single.fromCallable(() -> {
+                    //RxJava 2.x no longer accepts null values. Как лучше маскировать null value?
+                    return sharedPrefs.getWeatherResult();
+                });
     }
 
 

@@ -59,12 +59,13 @@ public class WeatherJob extends Job {
     }
 
     public static void scheduleJob(int minutes) {
+
         new JobRequest.Builder(WeatherJob.TAG)
                 //.setRequiresCharging(true)                                  //задача выполняется только если телефон включен
-                .setPersisted(true)                                         //задача невоспреимчива к перезагрузке устройства
+                .setPersisted(true)                                           //задача невоспреимчива к перезагрузке устройства
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)   //задача выполняется при наличии интернет соединения
                 .setUpdateCurrent(true)                                     //переписываю задачу с тем же тэгом
-                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes),TimeUnit.MINUTES.toMillis(14))
+                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes+5),TimeUnit.MINUTES.toMillis(5)) //чтобы выполнение задачи было отложенным
                 .build()
                 .schedule();
     }

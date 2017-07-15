@@ -35,4 +35,5 @@
 
     <string name="update_weather_job_started">Прогноз будет автоматически обновляться</string>
     <string name="update_at">Обновлено</string>
+    <string name="logs_empty">В логах пусто</string>
 </resources>

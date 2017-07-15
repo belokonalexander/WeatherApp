@@ -41,12 +41,13 @@ public class SettingsPresenterImpl implements SettingsPresenter {
 
     @Override
     public void handleSuccessJobStart(Boolean enabled) {
-        view.jobStateChanged(enabled);
+        if(view!=null)
+            view.jobStateChanged(enabled);
     }
 
     @Override
     public void handleFailureJobStart(Throwable throwable) {
-
-        view.onJobError(throwable);
+        if(view!=null)
+            view.onJobError(throwable);
     }
 }
