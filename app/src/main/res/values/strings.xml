@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">WeatherApp</string>
+    <string name="app_name">Weather</string>
 
 
     <string name="api_key_alias" translatable="false">appid</string>
@@ -43,6 +43,7 @@
         <item>3 hours</item>
     </string-array>
 
+    <string name="update_at">Updated</string>
 
 
 </resources>

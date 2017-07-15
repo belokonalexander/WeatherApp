@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alexander.weatherapp.R;
+import com.example.alexander.weatherapp.Utils.TimeUtils;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 import java.util.Locale;
@@ -36,7 +37,7 @@ public class WeatherWidget extends RelativeLayout {
     float kelwinCoef = 273.15f;
 
     public void setModelAndShow(@Nullable CityWeather model) {
-        if(model!=null && !model.equals(this.model)) {
+        if(model!=null) {
             this.model = model;
             inflateContent();
         }
@@ -53,6 +54,7 @@ public class WeatherWidget extends RelativeLayout {
         TextView temperatureTextView = (TextView) layout.findViewById(R.id.temperature);
         TextView pressureTextView = (TextView) layout.findViewById(R.id.pressure);
         TextView humidityTextView = (TextView) layout.findViewById(R.id.humidity);
+        TextView updatedAtTextView = (TextView) layout.findViewById(R.id.update_time);
 
         cityTextView.setText(getTranslatableCity(model.getCityId()));
 
@@ -68,6 +70,7 @@ public class WeatherWidget extends RelativeLayout {
         //В зависимости от региона (США или др, показывает время в кельвинах или цельсиях)
         temperatureTextView.setText(getLocaleTemp(model.getTemp()));
 
+        updatedAtTextView.append(TimeUtils.getFormattedDate(model.getCreatedDate(), true));
 
         addView(layout);
 

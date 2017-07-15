@@ -31,7 +31,6 @@ public class SharedPrefs {
 
     public void setWeatherResult(CityWeather cityWeather){
         SharedPreferences.Editor editor = commonStore.edit();
-        GsonBuilder builder = new GsonBuilder();
         editor.putString(_LAST_WEATHER_RESULT, new GsonBuilder().create().toJson(cityWeather));
         editor.apply();
     }

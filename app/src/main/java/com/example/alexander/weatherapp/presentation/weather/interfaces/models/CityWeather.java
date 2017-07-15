@@ -1,6 +1,7 @@
 package com.example.alexander.weatherapp.presentation.weather.interfaces.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Alexander on 13.07.2017.
@@ -22,6 +23,7 @@ public class CityWeather implements Serializable{
     private Integer press;
     private Integer hum;
     private Integer weatherState;
+    private Date createdDate;
 
     public CityWeather(Integer cityId, Integer stateCode, String cityName, Double temp, Integer press, Integer hum) {
         this.cityName = cityName;
@@ -30,6 +32,7 @@ public class CityWeather implements Serializable{
         this.hum = hum;
         this.cityId = cityId;
         this.weatherState = stateCode;
+        createdDate = new Date();
     }
 
 
@@ -59,7 +62,12 @@ public class CityWeather implements Serializable{
                 ", press=" + press +
                 ", hum=" + hum +
                 ", weatherState=" + weatherState +
+                ", createdDate=" + createdDate +
                 '}';
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
     public Integer getCityId() {

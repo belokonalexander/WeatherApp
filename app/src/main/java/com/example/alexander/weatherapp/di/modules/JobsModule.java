@@ -7,6 +7,7 @@ import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeath
 import com.example.alexander.weatherapp.data.local.JobWrapper;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.job.WeatherJobCreator;
+import com.example.alexander.weatherapp.prefs.EventedSharedPrefs;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
 
 import dagger.Module;
@@ -25,7 +26,7 @@ public class JobsModule {
     }
 
     @Provides
-    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefs prefs){
+    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs prefs){
         return new WeatherJobCreator(weatherApi,mapper,prefs);
     }
 

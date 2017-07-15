@@ -4,10 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
-import com.example.alexander.weatherapp.LogUtils;
+import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.prefs.SharedPrefs;
+import com.example.alexander.weatherapp.prefs.EventedSharedPrefs;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 
 import java.util.concurrent.TimeUnit;
@@ -26,9 +26,9 @@ public class WeatherJob extends Job {
 
     private WeatherApi weatherApi;
     private WeatherModelToCityWeatherMapper mapper;
-    private SharedPrefs sharedPrefs;
+    private EventedSharedPrefs sharedPrefs;
 
-    public WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefs sharedPrefs) {
+    WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs sharedPrefs) {
         this.weatherApi = weatherApi;
         this.mapper = mapper;
         this.sharedPrefs = sharedPrefs;

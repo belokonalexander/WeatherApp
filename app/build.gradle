@@ -87,4 +87,7 @@ dependencies {
     //for job schedule
     compile 'com.evernote:android-job:1.1.11'
 
+    //eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
+
 }

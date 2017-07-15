@@ -1,7 +1,7 @@
 package com.example.alexander.weatherapp.data.local;
 
 import com.evernote.android.job.JobManager;
-import com.example.alexander.weatherapp.LogUtils;
+import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.job.WeatherJob;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
 

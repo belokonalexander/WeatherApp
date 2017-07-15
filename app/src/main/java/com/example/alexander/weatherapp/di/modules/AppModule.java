@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.NetworkService;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
+import com.example.alexander.weatherapp.prefs.EventedSharedPrefs;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
 
 import javax.inject.Singleton;
@@ -38,6 +39,12 @@ public class AppModule {
     @Singleton
     SharedPrefs provideSharedPrefs(){
         return new SharedPrefs(appContext);
+    }
+
+    @Provides
+    @Singleton
+    EventedSharedPrefs provideEventedSharedPrefs(){
+        return new EventedSharedPrefs(appContext);
     }
 
     @Provides

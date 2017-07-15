@@ -1,6 +1,6 @@
 package com.example.alexander.weatherapp.business.weather;
 
-import com.example.alexander.weatherapp.LogUtils;
+import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.local.JobWrapper;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;

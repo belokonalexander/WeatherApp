@@ -8,7 +8,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.alexander.weatherapp.LogUtils;
+import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.MainActivity;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;

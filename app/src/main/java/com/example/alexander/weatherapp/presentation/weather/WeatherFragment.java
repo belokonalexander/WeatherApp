@@ -30,7 +30,7 @@ import butterknife.Unbinder;
  * Created by Alexander on 07.07.2017.
  */
 
-public class WeatherFragment extends Fragment implements WeatherView, NavigationFragment {
+public class WeatherFragment extends Fragment implements WeatherView, NavigationFragment{
 
     @Inject
     WeatherPresenter presenter;
@@ -41,9 +41,8 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     @BindView(R.id.weather_widget)
     WeatherWidget weatherWidget;
 
-    Toast toast;
-
-    Unbinder unbinder;
+    private Toast toast;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,7 +89,6 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override
@@ -114,6 +112,7 @@ public class WeatherFragment extends Fragment implements WeatherView, Navigation
     public void finishProgress() {
         refreshLayout.setRefreshing(false);
     }
+
 
 
 }
