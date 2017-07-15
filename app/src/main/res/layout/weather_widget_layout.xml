@@ -19,7 +19,7 @@
             android:id="@+id/relative_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/normal_padding"
+            android:padding="@dimen/small_padding"
             >
 
 
@@ -27,7 +27,11 @@
                 android:id="@+id/weather_icon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-
+                android:layout_marginLeft="@dimen/normal_padding"
+                android:layout_marginStart="@dimen/normal_padding"
+                android:layout_marginEnd="@dimen/normal_padding"
+                android:layout_marginRight="@dimen/normal_padding"
+                android:tint="@color/alter_accent_native"
                 />
 
 
@@ -42,23 +46,26 @@
                 android:paddingStart="@dimen/normal_padding"
                 android:paddingEnd="@dimen/normal_padding"
                 android:paddingRight="@dimen/normal_padding"
+
                 >
 
                 <TextView
                     android:id="@+id/city"
                     android:textSize="@dimen/h_text_size"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+
                     style="@style/OneLineTextView"
+
+
                     />
 
                 <TextView
                     android:id="@+id/temperature"
                     android:textSize="@dimen/h_text_size"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
 
-                    android:paddingTop="@dimen/small_padding"
                     style="@style/OneLineTextView"
                     />
 
@@ -73,7 +80,7 @@
                 android:layout_toRightOf="@id/weather_icon"
                 android:layout_toEndOf="@id/weather_icon"
                 android:layout_below="@id/header"
-                android:paddingTop="@dimen/small_padding"
+
                 android:paddingLeft="@dimen/normal_padding"
                 android:paddingStart="@dimen/normal_padding"
                 >

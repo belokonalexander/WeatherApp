@@ -3,9 +3,9 @@
     <color name="colorPrimary">#193f6e</color>
     <color name="colorPrimaryDark">#0f223c</color>
     <color name="colorAccent">#3c6ca6</color>
-
+    <color name="alter_accent">#f56b39</color>
     <color name="normal_text_color_light">#ffffff</color>
-
+    <color name="alter_accent_native">#5290dc</color>
 
 
     <color name="normal_text_color">#565656</color>
@@ -16,7 +16,7 @@
 
 
 
-    <color name="card_item_background">#94eaeaea</color>
+    <color name="card_item_background">#94f7f7f7</color>
 
     <color name="material_drawer_background">#2f5889</color>
     <color name="material_drawer_primary_text">#ffffff</color>

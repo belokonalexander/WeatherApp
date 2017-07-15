@@ -39,6 +39,10 @@ public class WeatherJob extends Job {
     @Override
     protected Result onRunJob(Params params) {
 
+        //синхронизирую выполняение rx элемента с результатом функции
+        //результат необходимо получать в зависимости от выполнения цепочки
+        final boolean[] flag = {false};
+
         Single.fromObservable(weatherApi.weatherByName("Moscow"))
                 .flatMap(mapper.toCityWeather())
                 .subscribe(new DisposableSingleObserver<CityWeather>() {
@@ -46,26 +50,28 @@ public class WeatherJob extends Job {
                     public void onSuccess(@io.reactivex.annotations.NonNull CityWeather cityWeather) {
                         LogUtils.writeLogCache(getContext(), WeatherJob.this.getClass(), " Android-job got new data: " + cityWeather);
                         sharedPrefs.setWeatherResult(cityWeather);
+                        flag[0] = true;
                     }
 
                     @Override
                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                         LogUtils.writeLogCache(getContext(), WeatherJob.this.getClass(), "Android-job got error: " + e);
+                        flag[0] = false;
                     }
                 });
 
-
-        return Result.SUCCESS;
+        LogUtils.writeLogCache(getContext(), "RESULT", "Android-job result: " + flag[0]);
+        return flag[0]?Result.SUCCESS:Result.FAILURE;
     }
 
     public static void scheduleJob(int minutes) {
 
         new JobRequest.Builder(WeatherJob.TAG)
-                //.setRequiresCharging(true)                                  //задача выполняется только если телефон включен
-                .setPersisted(true)                                           //задача невоспреимчива к перезагрузке устройства
+                //.setRequiresCharging(true)
+                .setPersisted(true)                                          //задача невоспреимчива к перезагрузке устройства
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)   //задача выполняется при наличии интернет соединения
                 .setUpdateCurrent(true)                                     //переписываю задачу с тем же тэгом
-                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes+5),TimeUnit.MINUTES.toMillis(5)) //чтобы выполнение задачи было отложенным
+                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes+5),TimeUnit.MINUTES.toMillis(5))  //чтобы выполнение задачи было отложенным
                 .build()
                 .schedule();
     }
