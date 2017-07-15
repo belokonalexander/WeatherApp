@@ -44,10 +44,13 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
     @Override
     public void handleFailureGetWeather(Throwable throwable) {
-        if(view!=null && !(throwable instanceof NullPointerException)) {
-            LogUtils.write(" ---> error " + throwable);
+        if(view!=null) {
+            if(!(throwable instanceof NullPointerException))
+                view.onError(throwable);
             view.finishProgress();
         }
+
+
     }
 
     @Override
