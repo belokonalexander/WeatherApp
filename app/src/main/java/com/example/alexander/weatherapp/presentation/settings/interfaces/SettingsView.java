@@ -5,4 +5,8 @@ package com.example.alexander.weatherapp.presentation.settings.interfaces;
  */
 
 public interface SettingsView {
+
+    void jobStateChanged(boolean enabled);
+    void onJobError(Throwable cause);
+
 }

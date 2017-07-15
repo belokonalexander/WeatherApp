@@ -16,5 +16,6 @@ public interface WeatherInteractor {
      */
     Single<CityWeather> getWeather();
 
+    Single<CityWeather> getStoredWeather();
 
 }

@@ -24,4 +24,13 @@
 
     <string name="moscow">Москва</string>
 
+    <string-array name="update_intervals">
+        <item>15 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>3 часа</item>
+    </string-array>
+
+    <string name="update_weather_job_started">Прогноз будет автоматически обновляться</string>
+
 </resources>

@@ -10,15 +10,17 @@
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="_auto_refresh"
             android:title="@string/pr_auto_refresh"
-            android:defaultValue="true"
+            android:defaultValue="false"
             />
 
-        <com.example.alexander.weatherapp.prefs.uiprefs.time.TimePreference
+        <android.support.v7.preference.ListPreference
             android:key="_update_interval"
             android:title="@string/pr_refresh_interval"
+            android:entries="@array/update_intervals"
+            android:entryValues="@array/update_intervals_values"
+            android:summary="%s"
             android:dependency = "_auto_refresh"
-            style="@style/AppTheme.DialogPreference"
-           />
+        />
 
 
     </android.support.v7.preference.PreferenceCategory>

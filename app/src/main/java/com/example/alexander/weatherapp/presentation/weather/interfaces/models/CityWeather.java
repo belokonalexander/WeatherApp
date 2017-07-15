@@ -1,7 +1,5 @@
 package com.example.alexander.weatherapp.presentation.weather.interfaces.models;
 
-import com.example.alexander.weatherapp.LogUtils;
-
 import java.io.Serializable;
 
 /**
@@ -32,8 +30,6 @@ public class CityWeather implements Serializable{
         this.hum = hum;
         this.cityId = cityId;
         this.weatherState = stateCode;
-
-        LogUtils.write(" CREATED: " + this);
     }
 
 
@@ -41,7 +37,6 @@ public class CityWeather implements Serializable{
     public String getCityName() {
         return cityName;
     }
-
 
     public Double getTemp() {
         return temp;

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="weather_api">
+        <!-- Api url с путем -->
+        <item >http://api.openweathermap.org/data/2.5/</item>
+        <!-- Тестовый ключ -->
+        <item>2080026a4d30007e744e576b22d43c06</item>
+    </string-array>
+
+    <string-array name="fahrenheit_countries">
+        <item>US</item>
+    </string-array>
+
+    <string name="update_value">15</string>
+
+    <string-array name="update_intervals_values" >
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+    </string-array>
+
+</resources>

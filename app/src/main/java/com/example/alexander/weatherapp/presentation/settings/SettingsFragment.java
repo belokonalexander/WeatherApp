@@ -3,22 +3,20 @@ package com.example.alexander.weatherapp.presentation.settings;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.preference.Preference;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.alexander.weatherapp.LogUtils;
 import com.example.alexander.weatherapp.MainActivity;
+import com.example.alexander.weatherapp.R;
+import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.di.modules.SettingsModule;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
-import com.example.alexander.weatherapp.prefs.uiprefs.time.TimePreference;
-import com.example.alexander.weatherapp.prefs.uiprefs.time.TimePreferenceDialogFragmentCompat;
 import com.example.alexander.weatherapp.presentation.NavigationFragment;
 import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;
 import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsView;
-import com.example.alexander.weatherapp.R;
-import com.example.alexander.weatherapp.WeatherApplication;
 
 import javax.inject.Inject;
 
@@ -37,7 +35,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Inject
     SharedPrefs prefs;
 
-    Unbinder unbinder;
+    private Toast toast;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +58,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         presenter.bindView(this);
+        toast = Toast.makeText(getContext(),null,Toast.LENGTH_LONG);
         ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
     }
 
@@ -79,8 +79,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(SharedPrefs._AUTO_REFRESH)){
-            LogUtils.write("ПЕРЕКЛЮЧАТЕЛЬ УВЕДОМЛЕНИЙ");
+            //устанавливаю дефолтное значение для элемента
+            ListPreference dataPref = (ListPreference) findPreference(SharedPrefs._UPDATE_INTERVAL);
+            if(dataPref.getValue() == null){
+                dataPref.setValueIndex(0); //set to index of your deafult value
+            }
+
+            presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH,false));
+
+        } else if(key.equals(SharedPrefs._UPDATE_INTERVAL)) {
+            presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH,false));
         }
+
+
     }
 
     @Override
@@ -99,27 +110,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
 
     @Override
-    public void onDisplayPreferenceDialog(Preference preference) {
-        // Try if the preference is one of our custom Preferences
-        DialogFragment dialogFragment = null;
-        if (preference instanceof TimePreference) {
-            // Create a new instance of TimePreferenceDialogFragment with the key of the related
-            // Preference
-            dialogFragment = TimePreferenceDialogFragmentCompat.newInstance(preference.getKey());
-            dialogFragment.setTargetFragment(this, 0);
-            dialogFragment.show(this.getFragmentManager(), "preference_dialog");
-        }
-
-
-        /*if (dialogFragment != null) {
-            // The dialog was created (it was one of our custom Preferences), show the dialog for it
-
-        } else {
-            // Dialog creation could not be handled here. Try with the super method.
-            super.onDisplayPreferenceDialog(preference);
-        }*/
+    public void jobStateChanged(boolean enabled) {
+        //
     }
 
-
-
+    @Override
+    public void onJobError(Throwable cause) {
+        LogUtils.write("Error start job:" + cause);
+    }
 }

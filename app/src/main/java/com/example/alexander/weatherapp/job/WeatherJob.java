@@ -57,7 +57,7 @@ public class WeatherJob extends Job {
         return Result.SUCCESS;
     }
 
-    public static void scheduleJob() {
+    public static void scheduleJob(int minutes) {
         new JobRequest.Builder(WeatherJob.TAG)
                 .setRequiresCharging(true)                                  //задача выполняется только если телефон включен
                 .setPersisted(true)                                         //задача невоспреимчива к перезагрузке устройства

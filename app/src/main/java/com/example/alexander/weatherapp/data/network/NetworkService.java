@@ -93,10 +93,15 @@ public class NetworkService {
 
             //проверяем, есть ли интернет соединение
             if(!NetworkUtils.isNetworkAvailable(context)){
-                //если нет соединения, то берем последнюю запись из кэша по сигнатуре и подменяем запрос
                 throw new UnknownHostException("Unable to resolve host \""+request.url().host()+"\"");
             }
 
+            /*try {
+                (FOR TESTS)
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
             //выполняю реальный запрос к api
             Response response = null;
             response = chain.proceed(request);

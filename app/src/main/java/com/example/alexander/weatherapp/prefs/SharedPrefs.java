@@ -46,7 +46,13 @@ public class SharedPrefs {
             return null;
     }
 
-    public SharedPreferences getCommonSettings() {
-        return commonSettings;
+    public boolean getUpdateEnabled(){
+        return commonSettings.getBoolean(_AUTO_REFRESH, false);
     }
+
+    public int getUpdateInterval(){
+        return Integer.parseInt(commonSettings.getString(_UPDATE_INTERVAL, "15"));
+    }
+
+
 }

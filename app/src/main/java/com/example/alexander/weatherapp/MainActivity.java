@@ -2,14 +2,13 @@ package com.example.alexander.weatherapp;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
-
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
@@ -17,9 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-
 import com.example.alexander.weatherapp.presentation.about.AboutFragment;
-import com.example.alexander.weatherapp.presentation.NavigationFragment;
 import com.example.alexander.weatherapp.presentation.settings.SettingsFragment;
 import com.example.alexander.weatherapp.presentation.weather.WeatherFragment;
 import com.mikepenz.materialdrawer.Drawer;
@@ -106,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
      *  1) иконка навигации
      */
     private void initToolbar(){
-        Drawable toolbarNavigationIcon = getBaseContext().getResources().getDrawable(R.drawable.ic_menu_black_24dp);
+        Drawable toolbarNavigationIcon = VectorDrawableCompat.create(getResources(),R.drawable.ic_menu_black_24dp,null);
         toolbarNavigationIcon.setColorFilter(ContextCompat.getColor(getBaseContext(),R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
         toolbar.setNavigationIcon(toolbarNavigationIcon);
         toolbar.setContentInsetStartWithNavigation(0);

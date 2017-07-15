@@ -16,10 +16,10 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherPresenterImpl implements WeatherPresenter {
 
     private WeatherView view;
-
     private WeatherInteractor weatherInteractor;
-
     private CityWeather cachedCityWeatherModel;
+
+    private boolean firstAttach = true;
 
     public WeatherPresenterImpl(WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
@@ -53,11 +53,23 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         this.view = weatherView;
 
         //отображение кешированных данных
-        if(cachedCityWeatherModel!=null){
-            view.showWeather(cachedCityWeatherModel);
-        } else {
-            getWeather();
-        }
+        if (cachedCityWeatherModel != null) {
+                view.showWeather(cachedCityWeatherModel);
+            } else {
+
+
+                if(firstAttach) {
+                    weatherInteractor.getStoredWeather()
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather);
+                }
+
+                getWeather();
+
+            }
+
+        firstAttach = false;
     }
 
     @Override

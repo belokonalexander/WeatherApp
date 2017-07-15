@@ -3,6 +3,7 @@ package com.example.alexander.weatherapp.views.Layouts;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -34,8 +35,8 @@ public class WeatherWidget extends RelativeLayout {
     CityWeather model;
     float kelwinCoef = 273.15f;
 
-    public void setModelAndShow(CityWeather model) {
-        if(!model.equals(this.model)) {
+    public void setModelAndShow(@Nullable CityWeather model) {
+        if(model!=null && !model.equals(this.model)) {
             this.model = model;
             inflateContent();
         }
@@ -78,22 +79,22 @@ public class WeatherWidget extends RelativeLayout {
 
         switch (weatherState){
             case STATE_RAIN:
-                drawable = getResources().getDrawable(R.drawable.ic_rain);
+                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_rain,null);
                 break;
             case STATE_CLEAR:
-                drawable = getResources().getDrawable(R.drawable.ic_cloudy);
+                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_cloudy,null);
                 break;
             case STATE_CLOUD:
-                drawable = getResources().getDrawable(R.drawable.ic_cloudy);
+                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_cloudy,null);
                 break;
             case STATE_THUNDERSTORM:
-                drawable = getResources().getDrawable(R.drawable.ic_storm);
+                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_storm,null);
                 break;
             case STATE_UNKNOWN:
-                drawable = getResources().getDrawable(R.drawable.ic_cloudy);
+                drawable =VectorDrawableCompat.create(getResources(),R.drawable.ic_cloudy,null);
                 break;
             case STATE_SNOW:
-                drawable = getResources().getDrawable(R.drawable.ic_snow);
+                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_snow,null);
                 break;
         }
 

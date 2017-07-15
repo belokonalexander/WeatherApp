@@ -9,4 +9,8 @@ public interface SettingsPresenter {
     void bindView(SettingsView settingsView);
     void unbindView();
 
+    void handleSuccessJobStart(Boolean result);
+    void handleFailureJobStart(Throwable throwable);
+
+    void updateWeatherJob(boolean enabled);
 }

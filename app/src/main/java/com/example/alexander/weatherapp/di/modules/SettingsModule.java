@@ -1,5 +1,8 @@
 package com.example.alexander.weatherapp.di.modules;
 
+import com.example.alexander.weatherapp.business.settings.SettingsInteractor;
+import com.example.alexander.weatherapp.business.settings.SettingsInteractorImpl;
+import com.example.alexander.weatherapp.data.local.JobWrapper;
 import com.example.alexander.weatherapp.di.scopes.SettingsScope;
 import com.example.alexander.weatherapp.presentation.settings.SettingsPresenterImpl;
 import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;
@@ -16,8 +19,15 @@ public class SettingsModule {
 
     @Provides
     @SettingsScope
-    SettingsPresenter provideSettingsPresenter(){
-        return new SettingsPresenterImpl();
+    SettingsPresenter provideSettingsPresenter(SettingsInteractor interactor){
+        return new SettingsPresenterImpl(interactor);
     }
+
+    @Provides
+    @SettingsScope
+    SettingsInteractor provideSettingsInteractor(JobWrapper jobWrapper){
+        return new SettingsInteractorImpl(jobWrapper);
+    }
+
 
 }

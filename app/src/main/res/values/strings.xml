@@ -3,12 +3,7 @@
 
 
     <string name="api_key_alias" translatable="false">appid</string>
-    <string-array name="weather_api">
-        <!-- Api url с путем -->
-        <item>http://api.openweathermap.org/data/2.5/</item>
-        <!-- Тестовый ключ -->
-        <item>2080026a4d30007e744e576b22d43c06</item>
-    </string-array>
+
 
 
     <string name="weather">Weather</string>
@@ -30,14 +25,24 @@
     <string name="unknown_error">Unknown error. Try to repeat operation</string>
     <string name="temperature">Temperature</string>
 
-    <string-array name="fahrenheit_countries">
-        <item>US</item>
-    </string-array>
+
 
     <string name="pressure">mmHg</string>
     <string name="fahrenheit" translatable="false">°F</string>
     <string name="celsius" translatable="false">°C</string>
 
+
     <string name="moscow">Moscow</string>
+    <string name="update_weather_job_started">The forecast will be automatically updated</string>
+
+
+    <string-array name="update_intervals">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+    </string-array>
+
+
 
 </resources>

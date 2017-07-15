@@ -35,6 +35,10 @@ public class WeatherApplication extends Application {
         appComponent.inject(this);
         stethoInit(true);
         jobsInit();
+
+
+
+
     }
 
 
