@@ -1,9 +1,8 @@
 package com.example.alexander.weatherapp.business.weather;
 
-import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
-import com.example.alexander.weatherapp.job.JobWrapper;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
+import com.example.alexander.weatherapp.job.JobWrapper;
 import com.example.alexander.weatherapp.prefs.SharedPrefs;
 import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
 

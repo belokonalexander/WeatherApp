@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -25,6 +26,8 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     private CityWeather cachedCityWeatherModel;
 
     private boolean firstAttach = true;
+
+    private Disposable getWeatherDisposable;
 
     public WeatherPresenterImpl(WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
@@ -52,25 +55,31 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         if(view!=null) {
             view.startProgress();
         }
-        weatherInteractor.getWeather()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather);
+
+        //не повторяю одну и ту же задачу по загрузке данных
+        if(getWeatherDisposable==null || getWeatherDisposable.isDisposed()) {
+            getWeatherDisposable = weatherInteractor.getWeather()
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather);
+        }
     }
 
     @Override
     public void bindView(WeatherView weatherView) {
         this.view = weatherView;
         EventBus.getDefault().register(this);
+
         //отображение кешированных данных
         if (cachedCityWeatherModel != null) {
                 view.showWeather(cachedCityWeatherModel);
-            } else {
-                if(firstAttach) {
-                    updateFromStore();
-                }
-                getWeather();
+        } else {
+
+            if(firstAttach) {
+                updateFromStore();
             }
+                getWeather();
+        }
 
         firstAttach = false;
     }
