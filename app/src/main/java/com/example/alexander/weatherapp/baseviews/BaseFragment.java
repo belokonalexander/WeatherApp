@@ -49,7 +49,7 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
         if (getArguments() != null && getArguments().getBoolean(MainActivity.NAVIGATION_BACKPRESS)) {
             navigationManager.setNavigationDrawerState(false);
             toolbarNavigationIcon = null;
-            //TODO
+            //TODO for backpress
         } else {
             toolbarNavigationIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu_black_24dp, null);
             navigationManager.setNavigationDrawerState(true);

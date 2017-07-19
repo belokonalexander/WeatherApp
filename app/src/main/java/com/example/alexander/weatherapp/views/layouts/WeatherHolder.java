@@ -17,6 +17,9 @@ import com.example.alexander.weatherapp.utils.TimeUtils;
 
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_CLEAR;
 import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_CLOUD;
 import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_RAIN;
@@ -32,26 +35,45 @@ public class WeatherHolder extends RelativeLayout {
 
     private CityWeather model;
 
+    @BindView(R.id.weather_icon)
+    ImageView weatherIcon;
+
+    @BindView(R.id.city)
+    TextView cityTextView;
+
+    @BindView(R.id.temperature)
+    TextView temperatureTextView;
+
+    @BindView(R.id.pressure)
+    TextView pressureTextView;
+
+    @BindView(R.id.humidity)
+    TextView humidityTextView;
+
+    @BindView(R.id.update_time)
+    TextView updatedAtTextView;
+
+    private RelativeLayout layout;
 
     public void setModelAndShow(@Nullable CityWeather model) {
+
+        if (layout == null)
+            inflateView();
+
         if (!CityWeather.isNullable(model)) {
             this.model = model;
             inflateContent();
         }
     }
 
-    private void inflateContent() {
-        clearView();
-
+    private void inflateView() {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout layout = (RelativeLayout) layoutInflater.inflate(R.layout.weather_widget_layout, null);
+        layout = (RelativeLayout) layoutInflater.inflate(R.layout.weather_widget_layout, null);
+        ButterKnife.bind(this, layout);
+        addView(layout);
+    }
 
-        ImageView weatherIcon = (ImageView) layout.findViewById(R.id.weather_icon);
-        TextView cityTextView = (TextView) layout.findViewById(R.id.city);
-        TextView temperatureTextView = (TextView) layout.findViewById(R.id.temperature);
-        TextView pressureTextView = (TextView) layout.findViewById(R.id.pressure);
-        TextView humidityTextView = (TextView) layout.findViewById(R.id.humidity);
-        TextView updatedAtTextView = (TextView) layout.findViewById(R.id.update_time);
+    private void inflateContent() {
 
         cityTextView.setText(getTranslatableCity(model.getCityId()));
         weatherIcon.setImageDrawable(getDrawableByStateCode(model.getWeatherState()));
@@ -65,13 +87,11 @@ public class WeatherHolder extends RelativeLayout {
         String hum = String.valueOf(model.getHum()) + "%";
         humidityTextView.setText(hum);
 
-        //В зависимости от региона (США или др, показывает время в кельвинах или цельсиях)
+        //depends of regions will show different units
         temperatureTextView.setText(getLocaleTemp(model.getTemp()));
 
-        updatedAtTextView.append(TimeUtils.getFormattedDate(model.getCreatedDate(), true));
+        updatedAtTextView.setText(getResources().getString(R.string.update_at) + " " + TimeUtils.getFormattedDate(model.getCreatedDate(), true));
 
-
-        addView(layout);
 
     }
 
@@ -127,11 +147,6 @@ public class WeatherHolder extends RelativeLayout {
         return tresult;
     }
 
-    private void clearView() {
-        if (getChildCount() > 0) {
-            removeAllViews();
-        }
-    }
 
     public WeatherHolder(Context context) {
         super(context);
@@ -146,10 +161,8 @@ public class WeatherHolder extends RelativeLayout {
     }
 
 
-    public String getTranslatableCity(Integer cityId) {
-        //TODO локализация города, пока только москва
-
-
+    private String getTranslatableCity(Integer cityId) {
+        //localization for cities
         return getResources().getString(R.string.moscow);
     }
 }

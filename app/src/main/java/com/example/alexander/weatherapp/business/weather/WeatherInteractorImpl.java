@@ -31,7 +31,6 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Override
     public Observable<CityWeather> getWeather(boolean fresh) {
-        //TODO получить ID текущего выбранного города
 
         List<Single<CityWeather>> tasks = new ArrayList<>();
 
