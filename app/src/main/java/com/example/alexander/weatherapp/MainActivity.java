@@ -1,17 +1,14 @@
 package com.example.alexander.weatherapp;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,39 +25,25 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-/**
- *  Главное активити - отвечает за навигацию и реализацию паттерна Navigation Drawer
- *  Не стал делать в стиле MVP потому что:
- *  1) Здесь есть только навигация
- *  2) Не вижу смысла бросать событие по клику на пункте меню в презентер, а оттуда возвращать то же самое во вью -
- *     проще сразу обработать все во вью без посредников
- *  3) Все процессы будут происходить во фрагментах, где уже и будет презентер
- */
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationManager {
 
     public static final String NAVIGATE_POSITION = "NAVIGATE_POSITION_ID";
+    public static final String NAVIGATION_BACKPRESS = "NAVIGATION_BACKPRESS";
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    //меню навигации
     private Drawer navigation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         navigation = new DrawerBuilder().withActivity(this)
-                        .withToolbar(toolbar)
+
                         .withHeader(R.layout.navigation_drawable_header)
                         .withHeaderHeight(DimenHolder.fromDp(240))
                         .withTranslucentStatusBar(true)
@@ -72,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
 
-        initToolbar();
-
         if(savedInstanceState==null) {
             onDrawerItemClick(R.id.weather);
         } else {
@@ -83,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * получение пунктов меню из MENU эелментов
+     * gets menu items from menu.xml
      * @return
      */
     private List<IDrawerItem> customInflateMenu() {
@@ -98,20 +79,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * настраиваю тулбар:
-     *  1) иконка навигации
-     */
-    private void initToolbar(){
-        Drawable toolbarNavigationIcon = VectorDrawableCompat.create(getResources(),R.drawable.ic_menu_black_24dp,null);
-        toolbarNavigationIcon.setColorFilter(ContextCompat.getColor(getBaseContext(),R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
-        toolbar.setNavigationIcon(toolbarNavigationIcon);
-        toolbar.setContentInsetStartWithNavigation(0);
-    }
 
 
     /**
-     * сохраняю позицию выбранного пункта меню
+     * saving current select position
      * @param outState
      */
     @Override
@@ -120,17 +91,10 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(NAVIGATE_POSITION, (int) navigation.getCurrentSelection());
     }
 
-    /**
-     * предоставляю фрагментам доступ к Toolbar'у
-     * @return
-     */
-    public Toolbar getToolbar(){
-        return toolbar;
-    }
 
     /**
-     * обработка клика по элементу меню
-     * @param id - id элемента меню, по которому произведен клик
+     * item click handling
+     * @param id - id of selected item
      */
     private void onDrawerItemClick(@IdRes int id) {
 
@@ -148,12 +112,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
-        //NPE, если забуду описать пункт меню
+        //NPE, if will dummy menu item
         String tag = fragmentClass.getSimpleName();
 
         FragmentManager fm = getSupportFragmentManager();
 
-        //если такой пункт меню открыт в данный момент - игнорирую нажатие
+        //if this item already selected
         if(fm.findFragmentByTag(tag)!=null){
             return;
         }
@@ -164,18 +128,10 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
 
-        //подсвечивается выбранный пункт меню
         navigation.setSelection(id, false);
 
     }
 
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
 
     @Override
     public void onBackPressed(){
@@ -188,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * конвертирую items в menu в IDrawerItem
+     * convert items menu in IDrawerItem
      * @param item
      * @param menu
      */
@@ -207,4 +163,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void showNavigationDrawer() {
+        navigation.openDrawer();
+    }
+
+    @Override
+    public void setNavigationDrawerState(boolean enabled) {
+        if(enabled){
+            navigation.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        } else {
+            navigation.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+    }
+
+    @Override
+    public void openNavigationDrawer() {
+        navigation.openDrawer();
+    }
 }

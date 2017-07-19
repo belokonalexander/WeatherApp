@@ -1,13 +1,11 @@
 package com.example.alexander.weatherapp.data.repositories;
 
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.data.network.models.Weather.WeatherModel;
+import com.example.alexander.weatherapp.data.network.models.weather.WeatherModel;
 
 import io.reactivex.Single;
 
-/**
- * Created by Alexander on 13.07.2017.
- */
+
 
 public class WeatherApiRepositoryImpl implements WeatherApiRepository {
 
@@ -17,14 +15,10 @@ public class WeatherApiRepositoryImpl implements WeatherApiRepository {
         this.weatherApi = weatherApi;
     }
 
-    @Override
-    public Single<WeatherModel> getWeatherByID(String id) {
-        return Single.fromObservable(weatherApi.weatherById(id));
-    }
 
     @Override
     public Single<WeatherModel> getWeatherByName(String name) {
-        return Single.fromObservable(weatherApi.weatherByName(name));
+        return weatherApi.weatherByName(name);
     }
 
 

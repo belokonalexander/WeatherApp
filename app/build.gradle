@@ -20,12 +20,15 @@ android {
         }
     }
 
+
+
+
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.example.alexander.weatherapp"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -81,12 +84,22 @@ dependencies {
 
     //rxjava
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.1'
 
     //for job schedule
     compile 'com.evernote:android-job:1.1.11'
 
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
+
+    //mockito for unit tests
+    testCompile 'org.mockito:mockito-core:2.7.22'
+
+    //moxy
+    compile 'com.arello-mobile:moxy:1.5.3'
+    apt 'com.arello-mobile:moxy-compiler:1.5.3'
+    compile 'com.arello-mobile:moxy-app-compat:1.5.3'
+
+
 
 }

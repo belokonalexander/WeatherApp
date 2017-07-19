@@ -6,17 +6,15 @@ import android.support.annotation.NonNull;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.NetworkService;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.prefs.EventedSharedPrefs;
-import com.example.alexander.weatherapp.prefs.SharedPrefs;
+import com.example.alexander.weatherapp.data.prefs.EventedSharedPrefs;
+import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by Alexander on 08.07.2017.
- */
+
 
 @Module
 public class AppModule {

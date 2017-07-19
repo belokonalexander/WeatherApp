@@ -3,12 +3,10 @@ package com.example.alexander.weatherapp.job;
 import android.content.Context;
 
 import com.evernote.android.job.JobManager;
-import com.example.alexander.weatherapp.Utils.LogUtils;
-import com.example.alexander.weatherapp.prefs.SharedPrefs;
+import com.example.alexander.weatherapp.utils.LogUtils;
+import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 
-/**
- * Created by Alexander on 14.07.2017.
- */
+
 
 public class JobWrapper {
 
@@ -28,7 +26,7 @@ public class JobWrapper {
             LogUtils.writeLogCache(context, getClass(), " Enable weather job: " + WeatherJob.TAG + "/ interval: " + sharedPrefs.getUpdateInterval());
             WeatherJob.scheduleJob(sharedPrefs.getUpdateInterval());
             return true;
-        };
+        }
 
         return false;
     }

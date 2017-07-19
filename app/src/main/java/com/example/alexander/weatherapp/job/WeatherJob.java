@@ -4,24 +4,21 @@ import android.support.annotation.NonNull;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
-import com.example.alexander.weatherapp.Utils.LogUtils;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.prefs.EventedSharedPrefs;
-import com.example.alexander.weatherapp.presentation.weather.interfaces.models.CityWeather;
+import com.example.alexander.weatherapp.data.prefs.EventedSharedPrefs;
+import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
+import com.example.alexander.weatherapp.utils.LogUtils;
 
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Single;
 import io.reactivex.observers.DisposableSingleObserver;
 
-/**
- * Created by Alexander on 14.07.2017.
- */
 
-public class WeatherJob extends Job {
 
-    public static final String TAG = "GET_WEATHER_JOB";
+class WeatherJob extends Job {
+
+    static final String TAG = "GET_WEATHER_JOB";
 
 
     private WeatherApi weatherApi;
@@ -43,7 +40,7 @@ public class WeatherJob extends Job {
         //результат необходимо получать в зависимости от выполнения цепочки
         final boolean[] flag = {false};
 
-        Single.fromObservable(weatherApi.weatherByName("Moscow"))
+        weatherApi.weatherByName("Moscow")
                 .flatMap(mapper.toCityWeather())
                 .subscribe(new DisposableSingleObserver<CityWeather>() {
                     @Override
@@ -64,7 +61,7 @@ public class WeatherJob extends Job {
         return flag[0]?Result.SUCCESS:Result.FAILURE;
     }
 
-    public static void scheduleJob(int minutes) {
+    static void scheduleJob(int minutes) {
 
         new JobRequest.Builder(WeatherJob.TAG)
                 //.setRequiresCharging(true)

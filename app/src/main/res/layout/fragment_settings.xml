@@ -9,6 +9,7 @@
      по id (@android:id/list_container) PreferenceFragmentCompat ищет ViewGroup для заполнения.
      студия ргается, что такой id требует версии API 24+, однако все работает корректно и на меньших версиях
     -->
+    <include layout="@layout/toolbar"/>
 
     <FrameLayout
         android:id="@android:id/list_container"

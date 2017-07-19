@@ -4,44 +4,43 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.preference.ListPreference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.alexander.weatherapp.Utils.LogUtils;
-import com.example.alexander.weatherapp.MainActivity;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.alexander.weatherapp.baseviews.MvpPreferenceFragment;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
+import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 import com.example.alexander.weatherapp.di.modules.SettingsModule;
-import com.example.alexander.weatherapp.prefs.SharedPrefs;
-import com.example.alexander.weatherapp.presentation.NavigationFragment;
-import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;
-import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsView;
+import com.example.alexander.weatherapp.utils.LogUtils;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.BindView;
 
-/**
- * Created by Alexander on 07.07.2017.
- */
 
-public class SettingsFragment extends PreferenceFragmentCompat implements SettingsView, NavigationFragment, SharedPreferences.OnSharedPreferenceChangeListener {
+
+public class SettingsFragment extends MvpPreferenceFragment implements SettingsView, SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     SettingsPresenter presenter;
 
-    @Inject
-    SharedPrefs prefs;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private Toast toast;
-    private Unbinder unbinder;
+
+
+    @ProvidePresenter
+    SettingsPresenter provideSettingsPresenter(){
+        return presenter;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         WeatherApplication.get(getContext()).getAppComponent().plus(new SettingsModule()).inject(this);
-        setRetainInstance(true);
         super.onCreate(savedInstanceState);
     }
 
@@ -49,31 +48,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         getPreferenceManager().setSharedPreferencesName(SharedPrefs.COMMON_PREFS);
         setPreferencesFromResource(R.xml.app_prefs, rootKey);
-
     }
 
+
+    @Override
+    protected Toolbar getToolbar() {
+        return toolbar;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-        presenter.bindView(this);
         toast = Toast.makeText(getContext(),null,Toast.LENGTH_LONG);
-        ((MainActivity)getActivity()).getToolbar().setTitle(getNavigationName());
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        presenter.unbindView();
-        unbinder.unbind();
-
     }
 
     @Override
-    public String getNavigationName() {
-        return getResources().getString(R.string.settings);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initToolbar(getString(R.string.settings));
     }
 
     @Override

@@ -15,7 +15,7 @@
 
     <!-- тема для окна настроек - пока дефолтная разметка -->
     <style name="AppTheme.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay.v14.Material">
-        <!--<item name="android:layout">@layout/fragment_settings</item>-->
+        <item name="android:layout">@layout/fragment_settings</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
 
     </style>
@@ -66,6 +66,11 @@
     <style name="TitleTextView" parent="OneLineTextView">
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">@color/title_text_color</item>
+    </style>
+
+    <style name="SplashScreenTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 </resources>

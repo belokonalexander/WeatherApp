@@ -17,12 +17,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Alexander on 13.07.2017.
- */
+
 
 /**
- * генерирует с помощью retrofit'а необходимый экземпляр API,
+ * generates API instance
  */
 public class NetworkService {
 
@@ -51,10 +49,10 @@ public class NetworkService {
     }
 
     /**
-     * Базовый interceptor
-     * добавляет api-ключ в параметры к запросу
-     * @param key
-     * @return
+     * Basic interceptor
+     * add api kay to the query
+     * @param key query for api
+     * @return okhttp client
      */
     private static OkHttpClient getBaseInterceptor(Context context, String key) {
         OkHttpClient.Builder httpClient =
@@ -81,10 +79,9 @@ public class NetworkService {
 
 
     /**
-     * В данном interceptor'e проверяется доступ к интернету перед отправкой запроса
-     * также можно впоследствии производить кеширование
+     * checks network connections and do caching
      * @param context
-     * @return
+     * @return interceptor
      */
     private static Interceptor getNetworkConnectInterceptor(Context context) {
         return chain -> {
@@ -96,12 +93,6 @@ public class NetworkService {
                 throw new UnknownHostException("Unable to resolve host \""+request.url().host()+"\"");
             }
 
-            /*try {
-                (FOR TESTS)
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
             //выполняю реальный запрос к api
             Response response = null;
             response = chain.proceed(request);
