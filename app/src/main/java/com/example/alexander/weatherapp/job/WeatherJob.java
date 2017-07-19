@@ -6,9 +6,13 @@ import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.data.prefs.EventedSharedPrefs;
+import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
+import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
+import com.example.alexander.weatherapp.events.StoreUpdatedEvent;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.example.alexander.weatherapp.utils.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,9 +26,9 @@ class WeatherJob extends Job {
 
     private WeatherApi weatherApi;
     private WeatherModelToCityWeatherMapper mapper;
-    private EventedSharedPrefs sharedPrefs;
+    private SharedPrefsRepository sharedPrefs;
 
-    WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs sharedPrefs) {
+    WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository sharedPrefs) {
 
         this.weatherApi = weatherApi;
         this.mapper = mapper;
@@ -35,8 +39,6 @@ class WeatherJob extends Job {
     @Override
     protected Result onRunJob(Params params) {
 
-        //синхронизирую выполняение rx элемента с результатом функции
-        //результат необходимо получать в зависимости от выполнения цепочки
         final boolean[] flag = {false};
 
         weatherApi.weatherByName("Moscow")
@@ -45,7 +47,8 @@ class WeatherJob extends Job {
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull CityWeather cityWeather) {
                         LogUtils.writeLogCache(getContext(), WeatherJob.this.getClass(), " Android-job got new data: " + cityWeather);
-                        sharedPrefs.setWeatherResult(cityWeather);
+                        sharedPrefs.saveCityWeather(cityWeather);
+                        EventBus.getDefault().post(new StoreUpdatedEvent(SharedPrefs._LAST_WEATHER_RESULT));
                         flag[0] = true;
                     }
 
@@ -67,7 +70,7 @@ class WeatherJob extends Job {
                 .setPersisted(true)                                          //задача невоспреимчива к перезагрузке устройства
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)   //задача выполняется при наличии интернет соединения
                 .setUpdateCurrent(true)                                     //переписываю задачу с тем же тэгом
-                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes + 5), TimeUnit.MINUTES.toMillis(5))  //чтобы выполнение задачи было отложенным
+                .setPeriodic(TimeUnit.MINUTES.toMillis(15), TimeUnit.MINUTES.toMillis(14))  //чтобы выполнение задачи было отложенным
                 .build()
                 .schedule();
     }

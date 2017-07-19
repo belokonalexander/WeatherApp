@@ -4,7 +4,7 @@ import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.data.prefs.EventedSharedPrefs;
+import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 
 
 public class WeatherJobCreator implements JobCreator {
@@ -12,10 +12,10 @@ public class WeatherJobCreator implements JobCreator {
 
     private WeatherApi weatherApi;
     private WeatherModelToCityWeatherMapper mapper;
-    private EventedSharedPrefs prefs;
+    private SharedPrefsRepository prefs;
 
 
-    public WeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs prefs) {
+    public WeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository prefs) {
         this.weatherApi = weatherApi;
         this.mapper = mapper;
         this.prefs = prefs;

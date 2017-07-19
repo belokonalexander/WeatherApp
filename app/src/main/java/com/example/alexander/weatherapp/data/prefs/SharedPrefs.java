@@ -3,13 +3,13 @@ package com.example.alexander.weatherapp.data.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import io.reactivex.Single;
-
 
 
 public class SharedPrefs implements SharedPrefsRepository {
@@ -23,37 +23,36 @@ public class SharedPrefs implements SharedPrefsRepository {
 
     private SharedPreferences commonSettings;
     private SharedPreferences commonStore;
+    private GsonBuilder gsonBuilder;
+    private Context context;
 
-    public SharedPrefs(Context context)
+    public SharedPrefs(Context context, GsonBuilder gsonBuilder)
     {
+        this.context = context;
+        this.gsonBuilder = gsonBuilder;
         commonSettings = context.getSharedPreferences(COMMON_PREFS,Context.MODE_PRIVATE);
         commonStore = context.getSharedPreferences(COMMON_STORE,Context.MODE_PRIVATE);
     }
 
-    public void setWeatherResult(CityWeather cityWeather){
+    protected void setWeatherResult(CityWeather cityWeather){
         SharedPreferences.Editor editor = commonStore.edit();
         editor.putString(_LAST_WEATHER_RESULT, new GsonBuilder().create().toJson(cityWeather));
         editor.apply();
     }
 
-    public CityWeather getWeatherResult(){
+    private CityWeather getWeatherResult(){
         String resultInJson = commonStore.getString(_LAST_WEATHER_RESULT, "");
         if(resultInJson.length()>0){
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
+            Gson gson = gsonBuilder.create();
             return gson.fromJson(resultInJson, CityWeather.class);
         } else
             return null;
     }
 
+    @Override
     public boolean getUpdateEnabled(){
         return commonSettings.getBoolean(_AUTO_REFRESH, false);
     }
-
-    public int getUpdateInterval(){
-        return Integer.parseInt(commonSettings.getString(_UPDATE_INTERVAL, "15"));
-    }
-
 
     @Override
     public Single<CityWeather> getCityWeather() {
@@ -64,6 +63,14 @@ public class SharedPrefs implements SharedPrefsRepository {
     public void saveCityWeather(CityWeather cityWeather) {
         setWeatherResult(cityWeather);
     }
+
+    @Override
+    public int getUpdateInterval(){
+        return Integer.parseInt(commonSettings.getString(_UPDATE_INTERVAL, context.getString(R.string.default_update_interval)));
+    }
+
+
+
 
 
 }

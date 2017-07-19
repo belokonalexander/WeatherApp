@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.alexander.weatherapp.BuildConfig;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
+import com.example.alexander.weatherapp.utils.LogUtils;
 import com.example.alexander.weatherapp.utils.TimeUtils;
 
 import java.util.Locale;
@@ -92,7 +94,8 @@ public class WeatherHolder extends RelativeLayout {
 
         updatedAtTextView.setText(getResources().getString(R.string.update_at) + " " + TimeUtils.getFormattedDate(model.getCreatedDate(), true));
 
-
+        if (BuildConfig.DEBUG)
+            updatedAtTextView.setOnClickListener(v -> LogUtils.write(LogUtils.showLogCacheFile(getContext(), 10)));
     }
 
     private Drawable getDrawableByStateCode(Integer weatherState) {

@@ -6,7 +6,6 @@ import com.example.alexander.weatherapp.data.network.models.weather.WeatherModel
 import io.reactivex.Single;
 
 
-
 public class WeatherApiRepositoryImpl implements WeatherApiRepository {
 
     private WeatherApi weatherApi;

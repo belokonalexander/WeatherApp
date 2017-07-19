@@ -39,7 +39,7 @@ public class NetworkService {
     private static <T> T createService(Context context, Class<T> service, String[] meta) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(meta[0])
-                .client(getBaseInterceptor(context, meta[1]))
+                .client(getBaseClient(context, meta[1]))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -48,13 +48,13 @@ public class NetworkService {
     }
 
     /**
-     * Basic interceptor
+     * Basic client
      * add api kay to the query
      *
      * @param key query for api
      * @return okhttp client
      */
-    private static OkHttpClient getBaseInterceptor(Context context, String key) {
+    private static OkHttpClient getBaseClient(Context context, String key) {
         OkHttpClient.Builder httpClient =
                 new OkHttpClient.Builder();
 
@@ -89,25 +89,22 @@ public class NetworkService {
 
             Request request = chain.request();
 
-            //проверяем, есть ли интернет соединение
             if (!NetworkUtils.isNetworkAvailable(context)) {
                 throw new UnknownHostException("Unable to resolve host \"" + request.url().host() + "\"");
             }
 
-            //выполняю реальный запрос к api
+            //run real api query
             Response response = null;
             response = chain.proceed(request);
 
-            //ответ для кеширования
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody.string();
 
-            //тут можно закешировать результат
+            //maybe caching
             if (response.code() == 200) {
                 //TODO
             }
 
-            //создадаю новый response для отправки обработчику
             return response.newBuilder().body(ResponseBody.create(responseBody.contentType(), responseBodyString.getBytes())).build();
         };
     }

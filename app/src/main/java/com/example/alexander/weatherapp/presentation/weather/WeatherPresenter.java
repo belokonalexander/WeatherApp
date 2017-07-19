@@ -11,6 +11,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,6 +22,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     private WeatherInteractor weatherInteractor;
     private Disposable getWeatherDisposable;
 
+
     public WeatherPresenter(WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
     }
@@ -30,6 +32,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         super.onFirstViewAttach();
         EventBus.getDefault().register(this);
         getWeather(false);
+
     }
 
     @Override

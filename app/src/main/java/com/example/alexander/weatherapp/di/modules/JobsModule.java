@@ -4,11 +4,10 @@ import android.content.Context;
 
 import com.evernote.android.job.JobManager;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
-import com.example.alexander.weatherapp.job.JobWrapper;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
+import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
+import com.example.alexander.weatherapp.job.JobWrapper;
 import com.example.alexander.weatherapp.job.WeatherJobCreator;
-import com.example.alexander.weatherapp.data.prefs.EventedSharedPrefs;
-import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,12 +22,12 @@ public class JobsModule {
     }
 
     @Provides
-    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs prefs) {
+    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository prefs) {
         return new WeatherJobCreator(weatherApi, mapper, prefs);
     }
 
     @Provides
-    JobWrapper provideJobWrapper(Context context, SharedPrefs sharedPrefs, JobManager jobManager) {
+    JobWrapper provideJobWrapper(Context context, SharedPrefsRepository sharedPrefs, JobManager jobManager) {
         return new JobWrapper(context, sharedPrefs, jobManager);
     }
 

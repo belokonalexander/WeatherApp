@@ -5,10 +5,13 @@ import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import io.reactivex.Single;
 
 
-
 public interface SharedPrefsRepository {
 
     Single<CityWeather> getCityWeather();
+
     void saveCityWeather(CityWeather cityWeather);
 
+    int getUpdateInterval();
+
+    boolean getUpdateEnabled();
 }

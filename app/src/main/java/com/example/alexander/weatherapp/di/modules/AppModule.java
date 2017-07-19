@@ -6,8 +6,9 @@ import android.support.annotation.NonNull;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.NetworkService;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
-import com.example.alexander.weatherapp.data.prefs.EventedSharedPrefs;
 import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
+import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
@@ -33,15 +34,15 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
-    SharedPrefs provideSharedPrefs() {
-        return new SharedPrefs(appContext);
+    GsonBuilder provideGsonBuilder() {
+        return new GsonBuilder();
     }
+
 
     @Provides
     @Singleton
-    EventedSharedPrefs provideEventedSharedPrefs() {
-        return new EventedSharedPrefs(appContext);
+    SharedPrefsRepository provideSharedPrefsRepository(GsonBuilder gsonBuilder) {
+        return new SharedPrefs(appContext, gsonBuilder);
     }
 
     @Provides

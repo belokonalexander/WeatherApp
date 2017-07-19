@@ -21,4 +21,6 @@
         <item>180</item>
     </string-array>
 
+    <string name="default_update_interval">15</string>
+
 </resources>

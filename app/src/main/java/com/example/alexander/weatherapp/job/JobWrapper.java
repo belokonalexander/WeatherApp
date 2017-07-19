@@ -3,17 +3,17 @@ package com.example.alexander.weatherapp.job;
 import android.content.Context;
 
 import com.evernote.android.job.JobManager;
+import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.utils.LogUtils;
-import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 
 
 public class JobWrapper {
 
-    private SharedPrefs sharedPrefs;
+    private SharedPrefsRepository sharedPrefs;
     private JobManager jobManager;
     private Context context;
 
-    public JobWrapper(Context context, SharedPrefs sharedPrefs, JobManager jobManager) {
+    public JobWrapper(Context context, SharedPrefsRepository sharedPrefs, JobManager jobManager) {
         this.sharedPrefs = sharedPrefs;
         this.jobManager = jobManager;
         this.context = context;

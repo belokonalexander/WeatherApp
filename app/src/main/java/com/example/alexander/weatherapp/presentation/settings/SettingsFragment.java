@@ -71,7 +71,6 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
         if (key.equals(SharedPrefs._AUTO_REFRESH)) {
-            //устанавливаю дефолтное значение для элемента
             ListPreference dataPref = (ListPreference) findPreference(SharedPrefs._UPDATE_INTERVAL);
             if (dataPref.getValue() == null) {
                 dataPref.setValueIndex(0); //set to index of your deafult value

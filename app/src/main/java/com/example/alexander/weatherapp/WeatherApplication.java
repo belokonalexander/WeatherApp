@@ -13,9 +13,6 @@ import com.facebook.stetho.Stetho;
 
 import javax.inject.Inject;
 
-/**
- * Created by Alexander on 08.07.2017.
- */
 
 public class WeatherApplication extends Application {
 
