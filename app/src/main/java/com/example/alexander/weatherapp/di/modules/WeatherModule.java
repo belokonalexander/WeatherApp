@@ -15,27 +15,26 @@ import dagger.Module;
 import dagger.Provides;
 
 
-
 @Module
 public class WeatherModule {
 
 
     @Provides
     @WeatherScope
-    WeatherApiRepository provideWeatherApiRepository(WeatherApi weatherApi){
+    WeatherApiRepository provideWeatherApiRepository(WeatherApi weatherApi) {
         return new WeatherApiRepositoryImpl(weatherApi);
     }
 
     @Provides
     @WeatherScope
-    WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository, WeatherModelToCityWeatherMapper mapper, SharedPrefs sharedPrefs, JobWrapper jw){
+    WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository, WeatherModelToCityWeatherMapper mapper, SharedPrefs sharedPrefs, JobWrapper jw) {
         return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw);
     }
 
 
     @Provides
     @WeatherScope
-    WeatherPresenter provideWeatherPresenter(WeatherInteractor interactor){
+    WeatherPresenter provideWeatherPresenter(WeatherInteractor interactor) {
         return new WeatherPresenter(interactor);
     }
 

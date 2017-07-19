@@ -15,13 +15,13 @@ public class SettingsModule {
 
     @Provides
     @SettingsScope
-    SettingsPresenter provideSettingsPresenter(SettingsInteractor interactor){
+    SettingsPresenter provideSettingsPresenter(SettingsInteractor interactor) {
         return new SettingsPresenter(interactor);
     }
 
     @Provides
     @SettingsScope
-    SettingsInteractor provideSettingsInteractor(JobWrapper jobWrapper){
+    SettingsInteractor provideSettingsInteractor(JobWrapper jobWrapper) {
         return new SettingsInteractorImpl(jobWrapper);
     }
 

@@ -17,23 +17,21 @@ import java.util.List;
 import java.util.Locale;
 
 
-
 public class LogUtils {
 
     private static final String common = "COMMON";
-    private static final String logFileName= "ApplicationLog.txt";
+    private static final String logFileName = "ApplicationLog.txt";
 
 
-    public static void write(Object msg){
+    public static void write(Object msg) {
         Log.e(common, msg.toString());
     }
 
-    public static void writeLogCache(Context context, String logMessageTag, String logMessage){
-        try
-        {
+    public static void writeLogCache(Context context, String logMessageTag, String logMessage) {
+        try {
             File logFile = new File(context.getCacheDir(),
                     logFileName);
-            if (!logFile.exists() ) {
+            if (!logFile.exists()) {
                 logFile.createNewFile();
             }
 
@@ -45,23 +43,21 @@ public class LogUtils {
 
             LogUtils.write(" LOGS: " + logMessage);
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             LogUtils.write(e);
         }
     }
 
-    public static void writeLogCache(Context context, Class cl, String logMessage){
-        writeLogCache(context,cl.getCanonicalName(),logMessage);
+    public static void writeLogCache(Context context, Class cl, String logMessage) {
+        writeLogCache(context, cl.getCanonicalName(), logMessage);
     }
 
-    public static File getLogCacheFile(Context context){
+    public static File getLogCacheFile(Context context) {
         return new File(context.getCacheDir(),
                 logFileName);
     }
 
-    public static String showLogCacheFile(Context context, int lastLines){
+    public static String showLogCacheFile(Context context, int lastLines) {
         File logFile = new File(context.getCacheDir(),
                 logFileName);
         BufferedReader reader;
@@ -71,26 +67,25 @@ public class LogUtils {
 
             reader = new BufferedReader(new FileReader(logFile));
 
-        String line;
+            String line;
 
-        int iterations = 0;
-        while ((line = reader.readLine())!=null){
-            list.add(line);
-        }
-        reader.close();
+            int iterations = 0;
+            while ((line = reader.readLine()) != null) {
+                list.add(line);
+            }
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        for(int i = list.size()-1; i >=0 && i>=list.size()-lastLines; i--)
+        for (int i = list.size() - 1; i >= 0 && i >= list.size() - lastLines; i--)
             result.append(list.get(i)).append("\n");
-
 
 
         return result.toString();
     }
 
-    private static String getDateTimeStamp(){
+    private static String getDateTimeStamp() {
         Date dateNow = Calendar.getInstance().getTime();
         return (DateFormat.getDateTimeInstance
                 (DateFormat.SHORT, DateFormat.SHORT, Locale.ENGLISH).format(dateNow));

@@ -37,8 +37,6 @@ public class WeatherApplication extends Application {
         jobsInit();
 
 
-
-
     }
 
 
@@ -48,7 +46,7 @@ public class WeatherApplication extends Application {
 
 
     private void stethoInit(boolean enable) {
-        if(enable) {
+        if (enable) {
             // Create an InitializerBuilder
             Stetho.InitializerBuilder initializerBuilder =
                     Stetho.newInitializerBuilder(this);

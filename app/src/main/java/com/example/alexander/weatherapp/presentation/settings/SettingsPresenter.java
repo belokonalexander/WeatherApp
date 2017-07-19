@@ -9,7 +9,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-
 @InjectViewState
 public class SettingsPresenter extends MvpPresenter<SettingsView> {
 
@@ -20,7 +19,7 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
         this.interactor = interactor;
     }
 
-    void updateWeatherJob(boolean enabled){
+    void updateWeatherJob(boolean enabled) {
         jobDisposable = interactor.startUpdateJob(enabled).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(someresult -> handleSuccessJobStart(enabled), this::handleFailureJobStart);
@@ -32,11 +31,11 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
         jobDisposable.dispose();
     }
 
-    private void handleSuccessJobStart(Boolean enabled){
+    private void handleSuccessJobStart(Boolean enabled) {
         getViewState().jobStateChanged(enabled);
     }
 
-    private void handleFailureJobStart(Throwable throwable){
+    private void handleFailureJobStart(Throwable throwable) {
         getViewState().onJobError(throwable);
     }
 }

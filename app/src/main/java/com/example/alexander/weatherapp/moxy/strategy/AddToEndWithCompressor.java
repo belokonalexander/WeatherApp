@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 
-
 public class AddToEndWithCompressor implements StateStrategy {
 
     private enum StrategyType {
@@ -17,12 +16,12 @@ public class AddToEndWithCompressor implements StateStrategy {
 
     private String delimiter = "$";
 
-    private String getTag(String incomingTag){
-        return incomingTag.substring(0,incomingTag.lastIndexOf(delimiter));
+    private String getTag(String incomingTag) {
+        return incomingTag.substring(0, incomingTag.lastIndexOf(delimiter));
     }
 
-    private StrategyType getType(String incomingTag){
-        return StrategyType.valueOf(incomingTag.substring(incomingTag.lastIndexOf(delimiter)+1,incomingTag.length()).toUpperCase());
+    private StrategyType getType(String incomingTag) {
+        return StrategyType.valueOf(incomingTag.substring(incomingTag.lastIndexOf(delimiter) + 1, incomingTag.length()).toUpperCase());
     }
 
     @Override
@@ -30,8 +29,7 @@ public class AddToEndWithCompressor implements StateStrategy {
         Iterator<ViewCommand<View>> iterator = currentState.iterator();
 
 
-
-        if(incomingCommand.getStrategyType().equals(AddToEndWithCompressor.class)) {
+        if (incomingCommand.getStrategyType().equals(AddToEndWithCompressor.class)) {
 
             String incomingTag = incomingCommand.getTag();
             StrategyType type = getType(incomingTag);
@@ -44,7 +42,7 @@ public class AddToEndWithCompressor implements StateStrategy {
 
             }
 
-            if(type==StrategyType.DO)
+            if (type == StrategyType.DO)
                 currentState.add(incomingCommand);
         }
 

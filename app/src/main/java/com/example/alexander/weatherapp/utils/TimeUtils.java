@@ -13,6 +13,6 @@ public class TimeUtils {
 
     public static CharSequence getFormattedDate(Date createdDate, boolean firstSpace) {
         String start = firstSpace ? " " : "";
-        return start+dateFormat.format(createdDate);
+        return start + dateFormat.format(createdDate);
     }
 }

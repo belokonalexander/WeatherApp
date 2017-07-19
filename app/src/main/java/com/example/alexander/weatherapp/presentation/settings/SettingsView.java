@@ -5,11 +5,11 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 
-
 @StateStrategyType(value = SkipStrategy.class)
-interface SettingsView extends MvpView{
+interface SettingsView extends MvpView {
 
     void jobStateChanged(boolean enabled);
+
     void onJobError(Throwable cause);
 
 }

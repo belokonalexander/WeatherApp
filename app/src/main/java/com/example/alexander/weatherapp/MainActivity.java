@@ -28,7 +28,6 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 
-
 public class MainActivity extends AppCompatActivity implements NavigationManager {
 
     public static final String NAVIGATE_POSITION = "NAVIGATE_POSITION_ID";
@@ -44,18 +43,18 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         ButterKnife.bind(this);
         navigation = new DrawerBuilder().withActivity(this)
 
-                        .withHeader(R.layout.navigation_drawable_header)
-                        .withHeaderHeight(DimenHolder.fromDp(240))
-                        .withTranslucentStatusBar(true)
-                        .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                            onDrawerItemClick(view.getId());
-                            return false;
-                        })
-                        .withDrawerItems(customInflateMenu())
-                        .build();
+                .withHeader(R.layout.navigation_drawable_header)
+                .withHeaderHeight(DimenHolder.fromDp(240))
+                .withTranslucentStatusBar(true)
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    onDrawerItemClick(view.getId());
+                    return false;
+                })
+                .withDrawerItems(customInflateMenu())
+                .build();
 
 
-        if(savedInstanceState==null) {
+        if (savedInstanceState == null) {
             onDrawerItemClick(R.id.weather);
         } else {
             navigation.setSelection(savedInstanceState.getInt(NAVIGATE_POSITION), false);
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
 
     /**
      * gets menu items from menu.xml
+     *
      * @return
      */
     private List<IDrawerItem> customInflateMenu() {
@@ -73,16 +73,15 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         MenuBuilder menu = new MenuBuilder(this);
         menuInflater.inflate(R.menu.navigation_menu, menu);
         List<IDrawerItem> result = new ArrayList<>();
-        addMenuItems(result,menu);
+        addMenuItems(result, menu);
 
         return result;
     }
 
 
-
-
     /**
      * saving current select position
+     *
      * @param outState
      */
     @Override
@@ -94,23 +93,24 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
 
     /**
      * item click handling
+     *
      * @param id - id of selected item
      */
     private void onDrawerItemClick(@IdRes int id) {
 
         Class fragmentClass = null;
 
-            switch (id){
-                case R.id.weather:
-                    fragmentClass = WeatherFragment.class;
-                    break;
-                case R.id.settings:
-                    fragmentClass = SettingsFragment.class;
-                    break;
-                case R.id.about:
-                    fragmentClass = AboutFragment.class;
-                    break;
-            }
+        switch (id) {
+            case R.id.weather:
+                fragmentClass = WeatherFragment.class;
+                break;
+            case R.id.settings:
+                fragmentClass = SettingsFragment.class;
+                break;
+            case R.id.about:
+                fragmentClass = AboutFragment.class;
+                break;
+        }
 
         //NPE, if will dummy menu item
         String tag = fragmentClass.getSimpleName();
@@ -118,13 +118,13 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         FragmentManager fm = getSupportFragmentManager();
 
         //if this item already selected
-        if(fm.findFragmentByTag(tag)!=null){
+        if (fm.findFragmentByTag(tag) != null) {
             return;
         }
 
-        Fragment fragment = Fragment.instantiate(this,fragmentClass.getName());
+        Fragment fragment = Fragment.instantiate(this, fragmentClass.getName());
         fm.beginTransaction()
-                .replace(R.id.main_content,fragment,tag)
+                .replace(R.id.main_content, fragment, tag)
                 .commit();
 
 
@@ -134,17 +134,17 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
 
 
     @Override
-    public void onBackPressed(){
-        if(navigation.isDrawerOpen()){
+    public void onBackPressed() {
+        if (navigation.isDrawerOpen()) {
             navigation.closeDrawer();
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
     }
 
     /**
      * convert items menu in IDrawerItem
+     *
      * @param item
      * @param menu
      */
@@ -152,13 +152,13 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         for (int i = 0; i < menu.size(); i++) {
             MenuItem mMenuItem = menu.getItem(i);
             IDrawerItem iDrawerItem = new PrimaryDrawerItem()
-                        .withName(mMenuItem.getTitle().toString())
-                        .withIcon(mMenuItem.getIcon())
-                        .withIdentifier(mMenuItem.getItemId())
-                        .withEnabled(mMenuItem.isEnabled())
-                        .withIconTintingEnabled(true)
-                        .withSelectedIconColor(ContextCompat.getColor(getBaseContext(),R.color.material_drawer_selected_icon));
-                item.add(iDrawerItem);
+                    .withName(mMenuItem.getTitle().toString())
+                    .withIcon(mMenuItem.getIcon())
+                    .withIdentifier(mMenuItem.getItemId())
+                    .withEnabled(mMenuItem.isEnabled())
+                    .withIconTintingEnabled(true)
+                    .withSelectedIconColor(ContextCompat.getColor(getBaseContext(), R.color.material_drawer_selected_icon));
+            item.add(iDrawerItem);
         }
     }
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
 
     @Override
     public void setNavigationDrawerState(boolean enabled) {
-        if(enabled){
+        if (enabled) {
             navigation.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         } else {
             navigation.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);

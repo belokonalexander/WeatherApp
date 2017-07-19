@@ -25,10 +25,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 
+public class WeatherFragment extends BaseFragment implements WeatherView {
 
-public class WeatherFragment extends BaseFragment implements WeatherView{
-
-    @Inject @InjectPresenter
+    @Inject
+    @InjectPresenter
     WeatherPresenter presenter;
 
     @BindView(R.id.swiperefresh)
@@ -43,7 +43,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView{
     private Toast toast;
 
     @ProvidePresenter
-    WeatherPresenter provideWeatherPresenter(){
+    WeatherPresenter provideWeatherPresenter() {
         return presenter;
     }
 
@@ -69,7 +69,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toast = Toast.makeText(getContext(),null,Toast.LENGTH_LONG);
+        toast = Toast.makeText(getContext(), null, Toast.LENGTH_LONG);
 
         initViewLogic();
 
@@ -88,7 +88,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView{
 
     @Override
     public void onError(Throwable cause) {
-        ViewException viewException = new ViewException(getContext(),cause);
+        ViewException viewException = new ViewException(getContext(), cause);
         toast.setText(viewException.getDetailMessage());
         toast.show();
     }
@@ -99,10 +99,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView{
     }
 
 
-
     @Override
     public void startProgress(boolean loud) {
-        if(loud)
+        if (loud)
             refreshLayout.setRefreshing(true);
         LogUtils.write("startProgress");
     }
@@ -112,8 +111,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView{
         refreshLayout.setRefreshing(false);
         LogUtils.write("finishProgress");
     }
-
-
 
 
 }

@@ -17,8 +17,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 
-
-public class AboutFragment extends BaseFragment implements AboutView{
+public class AboutFragment extends BaseFragment implements AboutView {
 
     @Inject
     AboutPresenter presenter;

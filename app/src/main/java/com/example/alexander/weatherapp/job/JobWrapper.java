@@ -7,7 +7,6 @@ import com.example.alexander.weatherapp.utils.LogUtils;
 import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 
 
-
 public class JobWrapper {
 
     private SharedPrefs sharedPrefs;
@@ -20,9 +19,9 @@ public class JobWrapper {
         this.context = context;
     }
 
-    public boolean tryToStartWeatherJob(){
+    public boolean tryToStartWeatherJob() {
 
-        if(sharedPrefs.getUpdateEnabled()) {
+        if (sharedPrefs.getUpdateEnabled()) {
             LogUtils.writeLogCache(context, getClass(), " Enable weather job: " + WeatherJob.TAG + "/ interval: " + sharedPrefs.getUpdateInterval());
             WeatherJob.scheduleJob(sharedPrefs.getUpdateInterval());
             return true;

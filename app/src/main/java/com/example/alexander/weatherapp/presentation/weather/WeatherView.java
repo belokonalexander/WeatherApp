@@ -8,7 +8,6 @@ import com.example.alexander.weatherapp.moxy.strategy.AddToEndWithCompressor;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 
-
 interface WeatherView extends MvpView {
 
     @StateStrategyType(value = SkipStrategy.class)
@@ -22,7 +21,6 @@ interface WeatherView extends MvpView {
 
     @StateStrategyType(value = AddToEndWithCompressor.class, tag = "progress$stop")
     void finishProgress();
-
 
 
 }

@@ -13,7 +13,6 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 
-
 public class WeatherInteractorImpl implements WeatherInteractor {
 
 
@@ -38,7 +37,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
         tasks.add(sharedPrefsRepository.getCityWeather());
 
-        if(fresh) {
+        if (fresh) {
             tasks.add(weatherApiRepository.getWeatherByName("Moscow")
                     .flatMap(weatherMapper.toCityWeather())
                     .doOnSuccess(cityWeather -> {
@@ -48,11 +47,8 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         }
 
 
-
         return Single.concat(tasks).toObservable();
     }
-
-
 
 
 }

@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-
-public class CityWeather implements Serializable{
+public class CityWeather implements Serializable {
 
     public static final int STATE_UNKNOWN = -1;
     public static final int STATE_RAIN = 0;
     public static final int STATE_CLOUD = 1;
     public static final int STATE_THUNDERSTORM = 2;
     public static final int STATE_SNOW = 3;
-    public static final int STATE_CLEAR= 5;
+    public static final int STATE_CLEAR = 5;
 
 
     private String cityName;
@@ -33,12 +32,12 @@ public class CityWeather implements Serializable{
         createdDate = new Date();
     }
 
-    public static CityWeather getNullable(){
-        return new CityWeather(-1,-1,"",-1d,-1,-1);
+    public static CityWeather getNullable() {
+        return new CityWeather(-1, -1, "", -1d, -1, -1);
     }
 
-    public static boolean isNullable(CityWeather instance){
-        return instance==null || instance.equals(getNullable());
+    public static boolean isNullable(CityWeather instance) {
+        return instance == null || instance.equals(getNullable());
     }
 
     public String getCityName() {

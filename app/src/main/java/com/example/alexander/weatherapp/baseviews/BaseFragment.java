@@ -18,17 +18,17 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-
 public abstract class BaseFragment extends MvpAppCompatFragment {
 
     private Unbinder unbinder;
     private NavigationManager navigationManager;
+
     protected abstract Toolbar getToolbar();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
     }
 
     @Override
@@ -40,18 +40,18 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        navigationManager = ((NavigationManager)getActivity());
+        navigationManager = ((NavigationManager) getActivity());
     }
 
-    public void initToolbar(String title){
+    public void initToolbar(String title) {
         getToolbar().setTitle(title);
         Drawable toolbarNavigationIcon;
-        if(getArguments()!=null && getArguments().getBoolean(MainActivity.NAVIGATION_BACKPRESS)){
+        if (getArguments() != null && getArguments().getBoolean(MainActivity.NAVIGATION_BACKPRESS)) {
             navigationManager.setNavigationDrawerState(false);
             toolbarNavigationIcon = null;
             //TODO
         } else {
-            toolbarNavigationIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu_black_24dp,null);
+            toolbarNavigationIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu_black_24dp, null);
             navigationManager.setNavigationDrawerState(true);
             getToolbar().setNavigationOnClickListener(v -> navigationManager.openNavigationDrawer());
         }
@@ -61,7 +61,7 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
     }
 
     private void initToolbarView(Drawable navigationIcon) {
-        navigationIcon.setColorFilter(ContextCompat.getColor(getContext(),R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
+        navigationIcon.setColorFilter(ContextCompat.getColor(getContext(), R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
         getToolbar().setNavigationIcon(navigationIcon);
         getToolbar().setContentInsetStartWithNavigation(0);
     }

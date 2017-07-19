@@ -21,7 +21,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 
-
 public class SettingsFragment extends MvpPreferenceFragment implements SettingsView, SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
@@ -34,7 +33,7 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
 
 
     @ProvidePresenter
-    SettingsPresenter provideSettingsPresenter(){
+    SettingsPresenter provideSettingsPresenter() {
         return presenter;
     }
 
@@ -59,7 +58,7 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        toast = Toast.makeText(getContext(),null,Toast.LENGTH_LONG);
+        toast = Toast.makeText(getContext(), null, Toast.LENGTH_LONG);
     }
 
     @Override
@@ -71,18 +70,18 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if(key.equals(SharedPrefs._AUTO_REFRESH)){
+        if (key.equals(SharedPrefs._AUTO_REFRESH)) {
             //устанавливаю дефолтное значение для элемента
             ListPreference dataPref = (ListPreference) findPreference(SharedPrefs._UPDATE_INTERVAL);
-            if(dataPref.getValue() == null){
+            if (dataPref.getValue() == null) {
                 dataPref.setValueIndex(0); //set to index of your deafult value
             } else
-                presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH,false));
+                presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH, false));
 
 
-        } else if(key.equals(SharedPrefs._UPDATE_INTERVAL)) {
+        } else if (key.equals(SharedPrefs._UPDATE_INTERVAL)) {
 
-                presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH,false));
+            presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH, false));
         }
 
 

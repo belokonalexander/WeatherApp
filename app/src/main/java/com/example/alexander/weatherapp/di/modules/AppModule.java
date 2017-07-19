@@ -15,7 +15,6 @@ import dagger.Module;
 import dagger.Provides;
 
 
-
 @Module
 public class AppModule {
 
@@ -29,31 +28,31 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Context provideContext(){
+    Context provideContext() {
         return appContext;
     }
 
     @Provides
     @Singleton
-    SharedPrefs provideSharedPrefs(){
+    SharedPrefs provideSharedPrefs() {
         return new SharedPrefs(appContext);
     }
 
     @Provides
     @Singleton
-    EventedSharedPrefs provideEventedSharedPrefs(){
+    EventedSharedPrefs provideEventedSharedPrefs() {
         return new EventedSharedPrefs(appContext);
     }
 
     @Provides
     @Singleton
-    WeatherApi provideWeatherApi(){
+    WeatherApi provideWeatherApi() {
         return NetworkService.getService(appContext, WeatherApi.class);
     }
 
 
     @Provides
-    WeatherModelToCityWeatherMapper provideMapper(){
+    WeatherModelToCityWeatherMapper provideMapper() {
         return new WeatherModelToCityWeatherMapper();
     }
 

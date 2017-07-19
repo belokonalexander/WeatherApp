@@ -11,20 +11,19 @@ import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 
 
-
 public class WeatherModelToCityWeatherMapper {
 
-    public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather(){
+    public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather() {
         return model -> Single.fromCallable(() ->
-                new CityWeather(model.getSys().getId(), getStateCode(model.getWeather()),model.getName(), model.getMain().getTemp(), model.getMain().getPressure(),
-                model.getMain().getHumidity()));
+                new CityWeather(model.getSys().getId(), getStateCode(model.getWeather()), model.getName(), model.getMain().getTemp(), model.getMain().getPressure(),
+                        model.getMain().getHumidity()));
     }
 
     private Integer getStateCode(List<Weather> weathers) {
 
         int code = CityWeather.STATE_UNKNOWN;
 
-        if(weathers!=null && !weathers.isEmpty()) {
+        if (weathers != null && !weathers.isEmpty()) {
             int id = weathers.get(0).getId();
             if (id == 800) {
                 code = CityWeather.STATE_CLEAR;

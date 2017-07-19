@@ -5,7 +5,6 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.events.StoreUpdatedEvent;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
-import com.example.alexander.weatherapp.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -14,7 +13,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
 
 
 @InjectViewState
@@ -53,13 +51,13 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
 
     void getWeather(boolean loud) {
-        //не повторяю одну и ту же задачу по загрузке данных
+        //don't start task if is already executing
         getViewState().startProgress(loud);
-        if(getWeatherDisposable==null || getWeatherDisposable.isDisposed()) {
+        if (getWeatherDisposable == null || getWeatherDisposable.isDisposed()) {
             getWeatherDisposable = weatherInteractor.getWeather(true)
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread(),true)
-                    .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather,this::onGetWeatherComplete);
+                    .observeOn(AndroidSchedulers.mainThread(), true)
+                    .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete);
         }
     }
 
@@ -69,16 +67,15 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateFromStoreListener(StoreUpdatedEvent event){
-        LogUtils.write("EVENT -> " + event);
+    public void updateFromStoreListener(StoreUpdatedEvent event) {
         updateFromStore();
     }
 
-    private void updateFromStore(){
+    private void updateFromStore() {
         weatherInteractor.getWeather(false)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather,this::onGetWeatherComplete);
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete);
     }
 
 }

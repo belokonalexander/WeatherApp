@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public abstract class MvpPreferenceFragment extends PreferenceFragmentCompat{
+public abstract class MvpPreferenceFragment extends PreferenceFragmentCompat {
 
 
     private Unbinder unbinder;
@@ -30,19 +30,19 @@ public abstract class MvpPreferenceFragment extends PreferenceFragmentCompat{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
     }
 
-    public void initToolbar(String title){
+    public void initToolbar(String title) {
         getToolbar().setTitle(title);
-        Drawable toolbarNavigationIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu_black_24dp,null);
+        Drawable toolbarNavigationIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu_black_24dp, null);
         navigationManager.setNavigationDrawerState(true);
         getToolbar().setNavigationOnClickListener(v -> navigationManager.openNavigationDrawer());
         initToolbarView(toolbarNavigationIcon);
     }
 
     private void initToolbarView(Drawable navigationIcon) {
-        navigationIcon.setColorFilter(ContextCompat.getColor(getContext(),R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
+        navigationIcon.setColorFilter(ContextCompat.getColor(getContext(), R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
         getToolbar().setNavigationIcon(navigationIcon);
         getToolbar().setContentInsetStartWithNavigation(0);
     }

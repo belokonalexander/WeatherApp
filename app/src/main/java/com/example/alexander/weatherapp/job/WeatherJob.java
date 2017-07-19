@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.observers.DisposableSingleObserver;
 
 
-
 class WeatherJob extends Job {
 
     static final String TAG = "GET_WEATHER_JOB";
@@ -58,7 +57,7 @@ class WeatherJob extends Job {
                 });
 
         LogUtils.writeLogCache(getContext(), "RESULT", "Android-job result: " + flag[0]);
-        return flag[0]?Result.SUCCESS:Result.FAILURE;
+        return flag[0] ? Result.SUCCESS : Result.FAILURE;
     }
 
     static void scheduleJob(int minutes) {
@@ -68,7 +67,7 @@ class WeatherJob extends Job {
                 .setPersisted(true)                                          //задача невоспреимчива к перезагрузке устройства
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)   //задача выполняется при наличии интернет соединения
                 .setUpdateCurrent(true)                                     //переписываю задачу с тем же тэгом
-                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes+5),TimeUnit.MINUTES.toMillis(5))  //чтобы выполнение задачи было отложенным
+                .setPeriodic(TimeUnit.MINUTES.toMillis(minutes + 5), TimeUnit.MINUTES.toMillis(5))  //чтобы выполнение задачи было отложенным
                 .build()
                 .schedule();
     }

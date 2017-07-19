@@ -14,22 +14,21 @@ import dagger.Module;
 import dagger.Provides;
 
 
-
 @Module
 public class JobsModule {
 
     @Provides
-    JobManager provideJobManager(Context context){
+    JobManager provideJobManager(Context context) {
         return JobManager.create(context);
     }
 
     @Provides
-    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs prefs){
-        return new WeatherJobCreator(weatherApi,mapper,prefs);
+    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, EventedSharedPrefs prefs) {
+        return new WeatherJobCreator(weatherApi, mapper, prefs);
     }
 
     @Provides
-    JobWrapper provideJobWrapper(Context context, SharedPrefs sharedPrefs, JobManager jobManager){
+    JobWrapper provideJobWrapper(Context context, SharedPrefs sharedPrefs, JobManager jobManager) {
         return new JobWrapper(context, sharedPrefs, jobManager);
     }
 

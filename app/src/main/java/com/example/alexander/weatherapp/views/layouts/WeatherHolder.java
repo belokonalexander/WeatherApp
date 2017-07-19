@@ -25,7 +25,6 @@ import static com.example.alexander.weatherapp.presentation.weather.models.CityW
 import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_UNKNOWN;
 
 
-
 /**
  * View, which shows weather
  */
@@ -35,16 +34,16 @@ public class WeatherHolder extends RelativeLayout {
 
 
     public void setModelAndShow(@Nullable CityWeather model) {
-        if(!CityWeather.isNullable(model)) {
+        if (!CityWeather.isNullable(model)) {
             this.model = model;
             inflateContent();
         }
     }
 
-    private void inflateContent(){
+    private void inflateContent() {
         clearView();
 
-        LayoutInflater layoutInflater = (LayoutInflater ) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         RelativeLayout layout = (RelativeLayout) layoutInflater.inflate(R.layout.weather_widget_layout, null);
 
         ImageView weatherIcon = (ImageView) layout.findViewById(R.id.weather_icon);
@@ -57,20 +56,19 @@ public class WeatherHolder extends RelativeLayout {
         cityTextView.setText(getTranslatableCity(model.getCityId()));
         weatherIcon.setImageDrawable(getDrawableByStateCode(model.getWeatherState()));
 
-        TypedValue pressCoef  = new TypedValue();
-        getResources().getValue(R.dimen.press_coef, pressCoef,true);
-        int press = (int) (model.getPress()*pressCoef.getFloat());
+        TypedValue pressCoef = new TypedValue();
+        getResources().getValue(R.dimen.press_coef, pressCoef, true);
+        int press = (int) (model.getPress() * pressCoef.getFloat());
         String pressure = String.valueOf(press) + " " + getResources().getString(R.string.pressure);
         pressureTextView.setText(pressure);
 
-        String hum = String.valueOf(model.getHum())+"%";
+        String hum = String.valueOf(model.getHum()) + "%";
         humidityTextView.setText(hum);
 
         //В зависимости от региона (США или др, показывает время в кельвинах или цельсиях)
         temperatureTextView.setText(getLocaleTemp(model.getTemp()));
 
         updatedAtTextView.append(TimeUtils.getFormattedDate(model.getCreatedDate(), true));
-
 
 
         addView(layout);
@@ -81,24 +79,24 @@ public class WeatherHolder extends RelativeLayout {
 
         Drawable drawable = null;
 
-        switch (weatherState){
+        switch (weatherState) {
             case STATE_RAIN:
-                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_rain,null);
+                drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_rain, null);
                 break;
             case STATE_CLEAR:
-                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_cloudy,null);
+                drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_cloudy, null);
                 break;
             case STATE_CLOUD:
-                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_cloudy,null);
+                drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_cloudy, null);
                 break;
             case STATE_THUNDERSTORM:
-                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_storm,null);
+                drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_storm, null);
                 break;
             case STATE_UNKNOWN:
-                drawable =VectorDrawableCompat.create(getResources(),R.drawable.ic_cloudy,null);
+                drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_cloudy, null);
                 break;
             case STATE_SNOW:
-                drawable = VectorDrawableCompat.create(getResources(),R.drawable.ic_snow,null);
+                drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_snow, null);
                 break;
         }
 
@@ -109,20 +107,20 @@ public class WeatherHolder extends RelativeLayout {
         String tresult;
         boolean fahrenheit = false;
         String[] countriesWithFahrenheit = getResources().getStringArray(R.array.fahrenheit_countries);
-        for(String country : countriesWithFahrenheit){
-            if(country.equals(Locale.getDefault().getCountry())){
+        for (String country : countriesWithFahrenheit) {
+            if (country.equals(Locale.getDefault().getCountry())) {
                 fahrenheit = true;
                 break;
             }
         }
 
-        if(fahrenheit) {
-            tresult = ((int)(temp*9/5-459.67)) + getResources().getString(R.string.fahrenheit);
+        if (fahrenheit) {
+            tresult = ((int) (temp * 9 / 5 - 459.67)) + getResources().getString(R.string.fahrenheit);
 
         } else {
             float kelwinCoef = 273.15f;
             int ctemp = (int) (temp - kelwinCoef);
-            String d = ctemp < 0 ? "-" : ctemp==0 ? "" :  "+";
+            String d = ctemp < 0 ? "-" : ctemp == 0 ? "" : "+";
             tresult = d + ctemp + getResources().getString(R.string.celsius);
         }
 
@@ -130,7 +128,7 @@ public class WeatherHolder extends RelativeLayout {
     }
 
     private void clearView() {
-        if(getChildCount()>0){
+        if (getChildCount() > 0) {
             removeAllViews();
         }
     }

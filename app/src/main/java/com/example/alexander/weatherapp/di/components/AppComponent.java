@@ -20,7 +20,9 @@ import dagger.Component;
 public interface AppComponent {
 
     AboutComponent plus(AboutModule aboutModule);
+
     SettingsComponent plus(SettingsModule settingsModule);
+
     WeatherComponent plus(WeatherModule weatherModule);
 
     void inject(WeatherApplication app);

@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 
-
-
 public class AddToEndSingleStrategyByTag implements StateStrategy {
     @Override
     public <View extends MvpView> void beforeApply(List<ViewCommand<View>> currentState, ViewCommand<View> incomingCommand) {

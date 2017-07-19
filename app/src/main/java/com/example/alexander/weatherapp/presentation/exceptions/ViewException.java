@@ -11,7 +11,7 @@ import com.example.alexander.weatherapp.R;
 import java.net.UnknownHostException;
 
 /**
- * переводит ошибки приложения в удобный для представления пользователю вид
+ * translate exceptions for views
  */
 public class ViewException extends Exception {
 

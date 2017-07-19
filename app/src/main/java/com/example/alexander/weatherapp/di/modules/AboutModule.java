@@ -7,13 +7,12 @@ import dagger.Module;
 import dagger.Provides;
 
 
-
 @Module
 public class AboutModule {
 
     @Provides
     @AboutScope
-    AboutPresenter provideAboutPresenter(){
+    AboutPresenter provideAboutPresenter() {
         return new AboutPresenter();
     }
 

@@ -18,17 +18,16 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
 /**
  * generates API instance
  */
 public class NetworkService {
 
-    public static <T> T getService( Context context, Class<T> service){
+    public static <T> T getService(Context context, Class<T> service) {
 
         String[] meta;
 
-        if(service == WeatherApi.class){
+        if (service == WeatherApi.class) {
             meta = context.getResources().getStringArray(R.array.weather_api);
         } else {
             throw new RuntimeException("Wrong api service type");
@@ -51,6 +50,7 @@ public class NetworkService {
     /**
      * Basic interceptor
      * add api kay to the query
+     *
      * @param key query for api
      * @return okhttp client
      */
@@ -80,6 +80,7 @@ public class NetworkService {
 
     /**
      * checks network connections and do caching
+     *
      * @param context
      * @return interceptor
      */
@@ -89,8 +90,8 @@ public class NetworkService {
             Request request = chain.request();
 
             //проверяем, есть ли интернет соединение
-            if(!NetworkUtils.isNetworkAvailable(context)){
-                throw new UnknownHostException("Unable to resolve host \""+request.url().host()+"\"");
+            if (!NetworkUtils.isNetworkAvailable(context)) {
+                throw new UnknownHostException("Unable to resolve host \"" + request.url().host() + "\"");
             }
 
             //выполняю реальный запрос к api
@@ -99,11 +100,11 @@ public class NetworkService {
 
             //ответ для кеширования
             ResponseBody responseBody = response.body();
-            String responseBodyString= responseBody.string();
+            String responseBodyString = responseBody.string();
 
             //тут можно закешировать результат
-            if(response.code()==200) {
-               //TODO
+            if (response.code() == 200) {
+                //TODO
             }
 
             //создадаю новый response для отправки обработчику
