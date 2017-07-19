@@ -69,7 +69,6 @@ public class LogUtils {
 
             String line;
 
-            int iterations = 0;
             while ((line = reader.readLine()) != null) {
                 list.add(line);
             }

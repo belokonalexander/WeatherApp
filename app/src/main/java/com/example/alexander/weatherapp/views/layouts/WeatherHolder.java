@@ -59,10 +59,12 @@ public class WeatherHolder extends RelativeLayout {
 
     public void setModelAndShow(@Nullable CityWeather model) {
 
-        if (layout == null)
-            inflateView();
-
         if (!CityWeather.isNullable(model)) {
+
+            if (layout == null) {
+                inflateView();
+            }
+
             this.model = model;
             inflateContent();
         }

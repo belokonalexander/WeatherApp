@@ -6,12 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.example.alexander.weatherapp.baseviews.MvpPreferenceFragment;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
+import com.example.alexander.weatherapp.baseviews.MvpPreferenceFragment;
 import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 import com.example.alexander.weatherapp.di.modules.SettingsModule;
 import com.example.alexander.weatherapp.utils.LogUtils;
@@ -28,8 +27,6 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    private Toast toast;
 
 
     @ProvidePresenter
@@ -58,7 +55,6 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        toast = Toast.makeText(getContext(), null, Toast.LENGTH_LONG);
     }
 
     @Override

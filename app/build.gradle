@@ -3,13 +3,16 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 
-// Получение данных для ключа из keystore.properties
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 
 android {
+
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
 
     signingConfigs {
         config {
@@ -28,7 +31,7 @@ android {
     defaultConfig {
         applicationId "com.example.alexander.weatherapp"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

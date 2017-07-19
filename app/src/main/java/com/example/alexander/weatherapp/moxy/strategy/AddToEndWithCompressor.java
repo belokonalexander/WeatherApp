@@ -11,7 +11,7 @@ import java.util.List;
 public class AddToEndWithCompressor implements StateStrategy {
 
     private enum StrategyType {
-        DO, STOP;
+        DO, STOP
     }
 
     private String delimiter = "$";

@@ -98,6 +98,11 @@ public class NetworkService {
             response = chain.proceed(request);
 
             ResponseBody responseBody = response.body();
+
+            if(responseBody==null){
+                throw new NullPointerException();
+            }
+
             String responseBodyString = responseBody.string();
 
             //maybe caching

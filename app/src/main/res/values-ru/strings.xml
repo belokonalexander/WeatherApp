@@ -6,21 +6,16 @@
     <string name="weather">Погода</string>
     <string name="settings">Настройки</string>
     <string name="about">О программе</string>
-    <string name="navigation_menu">Меню</string>
 
     <string name="pr_auto_refresh">Автообновление</string>
     <string name="pr_refresh_interval">Интервал обновления</string>
-    <string name="pr_refresh_interval_summary">Интервал обновления в минутах</string>
     <string name="pr_cat_common_prefs">Общие настройки</string>
 
     <string name="dialog_positive">Ок</string>
     <string name="dialog_negative">Отмена</string>
 
-    <string name="short_minutes">мин</string>
-
     <string name="connection_error">Ошибка соединения. Пожалуйста, проверьте доступ к интернету и повторите операцию</string>
     <string name="unknown_error">Неизвестная ошибка. Попробуйте повторить операцию</string>
-    <string name="temperature">Температура</string>
 
     <string name="pressure">мм рт.ст.</string>
 
@@ -33,7 +28,5 @@
         <item>3 часа</item>
     </string-array>
 
-    <string name="update_weather_job_started">Прогноз будет автоматически обновляться</string>
     <string name="update_at">Обновлено</string>
-    <string name="logs_empty">В логах пусто</string>
 </resources>
