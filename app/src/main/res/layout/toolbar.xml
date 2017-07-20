@@ -12,15 +12,9 @@
         android:background="@color/colorPrimary"
         android:id="@+id/toolbar"
         app:titleTextColor="@color/normal_text_color_light"
-        android:titleTextColor="@color/normal_text_color_light"
         app:titleTextAppearance="@style/ToolbarTitle"
-
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
-        android:contentInsetRight="0dp"
-        android:contentInsetEnd="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetEnd="0dp"
 

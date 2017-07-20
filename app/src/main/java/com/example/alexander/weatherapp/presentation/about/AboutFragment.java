@@ -2,36 +2,32 @@ package com.example.alexander.weatherapp.presentation.about;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.alexander.weatherapp.di.modules.AboutModule;
-import com.example.alexander.weatherapp.presentation.about.interfaces.*;
-import com.example.alexander.weatherapp.presentation.NavigationFragment;
+import com.example.alexander.weatherapp.baseviews.BaseFragment;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
+import com.example.alexander.weatherapp.di.modules.AboutModule;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.BindView;
 
-/**
- * Created by Alexander on 07.07.2017.
- */
 
-public class AboutFragment extends NavigationFragment implements AboutView {
+public class AboutFragment extends BaseFragment implements AboutView {
 
     @Inject
     AboutPresenter presenter;
 
-    Unbinder unbinder;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         WeatherApplication.get(getContext()).getAppComponent().plus(new AboutModule()).inject(this);
-        setRetainInstance(true);
         super.onCreate(savedInstanceState);
     }
 
@@ -42,22 +38,14 @@ public class AboutFragment extends NavigationFragment implements AboutView {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-        presenter.bindView(this);
+    protected Toolbar getToolbar() {
+        return toolbar;
     }
 
-    @Override
-    public String getNavigationName() {
-        return getContext().getResources().getString(R.string.about);
-    }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        presenter.unbindView();
-        unbinder.unbind();
-
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initToolbar(getString(R.string.about));
     }
 }

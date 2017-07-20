@@ -1,67 +1,109 @@
 package com.example.alexander.weatherapp.presentation.settings;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.example.alexander.weatherapp.di.modules.SettingsModule;
-import com.example.alexander.weatherapp.presentation.NavigationFragment;
-import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsPresenter;
-import com.example.alexander.weatherapp.presentation.settings.interfaces.SettingsView;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
+import com.example.alexander.weatherapp.baseviews.MvpPreferenceFragment;
+import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
+import com.example.alexander.weatherapp.di.modules.SettingsModule;
+import com.example.alexander.weatherapp.utils.LogUtils;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.BindView;
 
-/**
- * Created by Alexander on 07.07.2017.
- */
 
-public class SettingsFragment extends NavigationFragment implements SettingsView {
+public class SettingsFragment extends MvpPreferenceFragment implements SettingsView, SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     SettingsPresenter presenter;
 
-    Unbinder unbinder;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+
+    @ProvidePresenter
+    SettingsPresenter provideSettingsPresenter() {
+        return presenter;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         WeatherApplication.get(getContext()).getAppComponent().plus(new SettingsModule()).inject(this);
-        setRetainInstance(true);
         super.onCreate(savedInstanceState);
     }
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        getPreferenceManager().setSharedPreferencesName(SharedPrefs.COMMON_PREFS);
+        setPreferencesFromResource(R.xml.app_prefs, rootKey);
+    }
+
+
+    @Override
+    protected Toolbar getToolbar() {
+        return toolbar;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-        presenter.bindView(this);
-    }
-
-
-
-    @Override
-    public String getNavigationName() {
-        return getContext().getResources().getString(R.string.settings);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        presenter.unbindView();
-        unbinder.unbind();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initToolbar(getString(R.string.settings));
+    }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        if (key.equals(SharedPrefs._AUTO_REFRESH)) {
+            ListPreference dataPref = (ListPreference) findPreference(SharedPrefs._UPDATE_INTERVAL);
+            if (dataPref.getValue() == null) {
+                dataPref.setValueIndex(0); //set to index of your deafult value
+            } else
+                presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH, false));
+
+
+        } else if (key.equals(SharedPrefs._UPDATE_INTERVAL)) {
+
+            presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH, false));
+        }
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceScreen().getPreferenceManager().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getPreferenceScreen().getPreferenceManager().getSharedPreferences()
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+
+    @Override
+    public void jobStateChanged(boolean enabled) {
+        //
+    }
+
+    @Override
+    public void onJobError(Throwable cause) {
+        LogUtils.write("Error start job:" + cause);
     }
 }

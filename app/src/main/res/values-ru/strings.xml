@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">Погода</string>
+
     <string name="weather">Погода</string>
     <string name="settings">Настройки</string>
     <string name="about">О программе</string>
-    <string name="navigation_menu">Меню</string>
 
+    <string name="pr_auto_refresh">Автообновление</string>
+    <string name="pr_refresh_interval">Интервал обновления</string>
+    <string name="pr_cat_common_prefs">Общие настройки</string>
+
+    <string name="dialog_positive">Ок</string>
+    <string name="dialog_negative">Отмена</string>
+
+    <string name="connection_error">Ошибка соединения. Пожалуйста, проверьте доступ к интернету и повторите операцию</string>
+    <string name="unknown_error">Неизвестная ошибка. Попробуйте повторить операцию</string>
+
+    <string name="pressure">мм рт.ст.</string>
+
+    <string name="moscow">Москва</string>
+
+    <string-array name="update_intervals">
+        <item>15 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>3 часа</item>
+    </string-array>
+
+    <string name="update_at">Обновлено</string>
 </resources>
