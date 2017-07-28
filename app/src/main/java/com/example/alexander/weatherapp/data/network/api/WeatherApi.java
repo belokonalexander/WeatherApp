@@ -9,7 +9,11 @@ import retrofit2.http.Query;
 
 public interface WeatherApi {
 
-    @GET("weather")
+    String URL = "http://api.openweathermap.org/data/2.5/";
+
+    String APP_ID = "2080026a4d30007e744e576b22d43c06";
+
+    @GET("weather?appid=" + APP_ID)
     Single<WeatherModel> weatherByName(@Query("q") String cityName);
 
 }

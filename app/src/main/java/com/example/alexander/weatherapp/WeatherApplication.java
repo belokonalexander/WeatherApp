@@ -8,6 +8,7 @@ import com.evernote.android.job.JobManager;
 import com.example.alexander.weatherapp.di.components.AppComponent;
 import com.example.alexander.weatherapp.di.components.DaggerAppComponent;
 import com.example.alexander.weatherapp.di.modules.AppModule;
+import com.example.alexander.weatherapp.di.modules.NetworkModule;
 import com.example.alexander.weatherapp.job.WeatherJobCreator;
 import com.facebook.stetho.Stetho;
 
@@ -28,7 +29,10 @@ public class WeatherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .networkModule(new NetworkModule(this))
+                .build();
         appComponent.inject(this);
         stethoInit(true);
         jobsInit();
