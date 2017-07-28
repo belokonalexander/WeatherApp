@@ -4,8 +4,11 @@ import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.moxy.strategy.AddToEndWithCompressor;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
+
+import java.util.List;
 
 
 interface WeatherView extends MvpView {
@@ -22,5 +25,7 @@ interface WeatherView extends MvpView {
     @StateStrategyType(value = AddToEndWithCompressor.class, tag = "progress$stop")
     void finishProgress();
 
-
+    @StateStrategyType(value = AddToEndSingleStrategy.class)
+    void showPredictions(List<Prediction> predictions);
 }
+

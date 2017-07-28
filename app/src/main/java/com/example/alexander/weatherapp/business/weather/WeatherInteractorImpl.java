@@ -1,6 +1,9 @@
 package com.example.alexander.weatherapp.business.weather;
 
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
+import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
+import com.example.alexander.weatherapp.data.network.models.places.Prediction;
+import com.example.alexander.weatherapp.data.network.models.places.ResponsePredictions;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.job.JobWrapper;
@@ -20,13 +23,19 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private SharedPrefsRepository sharedPrefsRepository;
     private WeatherModelToCityWeatherMapper weatherMapper;
     private JobWrapper jobWrapper;
+    private GooglePlacesApi googlePlacesApi;
 
 
-    public WeatherInteractorImpl(WeatherApiRepository weatherApiRepository, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository sharedPrefs, JobWrapper jobWrapper) {
+    public WeatherInteractorImpl(WeatherApiRepository weatherApiRepository,
+                                 WeatherModelToCityWeatherMapper mapper,
+                                 SharedPrefsRepository sharedPrefs,
+                                 JobWrapper jobWrapper,
+                                 GooglePlacesApi googlePlacesApi) {
         this.weatherApiRepository = weatherApiRepository;
         this.weatherMapper = mapper;
         this.sharedPrefsRepository = sharedPrefs;
         this.jobWrapper = jobWrapper;
+        this.googlePlacesApi = googlePlacesApi;
     }
 
     @Override
@@ -49,5 +58,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         return Single.concat(tasks).toObservable();
     }
 
-
+    @Override
+    public Single<List<Prediction>> getAutocomplete(String query) {
+        return googlePlacesApi.autocomplete(query, "en")
+                .map(ResponsePredictions::getPredictions);
+    }
 }

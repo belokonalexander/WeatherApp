@@ -1,8 +1,6 @@
 package com.example.alexander.weatherapp;
 
 import android.app.Application;
-import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.evernote.android.job.JobManager;
 import com.example.alexander.weatherapp.di.components.AppComponent;
@@ -17,12 +15,12 @@ import javax.inject.Inject;
 
 public class WeatherApplication extends Application {
 
-    private AppComponent appComponent;
+    private static AppComponent appComponent;
 
     @Inject
     WeatherJobCreator weatherJobCreator;
 
-    public AppComponent getAppComponent() {
+    public static AppComponent getAppComponent() {
         return appComponent;
     }
 
@@ -69,10 +67,4 @@ public class WeatherApplication extends Application {
             Stetho.initialize(initializer);
         }
     }
-
-    @NonNull
-    public static WeatherApplication get(@NonNull Context context) {
-        return (WeatherApplication) context.getApplicationContext();
-    }
-
 }

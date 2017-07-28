@@ -3,6 +3,7 @@ package com.example.alexander.weatherapp.di.modules;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractorImpl;
+import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
@@ -27,8 +28,12 @@ public class WeatherModule {
 
     @Provides
     @WeatherScope
-    WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository sharedPrefs, JobWrapper jw) {
-        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw);
+    WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository,
+                                               WeatherModelToCityWeatherMapper mapper,
+                                               SharedPrefsRepository sharedPrefs,
+                                               JobWrapper jw,
+                                               GooglePlacesApi googlePlacesApi) {
+        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw, googlePlacesApi);
     }
 
 
@@ -37,5 +42,4 @@ public class WeatherModule {
     WeatherPresenter provideWeatherPresenter(WeatherInteractor interactor) {
         return new WeatherPresenter(interactor);
     }
-
 }

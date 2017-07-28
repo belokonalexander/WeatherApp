@@ -3,7 +3,6 @@ package com.example.alexander.weatherapp.di.modules;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.data.network.NetworkUtils;
 import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
@@ -74,22 +73,20 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    WeatherApi provideWeatherApi(Retrofit.Builder builder) {
-        String[] meta = appContext.getResources().getStringArray(R.array.weather_api);
-
-        return builder.baseUrl(meta[0])
-                .build()
-                .create(WeatherApi.class);
-    }
-
-    @Provides
-    @Singleton
     Retrofit.Builder provideRetrofitBuilder(OkHttpClient client) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client);
+    }
 
+    @Provides
+    @Singleton
+    WeatherApi provideWeatherApi(Retrofit.Builder builder) {
+        return builder
+                .baseUrl(WeatherApi.URL)
+                .build()
+                .create(WeatherApi.class);
     }
 
     @Provides
