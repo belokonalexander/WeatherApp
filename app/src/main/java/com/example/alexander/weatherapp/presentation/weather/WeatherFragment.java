@@ -22,6 +22,7 @@ import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.example.alexander.weatherapp.utils.LogUtils;
 import com.example.alexander.weatherapp.views.layouts.WeatherHolder;
+import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
@@ -97,6 +98,11 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
                 .filter(s -> !s.isEmpty())
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe(presenter::getAutocomplete);
+
+        RxAutoCompleteTextView.itemClickEvents(cityAutocomplete)
+                .map(event -> (Prediction) event.view().getAdapter().getItem(event.position()))
+                .map(Prediction::getPlaceId)
+                .subscribe(presenter::setPlace);
     }
 
     private void initViewLogic() {

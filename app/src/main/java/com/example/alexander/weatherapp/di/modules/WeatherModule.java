@@ -5,6 +5,8 @@ import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractorImpl;
 import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
+import com.example.alexander.weatherapp.data.repositories.GooglePlacesApiRepository;
+import com.example.alexander.weatherapp.data.repositories.GooglePlacesApiRepositoryImpl;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepositoryImpl;
@@ -28,12 +30,18 @@ public class WeatherModule {
 
     @Provides
     @WeatherScope
+    GooglePlacesApiRepository provideGoGApiRepository(GooglePlacesApi googlePlacesApi) {
+        return new GooglePlacesApiRepositoryImpl(googlePlacesApi);
+    }
+
+    @Provides
+    @WeatherScope
     WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository,
                                                WeatherModelToCityWeatherMapper mapper,
                                                SharedPrefsRepository sharedPrefs,
                                                JobWrapper jw,
-                                               GooglePlacesApi googlePlacesApi) {
-        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw, googlePlacesApi);
+                                               GooglePlacesApiRepository googlePlacesApiRepository) {
+        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw, googlePlacesApiRepository);
     }
 
 

@@ -90,4 +90,12 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getViewState()::showPredictions));
     }
+
+    void setPlace(String placeId) {
+        disposables.add(weatherInteractor.getLocation(placeId)
+                .flatMap(weatherInteractor::getWeatherByLocation)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
+    }
 }

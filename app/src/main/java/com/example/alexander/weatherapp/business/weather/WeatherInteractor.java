@@ -1,5 +1,6 @@
 package com.example.alexander.weatherapp.business.weather;
 
+import com.example.alexander.weatherapp.data.network.models.places.Location;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
@@ -13,5 +14,10 @@ public interface WeatherInteractor {
 
     Observable<CityWeather> getWeather(boolean fresh);
 
+    Single<CityWeather> getWeatherByLocation(Location location);
+
     Single<List<Prediction>> getAutocomplete(String query);
+
+    Single<Location> getLocation(String placeId);
+
 }

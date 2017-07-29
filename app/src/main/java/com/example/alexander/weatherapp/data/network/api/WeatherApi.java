@@ -16,4 +16,7 @@ public interface WeatherApi {
     @GET("weather?appid=" + APP_ID)
     Single<WeatherModel> weatherByName(@Query("q") String cityName);
 
+    @GET("weather?appid=" + APP_ID)
+    Single<WeatherModel> weatherByLocation(@Query("lat") double latitude,
+                                           @Query("lon") double longitude);
 }

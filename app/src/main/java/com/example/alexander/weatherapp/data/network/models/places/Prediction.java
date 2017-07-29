@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Prediction {
 
-    @SerializedName("id")
-    private String id;
-
     @SerializedName("place_id")
     private String placeId;
 
@@ -16,14 +13,6 @@ public class Prediction {
     @Override
     public String toString() {
         return description;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPlaceId() {

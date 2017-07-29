@@ -79,7 +79,7 @@ public class WeatherHolder extends RelativeLayout {
 
     private void inflateContent() {
 
-        cityTextView.setText(getTranslatableCity(model.getCityId()));
+        cityTextView.setText(model.getCityName());
         weatherIcon.setImageDrawable(getDrawableByStateCode(model.getWeatherState()));
 
         TypedValue pressCoef = new TypedValue();
