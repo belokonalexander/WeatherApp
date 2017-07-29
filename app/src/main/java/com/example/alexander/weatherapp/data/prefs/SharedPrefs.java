@@ -26,23 +26,22 @@ public class SharedPrefs implements SharedPrefsRepository {
     private GsonBuilder gsonBuilder;
     private Context context;
 
-    public SharedPrefs(Context context, GsonBuilder gsonBuilder)
-    {
+    public SharedPrefs(Context context, GsonBuilder gsonBuilder) {
         this.context = context;
         this.gsonBuilder = gsonBuilder;
-        commonSettings = context.getSharedPreferences(COMMON_PREFS,Context.MODE_PRIVATE);
-        commonStore = context.getSharedPreferences(COMMON_STORE,Context.MODE_PRIVATE);
+        commonSettings = context.getSharedPreferences(COMMON_PREFS, Context.MODE_PRIVATE);
+        commonStore = context.getSharedPreferences(COMMON_STORE, Context.MODE_PRIVATE);
     }
 
-    protected void setWeatherResult(CityWeather cityWeather){
+    protected void setWeatherResult(CityWeather cityWeather) {
         SharedPreferences.Editor editor = commonStore.edit();
         editor.putString(_LAST_WEATHER_RESULT, new GsonBuilder().create().toJson(cityWeather));
         editor.apply();
     }
 
-    private CityWeather getWeatherResult(){
+    private CityWeather getWeatherResult() {
         String resultInJson = commonStore.getString(_LAST_WEATHER_RESULT, "");
-        if(resultInJson.length()>0){
+        if (resultInJson.length() > 0) {
             Gson gson = gsonBuilder.create();
             return gson.fromJson(resultInJson, CityWeather.class);
         } else
@@ -50,7 +49,7 @@ public class SharedPrefs implements SharedPrefsRepository {
     }
 
     @Override
-    public boolean getUpdateEnabled(){
+    public boolean getUpdateEnabled() {
         return commonSettings.getBoolean(_AUTO_REFRESH, false);
     }
 
@@ -65,12 +64,9 @@ public class SharedPrefs implements SharedPrefsRepository {
     }
 
     @Override
-    public int getUpdateInterval(){
+    public int getUpdateInterval() {
         return Integer.parseInt(commonSettings.getString(_UPDATE_INTERVAL, context.getString(R.string.default_update_interval)));
     }
-
-
-
 
 
 }

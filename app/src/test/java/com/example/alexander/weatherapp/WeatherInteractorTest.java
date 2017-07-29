@@ -82,10 +82,10 @@ public class WeatherInteractorTest {
         testObserver.assertValue(o -> {
             boolean res = true;
             res &= o.getCityName().equals(apiAnswer[0].getName());
-            res &= o.getHum().equals(apiAnswer[0].getMain().getHumidity());
-            res &= o.getPress().equals(apiAnswer[0].getMain().getPressure());
-            res &= o.getTemp().equals(apiAnswer[0].getMain().getTemp());
-            res &= o.getCityId().equals(apiAnswer[0].getId());
+            res &= o.getHum() == apiAnswer[0].getMain().getHumidity();
+            res &= Double.compare(o.getPress(), apiAnswer[0].getMain().getPressure()) == 0;
+            res &= Double.compare(o.getTemp(), apiAnswer[0].getMain().getTemp()) == 0;
+            res &= o.getCityId() == apiAnswer[0].getId();
             return res;
         });
     }
@@ -104,7 +104,7 @@ public class WeatherInteractorTest {
 
         TestObserver<CityWeather> testObserver = TestObserver.create();
         mockWithCorrectAnswer(weatherApi, (ApiDummyValues.Modify) jsonObject -> {
-            jsonObject.getAsJsonArray("weather").get(0).getAsJsonObject().addProperty("id","603");
+            jsonObject.getAsJsonArray("weather").get(0).getAsJsonObject().addProperty("id", "603");
 
         });
 
