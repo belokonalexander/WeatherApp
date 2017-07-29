@@ -15,7 +15,7 @@ public class WeatherModelToCityWeatherMapper {
 
     public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather() {
         return model -> Single.fromCallable(() ->
-                new CityWeather(model.getSys().getId(), getStateCode(model.getWeather()), model.getName(), model.getMain().getTemp(), model.getMain().getPressure(),
+                new CityWeather(model.getId(), getStateCode(model.getWeather()), model.getName(), model.getMain().getTemp(), model.getMain().getPressure(),
                         model.getMain().getHumidity()));
     }
 

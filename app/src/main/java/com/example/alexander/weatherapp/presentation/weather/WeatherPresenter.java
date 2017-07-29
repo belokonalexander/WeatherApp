@@ -15,7 +15,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-
 @InjectViewState
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
@@ -50,6 +49,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
 
     private void handleFailureGetWeather(Throwable throwable) {
+        throwable.printStackTrace();
         getViewState().onError(throwable);
         getViewState().finishProgress();
     }

@@ -46,7 +46,6 @@ public class WeatherModel {
     private Sys sys;
 
     @SerializedName("id")
-    @Expose
     private int id;
 
     @SerializedName("name")

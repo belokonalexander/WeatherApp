@@ -10,5 +10,7 @@ public interface WeatherApiRepository {
 
     Single<WeatherModel> getWeatherByName(String name);
 
+    Single<WeatherModel> getWeatherById(int id);
+
     Single<WeatherModel> getWeatherByLocation(Location location);
 }

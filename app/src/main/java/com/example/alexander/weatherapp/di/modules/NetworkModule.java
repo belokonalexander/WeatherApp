@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.example.alexander.weatherapp.data.network.NetworkUtils;
 import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
+import com.example.alexander.weatherapp.di.qualifiers.LoggingInterceptor;
 
 import java.net.UnknownHostException;
 
@@ -18,6 +19,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -65,9 +68,18 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(Interceptor interceptor) {
+    @LoggingInterceptor
+    public Interceptor provideLoggingInterceptor() {
+        return new HttpLoggingInterceptor().setLevel(Level.BODY);
+    }
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(Interceptor interceptor,
+                                            @LoggingInterceptor Interceptor loggingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(loggingInterceptor)
                 .build();
     }
 

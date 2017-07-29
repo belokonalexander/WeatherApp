@@ -41,7 +41,10 @@ class WeatherJob extends Job {
 
         final boolean[] flag = {false};
 
-        weatherApi.weatherByName("Moscow")
+        sharedPrefs
+                .getCityWeather()
+                .map(CityWeather::getCityId)
+                .flatMap(weatherApi::weatherById)
                 .flatMap(mapper.toCityWeather())
                 .subscribe(new DisposableSingleObserver<CityWeather>() {
                     @Override

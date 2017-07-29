@@ -21,6 +21,11 @@ public class WeatherApiRepositoryImpl implements WeatherApiRepository {
     }
 
     @Override
+    public Single<WeatherModel> getWeatherById(int id) {
+        return weatherApi.weatherById(id);
+    }
+
+    @Override
     public Single<WeatherModel> getWeatherByLocation(Location location) {
         return weatherApi.weatherByLocation(location.getLatitude(), location.getLongitude());
     }

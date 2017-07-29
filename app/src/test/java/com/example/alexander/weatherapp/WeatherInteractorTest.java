@@ -85,7 +85,7 @@ public class WeatherInteractorTest {
             res &= o.getHum().equals(apiAnswer[0].getMain().getHumidity());
             res &= o.getPress().equals(apiAnswer[0].getMain().getPressure());
             res &= o.getTemp().equals(apiAnswer[0].getMain().getTemp());
-            res &= o.getCityId().equals(apiAnswer[0].getSys().getId());
+            res &= o.getCityId().equals(apiAnswer[0].getId());
             return res;
         });
     }

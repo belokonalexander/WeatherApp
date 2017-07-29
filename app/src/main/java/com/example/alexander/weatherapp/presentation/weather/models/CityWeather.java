@@ -3,7 +3,6 @@ package com.example.alexander.weatherapp.presentation.weather.models;
 import java.io.Serializable;
 import java.util.Date;
 
-
 public class CityWeather implements Serializable {
 
     public static final int STATE_UNKNOWN = -1;
@@ -17,12 +16,12 @@ public class CityWeather implements Serializable {
     private String cityName;
     private Integer cityId;
     private Double temp;
-    private Integer press;
+    private Double press;
     private Integer hum;
     private Integer weatherState;
     private Date createdDate;
 
-    public CityWeather(Integer cityId, Integer stateCode, String cityName, Double temp, Integer press, Integer hum) {
+    public CityWeather(Integer cityId, Integer stateCode, String cityName, Double temp, Double press, Integer hum) {
         this.cityName = cityName;
         this.temp = temp;
         this.press = press;
@@ -33,7 +32,7 @@ public class CityWeather implements Serializable {
     }
 
     public static CityWeather getNullable() {
-        return new CityWeather(-1, -1, "", -1d, -1, -1);
+        return new CityWeather(-1, -1, "", -1d, -1d, -1);
     }
 
     public static boolean isNullable(CityWeather instance) {
@@ -48,7 +47,7 @@ public class CityWeather implements Serializable {
         return temp;
     }
 
-    public Integer getPress() {
+    public Double getPress() {
         return press;
     }
 
