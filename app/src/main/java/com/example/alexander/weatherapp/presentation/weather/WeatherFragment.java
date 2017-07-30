@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 public class WeatherFragment extends BaseFragment implements WeatherView {
@@ -52,6 +53,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     AutoCompleteTextView cityAutocomplete;
 
     private Toast toast;
+
+    private CompositeDisposable disposables;
 
     @ProvidePresenter
     WeatherPresenter provideWeatherPresenter() {
@@ -92,17 +95,28 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         super.onActivityCreated(savedInstanceState);
         initToolbar(getString(R.string.weather));
 
-        RxTextView.textChanges(cityAutocomplete)
+        disposables = new CompositeDisposable();
+
+        disposables.add(RxTextView.textChanges(cityAutocomplete)
                 .map(CharSequence::toString)
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .debounce(500, TimeUnit.MILLISECONDS)
-                .subscribe(presenter::getAutocomplete);
+                .subscribe(presenter::getAutocomplete));
 
-        RxAutoCompleteTextView.itemClickEvents(cityAutocomplete)
+        disposables.add(RxAutoCompleteTextView.itemClickEvents(cityAutocomplete)
                 .map(event -> (Prediction) event.view().getAdapter().getItem(event.position()))
                 .map(Prediction::getPlaceId)
-                .subscribe(presenter::setPlace);
+                .subscribe(presenter::setPlace));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (disposables != null) {
+            disposables.dispose();
+        }
     }
 
     private void initViewLogic() {
