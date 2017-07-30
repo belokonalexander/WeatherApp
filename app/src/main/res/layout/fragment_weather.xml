@@ -26,7 +26,10 @@
                 android:id="@+id/city_autocomplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter the city"
+                android:hint="@string/enter_the_city"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLines="1"
                 tools:text="Some city" />
 
         </LinearLayout>

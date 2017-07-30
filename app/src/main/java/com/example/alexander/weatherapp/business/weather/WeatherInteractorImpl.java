@@ -1,5 +1,8 @@
 package com.example.alexander.weatherapp.business.weather;
 
+import android.content.Context;
+
+import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.data.network.models.places.Location;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
@@ -23,18 +26,21 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private final GooglePlacesApiRepository googlePlacesApiRepository;
     private final WeatherModelToCityWeatherMapper weatherMapper;
     private final JobWrapper jobWrapper;
+    private final Context context;
 
 
     public WeatherInteractorImpl(WeatherApiRepository weatherApiRepository,
                                  WeatherModelToCityWeatherMapper mapper,
                                  SharedPrefsRepository sharedPrefs,
                                  JobWrapper jobWrapper,
-                                 GooglePlacesApiRepository googlePlacesApiRepository) {
+                                 GooglePlacesApiRepository googlePlacesApiRepository,
+                                 Context context) {
         this.weatherApiRepository = weatherApiRepository;
         this.weatherMapper = mapper;
         this.sharedPrefsRepository = sharedPrefs;
         this.jobWrapper = jobWrapper;
         this.googlePlacesApiRepository = googlePlacesApiRepository;
+        this.context = context;
     }
 
     @Override
@@ -48,6 +54,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
         Single<CityWeather> remoteDataWeather = localDataWeather
                 .map(CityWeather::getCityId)
+                .map(id -> id <= 0 ? context.getResources().getInteger(R.integer.default_city_id) : id)
                 .flatMap(weatherApiRepository::getWeatherById)
                 .flatMap(weatherMapper.toCityWeather())
                 .doOnSuccess(cityWeather -> {
@@ -70,11 +77,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
 
     @Override
     public Single<List<Prediction>> getAutocomplete(String query) {
-        return googlePlacesApiRepository.getAutocomplete(query, "en");
+        return googlePlacesApiRepository.getAutocomplete(query);
     }
 
     @Override
     public Single<Location> getLocation(String placeId) {
-        return googlePlacesApiRepository.getLocation(placeId, "en");
+        return googlePlacesApiRepository.getLocation(placeId);
     }
 }

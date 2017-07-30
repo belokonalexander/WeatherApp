@@ -1,5 +1,7 @@
 package com.example.alexander.weatherapp.di.modules;
 
+import android.content.Context;
+
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractorImpl;
@@ -40,8 +42,9 @@ public class WeatherModule {
                                                WeatherModelToCityWeatherMapper mapper,
                                                SharedPrefsRepository sharedPrefs,
                                                JobWrapper jw,
-                                               GooglePlacesApiRepository googlePlacesApiRepository) {
-        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw, googlePlacesApiRepository);
+                                               GooglePlacesApiRepository googlePlacesApiRepository,
+                                               Context context) {
+        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw, googlePlacesApiRepository, context);
     }
 
 

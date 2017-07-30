@@ -14,11 +14,9 @@ public interface GooglePlacesApi {
 
     String API_KEY = "AIzaSyAVMmeKPsNDmXehQ10hxqWDPoztpAHpOcQ";
 
-    @GET("autocomplete/json?key=" + API_KEY)
-    Single<PredictionsResponse> getAutocomplete(@Query("input") String input,
-                                                @Query("language") String lang);
+    @GET("autocomplete/json?type=(cities)&key=" + API_KEY)
+    Single<PredictionsResponse> getAutocomplete(@Query("input") String input);
 
     @GET("details/json?key=" + API_KEY)
-    Single<DetailsResponse> getDetails(@Query("placeid") String placeId,
-                                       @Query("language") String lang);
+    Single<DetailsResponse> getDetails(@Query("placeid") String placeId);
 }

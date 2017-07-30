@@ -9,7 +9,7 @@ import io.reactivex.Single;
 
 public interface GooglePlacesApiRepository {
 
-    Single<List<Prediction>> getAutocomplete(String query, String lang);
+    Single<List<Prediction>> getAutocomplete(String query);
 
-    Single<Location> getLocation(String placeId, String lang);
+    Single<Location> getLocation(String placeId);
 }

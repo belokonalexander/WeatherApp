@@ -29,4 +29,6 @@
     </string-array>
 
     <string name="update_at">Обновлено</string>
+    <string name="enter_the_city">Введите город</string>
+
 </resources>

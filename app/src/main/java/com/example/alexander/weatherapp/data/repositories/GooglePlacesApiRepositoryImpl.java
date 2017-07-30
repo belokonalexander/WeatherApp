@@ -21,14 +21,14 @@ public class GooglePlacesApiRepositoryImpl implements GooglePlacesApiRepository 
     }
 
     @Override
-    public Single<List<Prediction>> getAutocomplete(String query, String lang) {
-        return googlePlacesApi.getAutocomplete(query, lang)
+    public Single<List<Prediction>> getAutocomplete(String query) {
+        return googlePlacesApi.getAutocomplete(query)
                 .map(PredictionsResponse::getPredictions);
     }
 
     @Override
-    public Single<Location> getLocation(String placeId, String lang) {
-        return googlePlacesApi.getDetails(placeId, lang)
+    public Single<Location> getLocation(String placeId) {
+        return googlePlacesApi.getDetails(placeId)
                 .map(DetailsResponse::getPlace)
                 .map(Place::getGeometry)
                 .map(Geometry::getLocation);
