@@ -102,7 +102,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
 
     //mockito for unit tests
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testCompile 'org.mockito:mockito-core:2.8.47'
 
     //moxy
     compile 'com.arello-mobile:moxy:1.5.3'

@@ -6,6 +6,8 @@ import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeath
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 
+import org.greenrobot.eventbus.EventBus;
+
 
 public class WeatherJobCreator implements JobCreator {
 
@@ -13,13 +15,14 @@ public class WeatherJobCreator implements JobCreator {
     private WeatherApi weatherApi;
     private WeatherModelToCityWeatherMapper mapper;
     private SharedPrefsRepository prefs;
+    private EventBus eventBus;
 
 
-    public WeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository prefs) {
+    public WeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository prefs, EventBus eventBus) {
         this.weatherApi = weatherApi;
         this.mapper = mapper;
         this.prefs = prefs;
-
+        this.eventBus = eventBus;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class WeatherJobCreator implements JobCreator {
         switch (tag) {
             case WeatherJob.TAG:
                 //error fix Job for tag GET_WEATHER_JOB was already run, a creator should always create a new Job instance
-                return new WeatherJob(weatherApi, mapper, prefs);
+                return new WeatherJob(weatherApi, mapper, prefs, eventBus);
             default:
                 return null;
         }

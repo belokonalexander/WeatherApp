@@ -8,6 +8,8 @@ import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.google.gson.GsonBuilder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -46,5 +48,11 @@ public class AppModule {
     @Provides
     WeatherModelToCityWeatherMapper provideMapper() {
         return new WeatherModelToCityWeatherMapper();
+    }
+
+    @Provides
+    @Singleton
+    EventBus provideEventBus() {
+        return EventBus.getDefault();
     }
 }
