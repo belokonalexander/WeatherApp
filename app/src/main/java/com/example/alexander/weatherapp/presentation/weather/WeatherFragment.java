@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -14,15 +16,22 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.baseviews.BaseFragment;
+import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.example.alexander.weatherapp.utils.LogUtils;
 import com.example.alexander.weatherapp.views.layouts.WeatherHolder;
+import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 public class WeatherFragment extends BaseFragment implements WeatherView {
@@ -40,7 +49,12 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.city_autocomplete)
+    AutoCompleteTextView cityAutocomplete;
+
     private Toast toast;
+
+    private CompositeDisposable disposables;
 
     @ProvidePresenter
     WeatherPresenter provideWeatherPresenter() {
@@ -49,7 +63,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        WeatherApplication.get(getContext()).getAppComponent().plus(new WeatherModule()).inject(this);
+        WeatherApplication.getAppComponent().plus(new WeatherModule()).inject(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -80,6 +94,29 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initToolbar(getString(R.string.weather));
+
+        disposables = new CompositeDisposable();
+
+        disposables.add(RxTextView.textChanges(cityAutocomplete)
+                .map(CharSequence::toString)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe(presenter::getAutocomplete));
+
+        disposables.add(RxAutoCompleteTextView.itemClickEvents(cityAutocomplete)
+                .map(event -> (Prediction) event.view().getAdapter().getItem(event.position()))
+                .map(Prediction::getPlaceId)
+                .subscribe(presenter::setPlace));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (disposables != null) {
+            disposables.dispose();
+        }
     }
 
     private void initViewLogic() {
@@ -112,5 +149,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         LogUtils.write("finishProgress");
     }
 
-
+    @Override
+    public void showPredictions(List<Prediction> predictions) {
+        ArrayAdapter<Prediction> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, predictions);
+        cityAutocomplete.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 }

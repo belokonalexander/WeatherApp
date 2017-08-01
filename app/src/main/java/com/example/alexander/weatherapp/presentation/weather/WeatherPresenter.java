@@ -11,19 +11,21 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
 
 @InjectViewState
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
-    private WeatherInteractor weatherInteractor;
-    private Disposable getWeatherDisposable;
+    private final WeatherInteractor weatherInteractor;
+    private final CompositeDisposable disposables;
+    private Disposable weatherDisposable;
 
 
     public WeatherPresenter(WeatherInteractor weatherInteractor) {
         this.weatherInteractor = weatherInteractor;
+        disposables = new CompositeDisposable();
     }
 
     @Override
@@ -38,7 +40,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        getWeatherDisposable.dispose();
+        disposables.dispose();
     }
 
     private void handleSuccessGetWeather(CityWeather weather) {
@@ -47,6 +49,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
 
     private void handleFailureGetWeather(Throwable throwable) {
+        throwable.printStackTrace();
         getViewState().onError(throwable);
         getViewState().finishProgress();
     }
@@ -55,11 +58,12 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     void getWeather(boolean loud) {
         //don't start task if is already executing
         getViewState().startProgress(loud);
-        if (getWeatherDisposable == null || getWeatherDisposable.isDisposed()) {
-            getWeatherDisposable = weatherInteractor.getWeather(true)
-                    .subscribeOn(Schedulers.newThread())
+        if (weatherDisposable == null || weatherDisposable.isDisposed()) {
+            weatherDisposable = weatherInteractor.getWeather(true)
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread(), true)
                     .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete);
+            disposables.add(weatherDisposable);
         }
     }
 
@@ -74,10 +78,24 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     private void updateFromStore() {
-        weatherInteractor.getWeather(false)
-                .subscribeOn(Schedulers.newThread())
+        disposables.add(weatherInteractor.getWeather(false)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete);
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete));
     }
 
+    void getAutocomplete(String query) {
+        disposables.add(weatherInteractor.getAutocomplete(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getViewState()::showPredictions));
+    }
+
+    void setPlace(String placeId) {
+        disposables.add(weatherInteractor.getLocation(placeId)
+                .flatMap(weatherInteractor::getWeatherByLocation)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
+    }
 }

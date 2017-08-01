@@ -5,7 +5,6 @@
     <string name="api_key_alias" translatable="false">appid</string>
 
 
-
     <string name="weather">Weather</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
@@ -27,6 +26,7 @@
 
 
     <string name="moscow">Moscow</string>
+    <integer name="default_city_id">524901</integer>
 
 
     <string-array name="update_intervals">
@@ -37,6 +37,7 @@
     </string-array>
 
     <string name="update_at">Updated</string>
+    <string name="enter_the_city">Enter the city</string>
 
 
 </resources>

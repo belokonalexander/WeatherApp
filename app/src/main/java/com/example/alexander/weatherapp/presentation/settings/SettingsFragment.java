@@ -36,7 +36,7 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        WeatherApplication.get(getContext()).getAppComponent().plus(new SettingsModule()).inject(this);
+        WeatherApplication.getAppComponent().plus(new SettingsModule()).inject(this);
         super.onCreate(savedInstanceState);
     }
 

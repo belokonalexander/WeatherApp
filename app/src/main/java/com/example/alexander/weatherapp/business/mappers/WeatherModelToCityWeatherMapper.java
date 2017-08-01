@@ -15,11 +15,11 @@ public class WeatherModelToCityWeatherMapper {
 
     public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather() {
         return model -> Single.fromCallable(() ->
-                new CityWeather(model.getSys().getId(), getStateCode(model.getWeather()), model.getName(), model.getMain().getTemp(), model.getMain().getPressure(),
-                        model.getMain().getHumidity()));
+                new CityWeather(model.getId(), getStateCode(model.getWeather()), model.getName(),
+                        model.getMain().getTemp(), model.getMain().getPressure(), model.getMain().getHumidity()));
     }
 
-    private Integer getStateCode(List<Weather> weathers) {
+    private int getStateCode(List<Weather> weathers) {
 
         int code = CityWeather.STATE_UNKNOWN;
 
@@ -46,5 +46,4 @@ public class WeatherModelToCityWeatherMapper {
 
         return code;
     }
-
 }

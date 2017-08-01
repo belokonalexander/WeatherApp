@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.alexander.weatherapp.baseviews.BaseFragment;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
+import com.example.alexander.weatherapp.baseviews.BaseFragment;
 import com.example.alexander.weatherapp.di.modules.AboutModule;
 
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ public class AboutFragment extends BaseFragment implements AboutView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        WeatherApplication.get(getContext()).getAppComponent().plus(new AboutModule()).inject(this);
+        WeatherApplication.getAppComponent().plus(new AboutModule()).inject(this);
         super.onCreate(savedInstanceState);
     }
 
