@@ -27,12 +27,13 @@ class WeatherJob extends Job {
     private WeatherApi weatherApi;
     private WeatherModelToCityWeatherMapper mapper;
     private SharedPrefsRepository sharedPrefs;
+    private EventBus eventBus;
 
-    WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository sharedPrefs) {
-
+    WeatherJob(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository sharedPrefs, EventBus eventBus) {
         this.weatherApi = weatherApi;
         this.mapper = mapper;
         this.sharedPrefs = sharedPrefs;
+        this.eventBus = eventBus;
     }
 
     @NonNull
@@ -51,7 +52,7 @@ class WeatherJob extends Job {
                     public void onSuccess(@io.reactivex.annotations.NonNull CityWeather cityWeather) {
                         LogUtils.writeLogCache(getContext(), WeatherJob.this.getClass(), " Android-job got new data: " + cityWeather);
                         sharedPrefs.saveCityWeather(cityWeather);
-                        EventBus.getDefault().post(new StoreUpdatedEvent(SharedPrefs._LAST_WEATHER_RESULT));
+                        eventBus.post(new StoreUpdatedEvent(SharedPrefs._LAST_WEATHER_RESULT));
                         flag[0] = true;
                     }
 

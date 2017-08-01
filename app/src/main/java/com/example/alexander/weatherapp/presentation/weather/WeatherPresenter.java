@@ -19,19 +19,21 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     private final WeatherInteractor weatherInteractor;
+    private final EventBus eventBus;
     private final CompositeDisposable disposables;
     private Disposable weatherDisposable;
 
 
-    public WeatherPresenter(WeatherInteractor weatherInteractor) {
+    public WeatherPresenter(WeatherInteractor weatherInteractor, EventBus eventBus) {
         this.weatherInteractor = weatherInteractor;
+        this.eventBus = eventBus;
         disposables = new CompositeDisposable();
     }
 
     @Override
-    protected void onFirstViewAttach() {
+    public void onFirstViewAttach() {
         super.onFirstViewAttach();
-        EventBus.getDefault().register(this);
+        eventBus.register(this);
         getWeather(false);
 
     }
@@ -39,7 +41,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        eventBus.unregister(this);
         disposables.dispose();
     }
 
@@ -55,7 +57,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
 
-    void getWeather(boolean loud) {
+    public void getWeather(boolean loud) {
         //don't start task if is already executing
         getViewState().startProgress(loud);
         if (weatherDisposable == null || weatherDisposable.isDisposed()) {
@@ -84,14 +86,14 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete));
     }
 
-    void getAutocomplete(String query) {
+    public void getAutocomplete(String query) {
         disposables.add(weatherInteractor.getAutocomplete(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getViewState()::showPredictions));
+                .subscribe(getViewState()::showPredictions, this::handleFailureGetWeather));
     }
 
-    void setPlace(String placeId) {
+    public void setPlace(String placeId) {
         disposables.add(weatherInteractor.getLocation(placeId)
                 .flatMap(weatherInteractor::getWeatherByLocation)
                 .subscribeOn(Schedulers.io())

@@ -9,6 +9,8 @@ import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.job.JobWrapper;
 import com.example.alexander.weatherapp.job.WeatherJobCreator;
 
+import org.greenrobot.eventbus.EventBus;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -22,8 +24,11 @@ public class JobsModule {
     }
 
     @Provides
-    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi, WeatherModelToCityWeatherMapper mapper, SharedPrefsRepository prefs) {
-        return new WeatherJobCreator(weatherApi, mapper, prefs);
+    WeatherJobCreator provideWeatherJobCreator(WeatherApi weatherApi,
+                                               WeatherModelToCityWeatherMapper mapper,
+                                               SharedPrefsRepository prefs,
+                                               EventBus eventBus) {
+        return new WeatherJobCreator(weatherApi, mapper, prefs, eventBus);
     }
 
     @Provides
