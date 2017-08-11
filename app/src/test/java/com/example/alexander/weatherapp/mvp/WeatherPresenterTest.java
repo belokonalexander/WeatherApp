@@ -1,11 +1,11 @@
 package com.example.alexander.weatherapp.mvp;
 
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.models.places.Location;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.presentation.weather.WeatherPresenter;
 import com.example.alexander.weatherapp.presentation.weather.WeatherView$$State;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
@@ -49,7 +49,7 @@ public class WeatherPresenterTest {
         presenter = new WeatherPresenter(weatherInteractor, eventBus);
         presenter.setViewState(viewState);
 
-        moscowWeather = new CityWeather(524901, CityWeather.STATE_CLEAR, "Moscow", 20, 1000, 80);
+        moscowWeather = CityWeather.newInstance(524901, CityWeather.STATE_CLEAR, "Moscow", 20, 1000, 80);
 
         RxAndroidPlugins.setInitMainThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
         RxJavaPlugins.setIoSchedulerHandler(scheduler -> Schedulers.trampoline());

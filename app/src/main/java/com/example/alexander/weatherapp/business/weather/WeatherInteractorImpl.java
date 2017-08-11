@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.models.places.Location;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.data.repositories.GooglePlacesApiRepository;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.job.JobWrapper;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import java.util.List;
 

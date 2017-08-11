@@ -3,8 +3,8 @@ package com.example.alexander.weatherapp.presentation.weather;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.events.StoreUpdatedEvent;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

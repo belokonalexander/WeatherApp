@@ -5,11 +5,11 @@ import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.data.prefs.SharedPrefs;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.events.StoreUpdatedEvent;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.example.alexander.weatherapp.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;

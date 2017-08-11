@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.alexander.weatherapp.BuildConfig;
 import com.example.alexander.weatherapp.R;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.utils.LogUtils;
 import com.example.alexander.weatherapp.utils.TimeUtils;
 
@@ -22,12 +22,12 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_CLEAR;
-import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_CLOUD;
-import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_RAIN;
-import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_SNOW;
-import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_THUNDERSTORM;
-import static com.example.alexander.weatherapp.presentation.weather.models.CityWeather.STATE_UNKNOWN;
+import static com.example.alexander.weatherapp.data.local.model.CityWeather.STATE_CLEAR;
+import static com.example.alexander.weatherapp.data.local.model.CityWeather.STATE_CLOUD;
+import static com.example.alexander.weatherapp.data.local.model.CityWeather.STATE_RAIN;
+import static com.example.alexander.weatherapp.data.local.model.CityWeather.STATE_SNOW;
+import static com.example.alexander.weatherapp.data.local.model.CityWeather.STATE_THUNDERSTORM;
+import static com.example.alexander.weatherapp.data.local.model.CityWeather.STATE_UNKNOWN;
 
 
 /**

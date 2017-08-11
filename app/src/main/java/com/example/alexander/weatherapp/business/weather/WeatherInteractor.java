@@ -1,8 +1,8 @@
 package com.example.alexander.weatherapp.business.weather;
 
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.models.places.Location;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import java.util.List;
 

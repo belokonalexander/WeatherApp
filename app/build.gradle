@@ -130,4 +130,9 @@ dependencies {
     compile "com.arello-mobile:moxy:$moxy_version"
     compile "com.arello-mobile:moxy-app-compat:$moxy_version"
     annotationProcessor "com.arello-mobile:moxy-compiler:$moxy_version"
+
+    // Requery
+    compile "io.requery:requery:$requery_version"
+    compile "io.requery:requery-android:$requery_version"
+    annotationProcessor "io.requery:requery-processor:$requery_version"
 }

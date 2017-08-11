@@ -16,10 +16,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.baseviews.BaseFragment;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.example.alexander.weatherapp.utils.LogUtils;
 import com.example.alexander.weatherapp.views.layouts.WeatherHolder;
 import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
@@ -52,8 +52,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @BindView(R.id.city_autocomplete)
     AutoCompleteTextView cityAutocomplete;
 
-    private Toast toast;
-
     private CompositeDisposable disposables;
 
     @ProvidePresenter
@@ -66,7 +64,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         WeatherApplication.getAppComponent().plus(new WeatherModule()).inject(this);
         super.onCreate(savedInstanceState);
     }
-
 
     @Nullable
     @Override
@@ -83,11 +80,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toast = Toast.makeText(getContext(), null, Toast.LENGTH_LONG);
-
-        initViewLogic();
-
-
+        refreshLayout.setOnRefreshListener(() -> presenter.getWeather(true));
     }
 
     @Override
@@ -119,15 +112,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         }
     }
 
-    private void initViewLogic() {
-        refreshLayout.setOnRefreshListener(() -> presenter.getWeather(true));
-    }
-
     @Override
     public void onError(Throwable cause) {
         ViewException viewException = new ViewException(getContext(), cause);
-        toast.setText(viewException.getDetailMessage());
-        toast.show();
+        Toast.makeText(getContext(), viewException.getDetailMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override

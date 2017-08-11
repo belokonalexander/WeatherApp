@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.alexander.weatherapp.R;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,7 +33,7 @@ public class SharedPrefs implements SharedPrefsRepository {
         commonStore = context.getSharedPreferences(COMMON_STORE, Context.MODE_PRIVATE);
     }
 
-    protected void setWeatherResult(CityWeather cityWeather) {
+    private void setWeatherResult(CityWeather cityWeather) {
         SharedPreferences.Editor editor = commonStore.edit();
         editor.putString(_LAST_WEATHER_RESULT, new GsonBuilder().create().toJson(cityWeather));
         editor.apply();
@@ -67,6 +67,4 @@ public class SharedPrefs implements SharedPrefsRepository {
     public int getUpdateInterval() {
         return Integer.parseInt(commonSettings.getString(_UPDATE_INTERVAL, context.getString(R.string.default_update_interval)));
     }
-
-
 }
