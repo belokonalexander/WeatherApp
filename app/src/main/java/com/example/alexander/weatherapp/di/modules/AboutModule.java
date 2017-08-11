@@ -15,5 +15,4 @@ public class AboutModule {
     AboutPresenter provideAboutPresenter() {
         return new AboutPresenter();
     }
-
 }

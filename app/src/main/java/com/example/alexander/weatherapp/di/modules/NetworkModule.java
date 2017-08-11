@@ -7,6 +7,7 @@ import com.example.alexander.weatherapp.data.network.NetworkUtils;
 import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.di.qualifiers.LoggingInterceptor;
+import com.google.gson.Gson;
 
 import java.net.UnknownHostException;
 
@@ -85,10 +86,10 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Retrofit.Builder provideRetrofitBuilder(OkHttpClient client) {
+    Retrofit.Builder provideRetrofitBuilder(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client);
     }
 

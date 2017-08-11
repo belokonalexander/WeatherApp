@@ -114,8 +114,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void onError(Throwable cause) {
-        ViewException viewException = new ViewException(getContext(), cause);
-        Toast.makeText(getContext(), viewException.getDetailMessage(), Toast.LENGTH_LONG).show();
+        String message = new ViewException(getContext(), cause).getDetailMessage();
+        if (message != null) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

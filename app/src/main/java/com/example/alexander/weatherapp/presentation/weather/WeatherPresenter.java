@@ -51,7 +51,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
 
     private void handleFailureGetWeather(Throwable throwable) {
-        throwable.printStackTrace();
         getViewState().onError(throwable);
         getViewState().finishProgress();
     }

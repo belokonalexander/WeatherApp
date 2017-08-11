@@ -1,15 +1,13 @@
 package com.example.alexander.weatherapp.di.modules;
 
-import android.content.Context;
-
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractorImpl;
+import com.example.alexander.weatherapp.data.local.WeatherLocalRepository;
 import com.example.alexander.weatherapp.data.network.api.GooglePlacesApi;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.data.repositories.GooglePlacesApiRepository;
 import com.example.alexander.weatherapp.data.repositories.GooglePlacesApiRepositoryImpl;
-import com.example.alexander.weatherapp.data.repositories.SharedPrefsRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepositoryImpl;
 import com.example.alexander.weatherapp.di.scopes.WeatherScope;
@@ -42,11 +40,10 @@ public class WeatherModule {
     @WeatherScope
     WeatherInteractor provideWeatherInteractor(WeatherApiRepository repository,
                                                WeatherModelToCityWeatherMapper mapper,
-                                               SharedPrefsRepository sharedPrefs,
+                                               WeatherLocalRepository weatherLocalRepository,
                                                JobWrapper jw,
-                                               GooglePlacesApiRepository googlePlacesApiRepository,
-                                               Context context) {
-        return new WeatherInteractorImpl(repository, mapper, sharedPrefs, jw, googlePlacesApiRepository, context);
+                                               GooglePlacesApiRepository googlePlacesApiRepository) {
+        return new WeatherInteractorImpl(repository, mapper, weatherLocalRepository, jw, googlePlacesApiRepository);
     }
 
 
