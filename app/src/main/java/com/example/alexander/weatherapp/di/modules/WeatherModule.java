@@ -12,6 +12,7 @@ import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepositoryImpl;
 import com.example.alexander.weatherapp.di.scopes.WeatherScope;
 import com.example.alexander.weatherapp.job.JobWrapper;
+import com.example.alexander.weatherapp.presentation.add_city.AddCityPresenter;
 import com.example.alexander.weatherapp.presentation.weather.WeatherPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,10 +20,8 @@ import org.greenrobot.eventbus.EventBus;
 import dagger.Module;
 import dagger.Provides;
 
-
 @Module
 public class WeatherModule {
-
 
     @Provides
     @WeatherScope
@@ -32,7 +31,7 @@ public class WeatherModule {
 
     @Provides
     @WeatherScope
-    GooglePlacesApiRepository provideGoGApiRepository(GooglePlacesApi googlePlacesApi) {
+    GooglePlacesApiRepository provideGooglePlacesApiRepository(GooglePlacesApi googlePlacesApi) {
         return new GooglePlacesApiRepositoryImpl(googlePlacesApi);
     }
 
@@ -48,8 +47,12 @@ public class WeatherModule {
 
 
     @Provides
-    @WeatherScope
     WeatherPresenter provideWeatherPresenter(WeatherInteractor interactor, EventBus eventBus) {
         return new WeatherPresenter(interactor, eventBus);
+    }
+
+    @Provides
+    AddCityPresenter provideAddCityPresenter(WeatherInteractor weatherInteractor) {
+        return new AddCityPresenter(weatherInteractor);
     }
 }

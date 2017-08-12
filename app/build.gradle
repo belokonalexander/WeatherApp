@@ -136,4 +136,7 @@ dependencies {
     compile "io.requery:requery:$requery_version"
     compile "io.requery:requery-android:$requery_version"
     annotationProcessor "io.requery:requery-processor:$requery_version"
+
+    // SearchBar
+    compile "com.github.mancj:MaterialSearchBar:$materialsearchbar_version"
 }

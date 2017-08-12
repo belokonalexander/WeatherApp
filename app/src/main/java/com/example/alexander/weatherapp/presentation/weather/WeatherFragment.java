@@ -61,7 +61,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        WeatherApplication.getAppComponent().plus(new WeatherModule()).inject(this);
+        WeatherApplication
+                .getAppComponent()
+                .plus(new WeatherModule())
+                .inject(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -124,7 +127,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void showWeather(CityWeather weatherModel) {
         weatherHolder.setModelAndShow(weatherModel);
     }
-
 
     @Override
     public void startProgress(boolean loud) {

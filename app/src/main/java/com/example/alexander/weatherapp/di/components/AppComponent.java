@@ -7,6 +7,7 @@ import com.example.alexander.weatherapp.di.modules.JobsModule;
 import com.example.alexander.weatherapp.di.modules.NetworkModule;
 import com.example.alexander.weatherapp.di.modules.SettingsModule;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
+import com.example.alexander.weatherapp.presentation.add_city.AddCityPresenter;
 
 import javax.inject.Singleton;
 
@@ -27,4 +28,6 @@ public interface AppComponent {
     WeatherComponent plus(WeatherModule weatherModule);
 
     void inject(WeatherApplication app);
+
+    void inject(AddCityPresenter addCityPresenter);
 }

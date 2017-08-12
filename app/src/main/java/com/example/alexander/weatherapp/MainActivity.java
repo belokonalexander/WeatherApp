@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.alexander.weatherapp.presentation.about.AboutFragment;
+import com.example.alexander.weatherapp.presentation.add_city.AddCityActivity;
 import com.example.alexander.weatherapp.presentation.settings.SettingsFragment;
 import com.example.alexander.weatherapp.presentation.weather.WeatherFragment;
 import com.mikepenz.materialdrawer.Drawer;
@@ -104,12 +105,19 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
             case R.id.weather:
                 fragmentClass = WeatherFragment.class;
                 break;
+            case R.id.add_city:
+                AddCityActivity.start(this);
+                break;
             case R.id.settings:
                 fragmentClass = SettingsFragment.class;
                 break;
             case R.id.about:
                 fragmentClass = AboutFragment.class;
                 break;
+        }
+
+        if (fragmentClass == null) {
+            return;
         }
 
         //NPE, if will dummy menu item
@@ -127,11 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 .replace(R.id.main_content, fragment, tag)
                 .commit();
 
-
         navigation.setSelection(id, false);
-
     }
-
 
     @Override
     public void onBackPressed() {

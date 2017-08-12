@@ -13,10 +13,10 @@ import java.util.List;
 
 interface WeatherView extends MvpView {
 
-    @StateStrategyType(value = SkipStrategy.class)
+    @StateStrategyType(SkipStrategy.class)
     void onError(Throwable cause);
 
-    @StateStrategyType(value = AddToEndSingleStrategy.class)
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void showWeather(CityWeather weatherModel);
 
     @StateStrategyType(value = AddToEndWithCompressor.class, tag = "progress$do")
@@ -25,6 +25,6 @@ interface WeatherView extends MvpView {
     @StateStrategyType(value = AddToEndWithCompressor.class, tag = "progress$stop")
     void finishProgress();
 
-    @StateStrategyType(value = AddToEndSingleStrategy.class)
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void showPredictions(List<Prediction> predictions);
 }

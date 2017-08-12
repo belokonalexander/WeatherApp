@@ -6,6 +6,7 @@
 
 
     <string name="weather">Weather</string>
+    <string name="add_city">Add city</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
 
