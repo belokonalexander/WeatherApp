@@ -1,8 +1,8 @@
 package com.example.alexander.weatherapp.business.mappers;
 
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.models.weather.Weather;
 import com.example.alexander.weatherapp.data.network.models.weather.WeatherModel;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import java.util.List;
 
@@ -13,10 +13,15 @@ import io.reactivex.functions.Function;
 
 public class WeatherModelToCityWeatherMapper {
 
-    public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather() {
+    public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather(String cityName) {
         return model -> Single.fromCallable(() ->
-                new CityWeather(model.getId(), getStateCode(model.getWeather()), model.getName(),
-                        model.getMain().getTemp(), model.getMain().getPressure(), model.getMain().getHumidity()));
+                CityWeather.newInstance(
+                        model.getId(),
+                        getStateCode(model.getWeather()),
+                        cityName,
+                        model.getMain().getTemp(),
+                        model.getMain().getPressure(),
+                        model.getMain().getHumidity()));
     }
 
     private int getStateCode(List<Weather> weathers) {

@@ -1,12 +1,10 @@
 package com.example.alexander.weatherapp.baseviews;
 
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -42,7 +40,6 @@ public abstract class MvpPreferenceFragment extends PreferenceFragmentCompat {
     }
 
     private void initToolbarView(Drawable navigationIcon) {
-        navigationIcon.setColorFilter(ContextCompat.getColor(getContext(), R.color.normal_text_color_light), PorterDuff.Mode.SRC_IN);
         getToolbar().setNavigationIcon(navigationIcon);
         getToolbar().setContentInsetStartWithNavigation(0);
     }

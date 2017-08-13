@@ -1,30 +1,20 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
+        <item name="android:textColorPrimary">@color/md_light_primary_text</item>
     </style>
 
-    <style name="ToolbarTitle">
-        <item name="android:textSize">@dimen/text_header</item>
-    </style>
-
-    <!-- тема для окна настроек - пока дефолтная разметка -->
     <style name="AppTheme.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay.v14.Material">
         <item name="android:layout">@layout/fragment_settings</item>
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-
     </style>
 
-    <!-- конфигурация отступа в категории -->
     <style name="AppTheme.FixForPreferenceCategory">
         <item name="android:paddingLeft">8dp</item>
     </style>
-
 
     <style name="AppTheme.DialogPreference">
         <item name="positiveButtonText">@string/dialog_positive</item>
@@ -32,7 +22,6 @@
     </style>
 
     <style name="AppCardView" parent="CardView">
-
         <item name="cardCornerRadius">1dp</item>
         <item name="android:clickable">true</item>
         <item name="contentPaddingLeft">0dp</item>
@@ -44,8 +33,6 @@
         <item name="contentPadding">0dp</item>
         <item name="cardUseCompatPadding">true</item>
         <item name="cardBackgroundColor">@color/card_item_background</item>
-
-
     </style>
 
     <style name="CommonTextView">

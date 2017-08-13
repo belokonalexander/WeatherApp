@@ -66,17 +66,17 @@ public class SettingsFragment extends MvpPreferenceFragment implements SettingsV
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(SharedPrefs._AUTO_REFRESH)) {
-            ListPreference dataPref = (ListPreference) findPreference(SharedPrefs._UPDATE_INTERVAL);
+        if (key.equals(SharedPrefs.AUTO_REFRESH)) {
+            ListPreference dataPref = (ListPreference) findPreference(SharedPrefs.UPDATE_INTERVAL);
             if (dataPref.getValue() == null) {
                 dataPref.setValueIndex(0); //set to index of your deafult value
             } else
-                presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH, false));
+                presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs.AUTO_REFRESH, false));
 
 
-        } else if (key.equals(SharedPrefs._UPDATE_INTERVAL)) {
+        } else if (key.equals(SharedPrefs.UPDATE_INTERVAL)) {
 
-            presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs._AUTO_REFRESH, false));
+            presenter.updateWeatherJob(sharedPreferences.getBoolean(SharedPrefs.AUTO_REFRESH, false));
         }
 
 

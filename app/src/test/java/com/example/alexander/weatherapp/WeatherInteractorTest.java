@@ -2,11 +2,11 @@ package com.example.alexander.weatherapp;
 
 import com.example.alexander.weatherapp.Helpers.ApiDummyValues;
 import com.example.alexander.weatherapp.business.mappers.WeatherModelToCityWeatherMapper;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.api.WeatherApi;
 import com.example.alexander.weatherapp.data.network.models.weather.WeatherModel;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepositoryImpl;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +76,7 @@ public class WeatherInteractorTest {
         apiRepository.getWeatherByName("").map(weatherModel -> {
             apiAnswer[0] = weatherModel;
             return weatherModel;
-        }).flatMap(weatherMapper.toCityWeather()).subscribe(testObserver);
+        }).flatMap(weatherMapper.toCityWeather("Moscow")).subscribe(testObserver);
 
 
         testObserver.assertValue(o -> {
@@ -95,7 +95,7 @@ public class WeatherInteractorTest {
 
         TestObserver<CityWeather> testObserver = TestObserver.create();
         mockWithCorrectAnswer(weatherApi, (ApiDummyValues.Modify) jsonObject -> jsonObject.remove("weather"));
-        apiRepository.getWeatherByName("").flatMap(weatherMapper.toCityWeather()).subscribe(testObserver);
+        apiRepository.getWeatherByName("").flatMap(weatherMapper.toCityWeather("Moscow")).subscribe(testObserver);
         testObserver.assertValue(cityWeather -> cityWeather.getWeatherState() == CityWeather.STATE_UNKNOWN);
     }
 
@@ -108,7 +108,7 @@ public class WeatherInteractorTest {
 
         });
 
-        apiRepository.getWeatherByName("").flatMap(weatherMapper.toCityWeather()).subscribe(testObserver);
+        apiRepository.getWeatherByName("").flatMap(weatherMapper.toCityWeather("Moscow")).subscribe(testObserver);
         testObserver.assertValue(cityWeather -> cityWeather.getWeatherState() == CityWeather.STATE_SNOW);
     }
 

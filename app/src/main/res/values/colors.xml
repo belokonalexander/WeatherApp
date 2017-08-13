@@ -1,25 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#193f6e</color>
-    <color name="colorPrimaryDark">#0f223c</color>
-    <color name="colorAccent">#3c6ca6</color>
+    <color name="colorPrimary">#FEDC60</color>
+    <color name="colorPrimaryDark">#DDC154</color>
+    <color name="colorAccent">#FAD85F</color>
     <color name="normal_text_color_light">#ffffff</color>
     <color name="alter_accent_native">#5290dc</color>
-
 
     <color name="normal_text_color">#565656</color>
     <color name="normal_text_color_background">#55565656</color>
     <color name="title_text_color">#386193</color>
     <color name="normal_text_color_white">#ffffff</color>
 
-
-
     <color name="card_item_background">#94f7f7f7</color>
 
-    <color name="material_drawer_background">#2f5889</color>
-    <color name="material_drawer_primary_text">#ffffff</color>
-    <color name="material_drawer_selected">#29507e</color>
-    <color name="material_drawer_selected_text">#f56b39</color>
-    <color name="material_drawer_selected_icon">#c1f56b39</color>
-
+    <color name="material_drawer_background">#ffffff</color>
+    <color name="material_drawer_primary_text">#212121</color>
+    <color name="material_drawer_icon">#7F7F7F</color>
+    <color name="material_drawer_selected">#F6F6F6</color>
+    <color name="material_drawer_selected_text">#000000</color>
+    <color name="material_drawer_selected_icon">#7B7B7B</color>
 </resources>

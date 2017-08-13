@@ -1,5 +1,6 @@
 package com.example.alexander.weatherapp.data.network.api;
 
+import com.example.alexander.weatherapp.data.network.models.weather.ForecastModel;
 import com.example.alexander.weatherapp.data.network.models.weather.WeatherModel;
 
 import io.reactivex.Single;
@@ -22,4 +23,7 @@ public interface WeatherApi {
     @GET("weather?appid=" + APP_ID)
     Single<WeatherModel> weatherByLocation(@Query("lat") double latitude,
                                            @Query("lon") double longitude);
+
+    @GET("forecast?appid=" + APP_ID)
+    Single<ForecastModel> forecastById(@Query("id") int id);
 }

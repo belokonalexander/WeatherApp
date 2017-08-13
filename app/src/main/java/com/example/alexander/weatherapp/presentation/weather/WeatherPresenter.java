@@ -3,8 +3,8 @@ package com.example.alexander.weatherapp.presentation.weather;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.alexander.weatherapp.business.weather.WeatherInteractor;
+import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.events.StoreUpdatedEvent;
-import com.example.alexander.weatherapp.presentation.weather.models.CityWeather;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,7 +22,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     private final EventBus eventBus;
     private final CompositeDisposable disposables;
     private Disposable weatherDisposable;
-
+    private int cityId;
 
     public WeatherPresenter(WeatherInteractor weatherInteractor, EventBus eventBus) {
         this.weatherInteractor = weatherInteractor;
@@ -34,8 +34,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     public void onFirstViewAttach() {
         super.onFirstViewAttach();
         eventBus.register(this);
-        getWeather(false);
-
+//        getWeather(false);
     }
 
     @Override
@@ -56,23 +55,9 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         getViewState().finishProgress();
     }
 
-
-    public void getWeather(boolean loud) {
-        //don't start task if is already executing
-        getViewState().startProgress(loud);
-        if (weatherDisposable == null || weatherDisposable.isDisposed()) {
-            weatherDisposable = weatherInteractor.getWeather(true)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread(), true)
-                    .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete);
-            disposables.add(weatherDisposable);
-        }
-    }
-
     private void onGetWeatherComplete() {
         getViewState().finishProgress();
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateFromStoreListener(StoreUpdatedEvent event) {
@@ -86,18 +71,20 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete));
     }
 
-    public void getAutocomplete(String query) {
-        disposables.add(weatherInteractor.getAutocomplete(query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getViewState()::showPredictions, this::handleFailureGetWeather));
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
-    public void setPlace(String placeId) {
-        disposables.add(weatherInteractor.getLocation(placeId)
-                .flatMap(weatherInteractor::getWeatherByLocation)
+    public void update() {
+        getViewState().startProgress();
+        weatherInteractor.getWeatherByCityId(cityId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread(), true)
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, getViewState()::finishProgress);
+
+        weatherInteractor.getForecastByCityId(cityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
+                .subscribe(getViewState()::showForecast, this::handleFailureGetWeather);
     }
 }
