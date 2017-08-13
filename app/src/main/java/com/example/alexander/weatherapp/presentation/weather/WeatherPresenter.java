@@ -93,10 +93,10 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     public void setPlace(String placeId) {
-        disposables.add(weatherInteractor.getLocation(placeId)
-                .flatMap(weatherInteractor::getWeatherByLocation)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
+//        disposables.add(weatherInteractor.getLocation(placeId)
+//                .flatMap(weatherInteractor::getWeatherByLocation)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
     }
 }

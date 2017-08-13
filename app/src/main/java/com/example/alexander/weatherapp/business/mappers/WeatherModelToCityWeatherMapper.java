@@ -13,12 +13,12 @@ import io.reactivex.functions.Function;
 
 public class WeatherModelToCityWeatherMapper {
 
-    public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather() {
+    public Function<WeatherModel, SingleSource<CityWeather>> toCityWeather(String cityName) {
         return model -> Single.fromCallable(() ->
                 CityWeather.newInstance(
                         model.getId(),
                         getStateCode(model.getWeather()),
-                        model.getName(),
+                        cityName,
                         model.getMain().getTemp(),
                         model.getMain().getPressure(),
                         model.getMain().getHumidity()));

@@ -113,13 +113,13 @@ public class WeatherPresenterTest {
         location.setLatitude(4.19);
         location.setLongitude(4.20);
         when(weatherInteractor.getLocation("123456")).thenReturn(Single.just(location));
-        when(weatherInteractor.getWeatherByLocation(location)).thenReturn(Single.just(moscowWeather));
+        when(weatherInteractor.getWeatherByLocation("Moscow", location)).thenReturn(Single.just(moscowWeather));
 
         presenter.setPlace("123456");
 
         verify(viewState).showWeather(moscowWeather);
         verify(viewState, never()).onError(any(Throwable.class));
         verify(weatherInteractor).getLocation("123456");
-        verify(weatherInteractor).getWeatherByLocation(location);
+        verify(weatherInteractor).getWeatherByLocation("Moscow", location);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.alexander.weatherapp.di.components;
 
+import com.example.alexander.weatherapp.CityWeatherAdapter;
 import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.di.modules.AboutModule;
 import com.example.alexander.weatherapp.di.modules.AppModule;
@@ -30,4 +31,6 @@ public interface AppComponent {
     void inject(WeatherApplication app);
 
     void inject(AddCityPresenter addCityPresenter);
+
+    void inject(CityWeatherAdapter cityWeatherAdapter);
 }

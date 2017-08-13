@@ -14,7 +14,7 @@ public interface WeatherInteractor {
 
     Observable<CityWeather> getWeather(boolean fresh);
 
-    Single<CityWeather> getWeatherByLocation(Location location);
+    Single<CityWeather> getWeatherByLocation(String cityName, Location location);
 
     Single<List<Prediction>> getAutocomplete(String query);
 

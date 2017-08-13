@@ -49,7 +49,7 @@ class WeatherJob extends Job {
                 .getCityWeather()
                 .map(CityWeather::getCityId)
                 .flatMap(weatherApi::weatherById)
-                .flatMap(mapper.toCityWeather())
+                .flatMap(mapper.toCityWeather(""))
                 .subscribe(new DisposableSingleObserver<CityWeather>() {
                     @Override
                     public void onSuccess(@io.reactivex.annotations.NonNull CityWeather cityWeather) {

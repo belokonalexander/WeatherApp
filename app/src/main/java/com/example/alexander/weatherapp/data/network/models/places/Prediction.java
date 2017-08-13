@@ -10,6 +10,9 @@ public class Prediction {
     @SerializedName("description")
     private String description;
 
+    @SerializedName("structured_formatting")
+    private StructuredFormatting structuredFormatting;
+
     @Override
     public String toString() {
         return description;
@@ -29,5 +32,19 @@ public class Prediction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCityName() {
+        return structuredFormatting.cityName;
+    }
+
+    public void setCityName(String cityName) {
+        structuredFormatting.cityName = cityName;
+    }
+
+    private static class StructuredFormatting {
+
+        @SerializedName("main_text")
+        String cityName;
     }
 }

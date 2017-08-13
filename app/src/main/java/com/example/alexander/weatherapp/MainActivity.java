@@ -1,5 +1,6 @@
 package com.example.alexander.weatherapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +23,6 @@ import com.example.alexander.weatherapp.presentation.settings.SettingsFragment;
 import com.example.alexander.weatherapp.presentation.weather.WeatherFragment;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.holder.DimenHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
@@ -28,13 +31,12 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationManager {
 
-    public static final String NAVIGATE_POSITION = "NAVIGATE_POSITION_ID";
+    public static final String SELECTED_ITEM = "SELECTED_ITEM";
     public static final String NAVIGATION_BACKPRESS = "NAVIGATION_BACKPRESS";
 
-    private Drawer navigation;
+    private Drawer drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,21 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        navigation = new DrawerBuilder().withActivity(this)
 
-                .withHeader(R.layout.navigation_drawable_header)
-                .withHeaderHeight(DimenHolder.fromDp(240))
+        initDrawer();
+        initCityList();
+
+        if (savedInstanceState == null) {
+            onDrawerItemClick(R.id.weather);
+        } else {
+            drawer.setSelection(savedInstanceState.getLong(SELECTED_ITEM));
+        }
+    }
+
+    private void initDrawer() {
+        drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withHeader(R.layout.layout_drawer_header)
                 .withTranslucentStatusBar(true)
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
                     onDrawerItemClick(view.getId());
@@ -53,23 +66,15 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 })
                 .withDrawerItems(customInflateMenu())
                 .build();
-
-
-        if (savedInstanceState == null) {
-            onDrawerItemClick(R.id.weather);
-        } else {
-            navigation.setSelection(savedInstanceState.getInt(NAVIGATE_POSITION), false);
-        }
-
     }
 
-    /**
-     * gets menu items from menu.xml
-     *
-     * @return
-     */
-    private List<IDrawerItem> customInflateMenu() {
+    private void initCityList() {
+        RecyclerView cityList = drawer.getHeader().findViewById(R.id.city_list);
+        cityList.setLayoutManager(new LinearLayoutManager(this));
+        cityList.setAdapter(new CityWeatherAdapter());
+    }
 
+    private List<IDrawerItem> customInflateMenu() {
         MenuInflater menuInflater = new SupportMenuInflater(this);
         MenuBuilder menu = new MenuBuilder(this);
         menuInflater.inflate(R.menu.navigation_menu, menu);
@@ -79,24 +84,12 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         return result;
     }
 
-
-    /**
-     * saving current select position
-     *
-     * @param outState
-     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(NAVIGATE_POSITION, (int) navigation.getCurrentSelection());
+        outState.putLong(SELECTED_ITEM, drawer.getCurrentSelection());
     }
 
-
-    /**
-     * item click handling
-     *
-     * @param id - id of selected item
-     */
     private void onDrawerItemClick(@IdRes int id) {
 
         Class fragmentClass = null;
@@ -106,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 fragmentClass = WeatherFragment.class;
                 break;
             case R.id.add_city:
-                AddCityActivity.start(this);
+                AddCityActivity.startForResult(this, AddCityActivity.ADD_CITY_REQUEST);
                 break;
             case R.id.settings:
                 fragmentClass = SettingsFragment.class;
@@ -135,24 +128,18 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 .replace(R.id.main_content, fragment, tag)
                 .commit();
 
-        navigation.setSelection(id, false);
+        drawer.setSelection(id, false);
     }
 
     @Override
     public void onBackPressed() {
-        if (navigation.isDrawerOpen()) {
-            navigation.closeDrawer();
+        if (drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
         } else {
             super.onBackPressed();
         }
     }
 
-    /**
-     * convert items menu in IDrawerItem
-     *
-     * @param item
-     * @param menu
-     */
     private void addMenuItems(List<IDrawerItem> item, Menu menu) {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem mMenuItem = menu.getItem(i);
@@ -162,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                     .withIdentifier(mMenuItem.getItemId())
                     .withEnabled(mMenuItem.isEnabled())
                     .withIconTintingEnabled(true)
+                    .withIconColor(ContextCompat.getColor(getBaseContext(), R.color.material_drawer_icon))
                     .withSelectedIconColor(ContextCompat.getColor(getBaseContext(), R.color.material_drawer_selected_icon));
             item.add(iDrawerItem);
         }
@@ -170,20 +158,32 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
 
     @Override
     public void showNavigationDrawer() {
-        navigation.openDrawer();
+        drawer.openDrawer();
     }
 
     @Override
     public void setNavigationDrawerState(boolean enabled) {
         if (enabled) {
-            navigation.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         } else {
-            navigation.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
     }
 
     @Override
     public void openNavigationDrawer() {
-        navigation.openDrawer();
+        drawer.openDrawer();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AddCityActivity.ADD_CITY_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                int cityId = data.getIntExtra(AddCityActivity.CITY_ID_KEY, 0);
+                Log.d("MyTag", "" + cityId);
+            }
+        }
     }
 }

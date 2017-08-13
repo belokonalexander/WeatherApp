@@ -3,8 +3,12 @@ package com.example.alexander.weatherapp.data.local;
 import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.local.model.CityWeatherEntity;
 
+import java.util.List;
+
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.requery.Persistable;
+import io.requery.query.ResultDelegate;
 import io.requery.reactivex.ReactiveEntityStore;
 
 public class WeatherLocalRepositoryImpl implements WeatherLocalRepository {
@@ -24,6 +28,15 @@ public class WeatherLocalRepositoryImpl implements WeatherLocalRepository {
                 .maybe()
                 .toSingle()
                 .cast(CityWeather.class);
+    }
+
+    public Observable<List<? extends CityWeather>> getAllCityWeather() {
+        return entityStore
+                .select(CityWeatherEntity.class)
+                .orderBy(CityWeatherEntity.CREATED_DATE)
+                .get()
+                .observableResult()
+                .map(ResultDelegate::toList);
     }
 
     @Override
