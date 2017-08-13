@@ -1,6 +1,7 @@
 package com.example.alexander.weatherapp;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,9 +30,14 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<CityWeatherAdapter.
     @Inject
     WeatherLocalRepository weatherLocalRepository;
 
+    @NonNull
+    private final OnCityWeatherClickListener listener;
+
     private List<? extends CityWeather> cityWeatherList;
 
-    public CityWeatherAdapter() {
+    public CityWeatherAdapter(@NonNull OnCityWeatherClickListener listener) {
+        this.listener = listener;
+
         WeatherApplication.getAppComponent().plus(new WeatherModule()).inject(this);
 
         weatherLocalRepository.getAllCityWeather()
@@ -85,6 +91,12 @@ public class CityWeatherAdapter extends RecyclerView.Adapter<CityWeatherAdapter.
 
         void bind(CityWeather cityWeather) {
             cityName.setText(cityWeather.getCityName());
+            itemView.setOnClickListener(view -> listener.onCityWeatherClick(cityWeather.getCityId()));
         }
+    }
+
+    interface OnCityWeatherClickListener {
+
+        void onCityWeatherClick(int cityId);
     }
 }

@@ -34,8 +34,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     public void onFirstViewAttach() {
         super.onFirstViewAttach();
         eventBus.register(this);
-        getWeather(false);
-
+//        getWeather(false);
     }
 
     @Override
@@ -98,5 +97,12 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
+    }
+
+    public void setCityId(int cityId) {
+        weatherInteractor.getWeatherByCityId(cityId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather);
     }
 }

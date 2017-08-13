@@ -9,15 +9,15 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-
 public interface WeatherInteractor {
 
     Observable<CityWeather> getWeather(boolean fresh);
+
+    Single<CityWeather> getWeatherByCityId(int cityId);
 
     Single<CityWeather> getWeatherByLocation(String cityName, Location location);
 
     Single<List<Prediction>> getAutocomplete(String query);
 
     Single<Location> getLocation(String placeId);
-
 }

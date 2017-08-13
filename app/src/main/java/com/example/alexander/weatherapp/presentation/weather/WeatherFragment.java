@@ -3,7 +3,6 @@ package com.example.alexander.weatherapp.presentation.weather;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,8 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class WeatherFragment extends BaseFragment implements WeatherView {
 
+    private static final String CITY_ID = "CITY_ID";
+
     @Inject
     @InjectPresenter
     WeatherPresenter presenter;
@@ -46,13 +47,20 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @BindView(R.id.weather_widget)
     WeatherHolder weatherHolder;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     @BindView(R.id.city_autocomplete)
     AutoCompleteTextView cityAutocomplete;
 
     private CompositeDisposable disposables;
+
+    public static WeatherFragment newInstance(int cityId) {
+        WeatherFragment weatherFragment = new WeatherFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(CITY_ID, cityId);
+        weatherFragment.setArguments(args);
+
+        return weatherFragment;
+    }
 
     @ProvidePresenter
     WeatherPresenter provideWeatherPresenter() {
@@ -66,17 +74,17 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
                 .plus(new WeatherModule())
                 .inject(this);
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            presenter.setCityId(args.getInt(CITY_ID));
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_weather, container, false);
-    }
-
-    @Override
-    protected Toolbar getToolbar() {
-        return toolbar;
     }
 
     @Override
@@ -89,7 +97,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initToolbar(getString(R.string.weather));
 
         disposables = new CompositeDisposable();
 

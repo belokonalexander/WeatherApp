@@ -57,6 +57,11 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
+    public Single<CityWeather> getWeatherByCityId(int cityId) {
+        return weatherLocalRepository.getCityWeather(cityId);
+    }
+
+    @Override
     public Single<CityWeather> getWeatherByLocation(String cityName, Location location) {
         return weatherApiRepository.getWeatherByLocation(location)
                 .flatMap(weatherMapper.toCityWeather(cityName))

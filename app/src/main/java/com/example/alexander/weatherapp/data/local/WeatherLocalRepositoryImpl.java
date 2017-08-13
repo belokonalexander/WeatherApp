@@ -30,6 +30,18 @@ public class WeatherLocalRepositoryImpl implements WeatherLocalRepository {
                 .cast(CityWeather.class);
     }
 
+    @Override
+    public Single<CityWeather> getCityWeather(int cityId) {
+        return entityStore
+                .select(CityWeatherEntity.class)
+                .where(CityWeatherEntity.CITY_ID.eq(cityId))
+                .limit(1)
+                .get()
+                .maybe()
+                .toSingle()
+                .cast(CityWeather.class);
+    }
+
     public Observable<List<? extends CityWeather>> getAllCityWeather() {
         return entityStore
                 .select(CityWeatherEntity.class)

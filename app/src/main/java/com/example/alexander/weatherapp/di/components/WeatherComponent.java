@@ -1,6 +1,7 @@
 package com.example.alexander.weatherapp.di.components;
 
 import com.example.alexander.weatherapp.CityWeatherAdapter;
+import com.example.alexander.weatherapp.NavigationActivity;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.di.scopes.WeatherScope;
 import com.example.alexander.weatherapp.presentation.add_city.AddCityActivity;
@@ -23,4 +24,6 @@ public interface WeatherComponent {
     void inject(AddCityActivity addCityActivity);
 
     void inject(CityWeatherAdapter cityWeatherAdapter);
+
+    void inject(NavigationActivity navigationActivity);
 }
