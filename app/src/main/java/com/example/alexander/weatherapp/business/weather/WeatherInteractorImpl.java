@@ -5,6 +5,7 @@ import com.example.alexander.weatherapp.data.local.WeatherLocalRepository;
 import com.example.alexander.weatherapp.data.local.model.CityWeather;
 import com.example.alexander.weatherapp.data.network.models.places.Location;
 import com.example.alexander.weatherapp.data.network.models.places.Prediction;
+import com.example.alexander.weatherapp.data.network.models.weather.Forecast;
 import com.example.alexander.weatherapp.data.repositories.GooglePlacesApiRepository;
 import com.example.alexander.weatherapp.data.repositories.WeatherApiRepository;
 import com.example.alexander.weatherapp.job.JobWrapper;
@@ -84,5 +85,10 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     @Override
     public Single<Location> getLocation(String placeId) {
         return googlePlacesApiRepository.getLocation(placeId);
+    }
+
+    @Override
+    public Single<List<Forecast>> getForecastByCityId(int cityId) {
+        return weatherApiRepository.getForecastByCityId(cityId);
     }
 }

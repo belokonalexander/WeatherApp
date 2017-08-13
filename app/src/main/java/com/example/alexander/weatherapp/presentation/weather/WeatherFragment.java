@@ -3,6 +3,7 @@ package com.example.alexander.weatherapp.presentation.weather;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,12 @@ import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.baseviews.BaseFragment;
 import com.example.alexander.weatherapp.data.local.model.CityWeather;
+import com.example.alexander.weatherapp.data.network.models.weather.Forecast;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
 import com.example.alexander.weatherapp.view.WeatherWidget;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,6 +43,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @BindView(R.id.forecast_list)
     RecyclerView forecastList;
+
+    private ForecastAdapter forecastAdapter;
 
     public static WeatherFragment newInstance(int cityId) {
         WeatherFragment weatherFragment = new WeatherFragment();
@@ -80,6 +86,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         super.onViewCreated(view, savedInstanceState);
 
         refreshLayout.setOnRefreshListener(presenter::update);
+
+        forecastList.setLayoutManager(new LinearLayoutManager(getContext()));
+        forecastAdapter = new ForecastAdapter();
+        forecastList.setAdapter(forecastAdapter);
     }
 
     @Override
@@ -104,5 +114,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @Override
     public void finishProgress() {
         refreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showForecast(List<Forecast> forecastList) {
+        forecastAdapter.setForecastList(forecastList);
     }
 }

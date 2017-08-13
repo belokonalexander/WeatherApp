@@ -50,6 +50,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
 
     private void handleFailureGetWeather(Throwable throwable) {
+        throwable.printStackTrace();
         getViewState().onError(throwable);
         getViewState().finishProgress();
     }
@@ -80,5 +81,10 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true)
                 .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, getViewState()::finishProgress);
+
+        weatherInteractor.getForecastByCityId(cityId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getViewState()::showForecast, this::handleFailureGetWeather);
     }
 }

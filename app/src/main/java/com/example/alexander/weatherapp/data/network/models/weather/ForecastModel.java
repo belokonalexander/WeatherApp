@@ -7,9 +7,9 @@ import java.util.List;
 public class ForecastModel {
 
     @SerializedName("list")
-    private List<ForecastInfo> forecastInfo;
+    private List<Forecast> forecastList;
 
-    public List<ForecastInfo> getForecastInfo() {
-        return forecastInfo;
+    public List<Forecast> getForecastList() {
+        return forecastList;
     }
 }

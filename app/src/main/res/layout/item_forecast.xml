@@ -15,6 +15,7 @@
         tools:text="Mon, 14 August" />
 
     <ImageView
+        android:id="@+id/forecast_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

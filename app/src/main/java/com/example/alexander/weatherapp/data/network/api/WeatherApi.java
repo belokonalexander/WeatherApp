@@ -25,6 +25,5 @@ public interface WeatherApi {
                                            @Query("lon") double longitude);
 
     @GET("forecast?appid=" + APP_ID)
-    Single<ForecastModel> forecastByLocation(@Query("lat") double latitude,
-                                             @Query("lon") double longitude);
+    Single<ForecastModel> forecastById(@Query("id") int id);
 }
