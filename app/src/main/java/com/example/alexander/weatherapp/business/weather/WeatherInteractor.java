@@ -13,7 +13,7 @@ public interface WeatherInteractor {
 
     Observable<CityWeather> getWeather(boolean fresh);
 
-    Single<CityWeather> getWeatherByCityId(int cityId);
+    Observable<CityWeather> getWeatherByCityId(int cityId);
 
     Single<CityWeather> getWeatherByLocation(String cityName, Location location);
 

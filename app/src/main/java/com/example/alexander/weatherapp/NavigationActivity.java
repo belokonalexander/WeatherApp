@@ -43,7 +43,6 @@ public class NavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_navigation);
 
         ButterKnife.bind(this);

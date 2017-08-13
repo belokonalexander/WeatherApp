@@ -45,7 +45,7 @@ public class WeatherLocalRepositoryImpl implements WeatherLocalRepository {
     public Observable<List<? extends CityWeather>> getAllCityWeather() {
         return entityStore
                 .select(CityWeatherEntity.class)
-                .orderBy(CityWeatherEntity.CREATED_DATE)
+                .orderBy(CityWeatherEntity.CITY_NAME)
                 .get()
                 .observableResult()
                 .map(ResultDelegate::toList);
@@ -53,11 +53,26 @@ public class WeatherLocalRepositoryImpl implements WeatherLocalRepository {
 
     @Override
     public Single<CityWeather> saveCityWeather(CityWeather cityWeather) {
-        return entityStore
-                .findByKey(CityWeatherEntity.class, cityWeather.getCityId())
-                .toSingle()
-                .flatMap(cityWeatherEntity -> entityStore.update((CityWeatherEntity) cityWeather))
-                .onErrorResumeNext(throwable -> entityStore.insert((CityWeatherEntity) cityWeather))
+        return entityStore.delete(CityWeatherEntity.class)
+                .where(CityWeatherEntity.CITY_ID.eq(cityWeather.getCityId()))
+                .get()
+                .single()
+                .flatMap(i -> entityStore.insert((CityWeatherEntity) cityWeather))
+                .doOnError(throwable -> entityStore.insert((CityWeatherEntity) cityWeather))
                 .cast(CityWeather.class);
+
+//        return entityStore
+//                .findByKey(CityWeatherEntity.class, cityWeather.getCityId())
+//                .toSingle()
+//                .flatMap(cityWeatherEntity -> entityStore
+//                        .delete(cityWeatherEntity)
+//                        .toSingle(() -> cityWeather)
+//                )
+//                .flatMap(entityStore::insert)
+//                .onErrorResumeNext(throwable -> {
+//                    Log.d("MyTag", "inserting: " + cityWeather.toString());
+//                    return entityStore.insert((CityWeatherEntity) cityWeather);
+//                })
+//                .cast(CityWeather.class);
     }
 }

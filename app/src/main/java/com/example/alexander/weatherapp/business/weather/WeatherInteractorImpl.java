@@ -57,8 +57,15 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     @Override
-    public Single<CityWeather> getWeatherByCityId(int cityId) {
-        return weatherLocalRepository.getCityWeather(cityId);
+    public Observable<CityWeather> getWeatherByCityId(int cityId) {
+        return weatherLocalRepository.getCityWeather(cityId)
+                .flatMapObservable(cityWeather -> Observable.concat(
+                        Observable.just(cityWeather),
+                        weatherApiRepository.getWeatherById(cityId)
+                                .flatMap(weatherMapper.toCityWeather(cityWeather.getCityName()))
+                                .flatMap(weatherLocalRepository::saveCityWeather)
+                                .toObservable())
+                );
     }
 
     @Override

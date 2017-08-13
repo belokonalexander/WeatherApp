@@ -17,8 +17,6 @@
     <string name="connection_error">Ошибка соединения. Пожалуйста, проверьте доступ к интернету и повторите операцию</string>
     <string name="unknown_error">Неизвестная ошибка. Попробуйте повторить операцию</string>
 
-    <string name="pressure">мм рт.ст.</string>
-
     <string name="moscow">Москва</string>
 
     <string-array name="update_intervals">

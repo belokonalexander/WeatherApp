@@ -3,11 +3,10 @@ package com.example.alexander.weatherapp.presentation.weather;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -16,22 +15,13 @@ import com.example.alexander.weatherapp.R;
 import com.example.alexander.weatherapp.WeatherApplication;
 import com.example.alexander.weatherapp.baseviews.BaseFragment;
 import com.example.alexander.weatherapp.data.local.model.CityWeather;
-import com.example.alexander.weatherapp.data.network.models.places.Prediction;
 import com.example.alexander.weatherapp.di.modules.WeatherModule;
 import com.example.alexander.weatherapp.presentation.exceptions.ViewException;
-import com.example.alexander.weatherapp.utils.LogUtils;
-import com.example.alexander.weatherapp.views.layouts.WeatherHolder;
-import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import com.example.alexander.weatherapp.view.WeatherWidget;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.disposables.CompositeDisposable;
-
 
 public class WeatherFragment extends BaseFragment implements WeatherView {
 
@@ -41,16 +31,14 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @InjectPresenter
     WeatherPresenter presenter;
 
-    @BindView(R.id.swiperefresh)
+    @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout refreshLayout;
 
     @BindView(R.id.weather_widget)
-    WeatherHolder weatherHolder;
+    WeatherWidget weatherWidget;
 
-    @BindView(R.id.city_autocomplete)
-    AutoCompleteTextView cityAutocomplete;
-
-    private CompositeDisposable disposables;
+    @BindView(R.id.forecast_list)
+    RecyclerView forecastList;
 
     public static WeatherFragment newInstance(int cityId) {
         WeatherFragment weatherFragment = new WeatherFragment();
@@ -73,12 +61,12 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
                 .getAppComponent()
                 .plus(new WeatherModule())
                 .inject(this);
+
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            presenter.setCityId(args.getInt(CITY_ID));
-        }
+
+        presenter.setCityId(getArguments().getInt(CITY_ID));
+        presenter.update();
     }
 
     @Nullable
@@ -91,35 +79,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        refreshLayout.setOnRefreshListener(() -> presenter.getWeather(true));
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        disposables = new CompositeDisposable();
-
-        disposables.add(RxTextView.textChanges(cityAutocomplete)
-                .map(CharSequence::toString)
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .subscribe(presenter::getAutocomplete));
-
-        disposables.add(RxAutoCompleteTextView.itemClickEvents(cityAutocomplete)
-                .map(event -> (Prediction) event.view().getAdapter().getItem(event.position()))
-                .map(Prediction::getPlaceId)
-                .subscribe(presenter::setPlace));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        if (disposables != null) {
-            disposables.dispose();
-        }
+        refreshLayout.setOnRefreshListener(presenter::update);
     }
 
     @Override
@@ -131,27 +91,18 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     }
 
     @Override
-    public void showWeather(CityWeather weatherModel) {
-        weatherHolder.setModelAndShow(weatherModel);
+    public void showWeather(CityWeather cityWeather) {
+        getActivity().setTitle(cityWeather.getCityName());
+        weatherWidget.setCityWeather(cityWeather);
     }
 
     @Override
-    public void startProgress(boolean loud) {
-        if (loud)
-            refreshLayout.setRefreshing(true);
-        LogUtils.write("startProgress");
+    public void startProgress() {
+        refreshLayout.setRefreshing(true);
     }
 
     @Override
     public void finishProgress() {
         refreshLayout.setRefreshing(false);
-        LogUtils.write("finishProgress");
-    }
-
-    @Override
-    public void showPredictions(List<Prediction> predictions) {
-        ArrayAdapter<Prediction> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, predictions);
-        cityAutocomplete.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 }

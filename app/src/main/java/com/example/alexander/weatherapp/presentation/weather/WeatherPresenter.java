@@ -22,7 +22,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     private final EventBus eventBus;
     private final CompositeDisposable disposables;
     private Disposable weatherDisposable;
-
+    private int cityId;
 
     public WeatherPresenter(WeatherInteractor weatherInteractor, EventBus eventBus) {
         this.weatherInteractor = weatherInteractor;
@@ -54,23 +54,9 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         getViewState().finishProgress();
     }
 
-
-    public void getWeather(boolean loud) {
-        //don't start task if is already executing
-        getViewState().startProgress(loud);
-        if (weatherDisposable == null || weatherDisposable.isDisposed()) {
-            weatherDisposable = weatherInteractor.getWeather(true)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread(), true)
-                    .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete);
-            disposables.add(weatherDisposable);
-        }
-    }
-
     private void onGetWeatherComplete() {
         getViewState().finishProgress();
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateFromStoreListener(StoreUpdatedEvent event) {
@@ -84,25 +70,15 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, this::onGetWeatherComplete));
     }
 
-    public void getAutocomplete(String query) {
-        disposables.add(weatherInteractor.getAutocomplete(query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getViewState()::showPredictions, this::handleFailureGetWeather));
-    }
-
-    public void setPlace(String placeId) {
-//        disposables.add(weatherInteractor.getLocation(placeId)
-//                .flatMap(weatherInteractor::getWeatherByLocation)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather));
-    }
-
     public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
+    public void update() {
+        getViewState().startProgress();
         weatherInteractor.getWeatherByCityId(cityId)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather);
+                .observeOn(AndroidSchedulers.mainThread(), true)
+                .subscribe(this::handleSuccessGetWeather, this::handleFailureGetWeather, getViewState()::finishProgress);
     }
 }
